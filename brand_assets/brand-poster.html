@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Synex AI Labs — Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;
+  --bg2:#0a0a0a;
+  --bg3:#111827;
+  --card:rgba(255,255,255,0.05);
+  --border:rgba(255,255,255,0.1);
+  --border2:rgba(255,255,255,0.2);
+  --tx:#ffffff;
+  --tx2:#d1d5db;
+  --tx3:#9ca3af;
+  --tx4:#6b7280;
+  --cyan4:#22d3ee;
+  --cyan5:#06b6d4;
+  --cyan3:#67e8f9;
+  --blue5:#3b82f6;
+  --blue6:#2563eb;
+  --fd:'Syne',sans-serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{background:var(--bg);color:var(--tx);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+body{padding:0;background:linear-gradient(to bottom,#000,#0a0a0a 40%,#111827 70%,#000)}
+
+/* GRID TEXTURE */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(6,182,212,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(6,182,212,0.03) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+.page{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:72px 40px 100px}
+
+/* ── HEADER ── */
+.header{margin-bottom:72px}
+.header__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--fm);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--tx4);border:1px solid var(--border);
+  background:rgba(6,182,212,0.05);
+  padding:6px 14px;border-radius:100px;margin-bottom:24px;
+}
+.header__eyebrow span{width:6px;height:6px;background:var(--cyan5);border-radius:50%;box-shadow:0 0 6px var(--cyan5);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+.header__title{
+  font-family:var(--fd);font-size:clamp(40px,6vw,72px);font-weight:800;
+  line-height:1;letter-spacing:-0.03em;margin-bottom:16px;
+}
+.header__title span{
+  background:linear-gradient(to right,var(--cyan4),var(--blue5));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.header__sub{font-size:16px;font-weight:300;color:var(--tx3);max-width:480px;line-height:1.6}
+
+/* ── SECTION ── */
+.section{margin-bottom:64px}
+.section__label{
+  font-family:var(--fm);font-size:10px;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan5);
+  margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid rgba(6,182,212,0.15);
+}
+.section__title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--tx4);letter-spacing:0.05em;margin-bottom:16px}
+
+/* ── TYPOGRAPHY BLOCK ── */
+.type-specimen{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:40px;margin-bottom:16px;overflow:hidden;position:relative;
+}
+.type-specimen::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,var(--cyan5),transparent);
+  opacity:0.4;
+}
+.type-row{display:flex;align-items:baseline;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border)}
+.type-row:last-child{border-bottom:none;padding-bottom:0}
+.type-row:first-child{padding-top:0}
+.type-sample{line-height:1.1}
+.type-meta{font-family:var(--fm);font-size:11px;color:var(--tx4);text-align:right;flex-shrink:0;margin-left:24px;line-height:1.6}
+
+/* ── COLOUR GRID ── */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.swatch-grid--wide{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.swatch{border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.swatch__color{height:72px;width:100%}
+.swatch__info{padding:10px 12px;background:#0d1117}
+.swatch__name{font-size:11px;font-weight:600;color:var(--tx2);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.swatch__hex{font-family:var(--fm);font-size:10px;color:var(--tx4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* gradient swatches */
+.swatch--grad .swatch__color{height:56px}
+
+/* ── COMPONENT SHOWCASE ── */
+.components{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:32px;background:var(--card);border:1px solid var(--border);border-radius:20px}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;font-family:var(--fb);font-size:15px;font-weight:600;
+  background:linear-gradient(to right,var(--cyan5),var(--blue6));
+  color:#000;border:none;border-radius:100px;cursor:pointer;
+  box-shadow:0 0 24px rgba(6,182,212,0.4);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 36px rgba(6,182,212,0.6)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;font-family:var(--fb);font-size:15px;font-weight:600;
+  background:rgba(255,255,255,0.05);color:var(--tx);
+  border:1px solid rgba(255,255,255,0.1);border-radius:100px;cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);transform:scale(1.04)}
+.btn-sm{
+  padding:8px 18px;font-family:var(--fb);font-size:13px;font-weight:500;
+  background:rgba(255,255,255,0.05);color:var(--tx3);
+  border:1px solid rgba(255,255,255,0.2);border-radius:100px;cursor:pointer;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;font-size:12px;font-weight:500;color:var(--tx2);
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  border-radius:100px;
+}
+.badge--cyan{
+  color:var(--cyan4);background:rgba(6,182,212,0.15);
+  border-color:rgba(6,182,212,0.3);
+}
+.badge--step{
+  padding:5px 14px;font-size:12px;font-weight:700;
+  background:linear-gradient(to right,var(--cyan5),var(--blue5));
+  color:#000;border:none;border-radius:100px;
+}
+.tag-pill{
+  padding:8px 16px;font-size:13px;color:var(--tx3);
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.2);
+  border-radius:100px;
+}
+
+/* ── CARD SHOWCASE ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.card{border-radius:20px;padding:28px;border:1px solid rgba(255,255,255,0.1);position:relative;overflow:hidden}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.15),transparent)}
+.card--default{background:linear-gradient(to bottom,rgba(255,255,255,0.05),rgba(255,255,255,0))}
+.card--problem{background:linear-gradient(to bottom,rgba(239,68,68,0.05),transparent);border-color:rgba(239,68,68,0.2)}
+.card--solution{background:linear-gradient(to bottom,rgba(6,182,212,0.05),transparent);border-color:rgba(6,182,212,0.2)}
+.card__icon{
+  width:40px;height:40px;border-radius:12px;margin-bottom:16px;
+  background:linear-gradient(to br,var(--cyan5),var(--blue6));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(6,182,212,0.4);
+}
+.card__icon svg{width:20px;height:20px;color:#000}
+.card__title{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.card__body{font-size:13px;color:var(--tx3);line-height:1.6}
+
+/* ── INPUT ── */
+.input-demo{
+  width:100%;padding:12px 16px;
+  background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;font-family:var(--fb);font-size:14px;
+  color:var(--tx3);outline:none;
+}
+
+/* ── SPACING TOKENS ── */
+.spacing-row{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border)}
+.spacing-row:last-child{border-bottom:none}
+.spacing-bar{height:12px;background:linear-gradient(to right,var(--cyan5),var(--blue5));border-radius:4px;flex-shrink:0}
+.spacing-label{font-family:var(--fm);font-size:11px;color:var(--tx4);min-width:80px}
+.spacing-val{font-family:var(--fm);font-size:11px;color:var(--tx2)}
+
+/* ── ANIMATION TOKENS ── */
+.anim-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.anim-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.anim-card__label{font-family:var(--fm);font-size:10px;color:var(--cyan5);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+.anim-card__val{font-family:var(--fm);font-size:12px;color:var(--tx2);line-height:1.6}
+
+/* ── TWO-COL LAYOUT ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.2),transparent);margin:56px 0}
+
+/* ── FOOTER ── */
+.footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:32px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--tx4);font-family:var(--fm);
+}
+.footer strong{color:var(--tx2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header__eyebrow"><span></span>brand-assets / BRAND_POSTER.html</div>
+    <h1 class="header__title">Synex AI Labs<br/><span>Brand System</span></h1>
+    <p class="header__sub">Complete design token reference — typography, colour, components, spacing, and animation.</p>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="section">
+    <div class="section__label">01 — Typography</div>
+
+    <div class="section__title">DISPLAY FONT — SYNE</div>
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'Syne',sans-serif;font-size:56px;font-weight:800;letter-spacing:-0.03em;line-height:1">Hero Heading</div>
+        <div class="type-meta">Syne 800<br/>56px / -0.03em</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'Syne',sans-serif;font-size:36px;font-weight:700;letter-spacing:-0.02em">Section Heading</div>
+        <div class="type-meta">Syne 700<br/>36px / -0.02em</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700">Card Title</div>
+        <div class="type-meta">Syne 700<br/>22px</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:600">Subheading / Step Title</div>
+        <div class="type-meta">Syne 600<br/>18px</div>
+      </div>
+    </div>
+
+    <div class="section__title">BODY FONT — DM SANS</div>
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-sample" style="font-size:18px;font-weight:400;color:#d1d5db;line-height:1.7;max-width:520px">Body copy at 18px. DM Sans at normal weight with relaxed line-height for comfortable reading across all screen sizes.</div>
+        <div class="type-meta">DM Sans 400<br/>18px / 1.7</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-size:15px;font-weight:400;color:#9ca3af;line-height:1.65">Card description text. Smaller body size at 15px, muted gray for secondary content.</div>
+        <div class="type-meta">DM Sans 400<br/>15px / 1.65</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-size:13px;font-weight:500;color:#6b7280;letter-spacing:0.02em">Form label / meta text</div>
+        <div class="type-meta">DM Sans 500<br/>13px</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#22d3ee">Section Label — Eyebrow</div>
+        <div class="type-meta">DM Sans 500<br/>11px / 0.15em UC</div>
+      </div>
+    </div>
+
+    <div class="section__title">MONO FONT — JETBRAINS MONO (code / tokens)</div>
+    <div class="type-specimen" style="padding:24px 32px">
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#22d3ee">#06b6d4 · rgba(6,182,212,0.5) · cyan-500</div>
+        <div class="type-meta">Mono 400<br/>13px</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b7280;letter-spacing:0.15em;text-transform:uppercase">brand-assets / SECTION — LABEL</div>
+        <div class="type-meta">Mono 500<br/>11px / 0.15em</div>
+      </div>
+    </div>
+
+    <div class="section__title">GRADIENT TEXT TREATMENT</div>
+    <div class="type-specimen" style="padding:28px 32px">
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;letter-spacing:-0.03em;background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Synex AI Labs</div>
+        <div class="type-meta">from-cyan-400<br/>to-blue-500</div>
+      </div>
+      <div class="type-row">
+        <div class="type-sample" style="font-family:'Syne',sans-serif;font-size:28px;font-weight:700;background:linear-gradient(to right,#ffffff,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Brand Name Alt</div>
+        <div class="type-meta">from-white<br/>to-blue-500</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- COLOURS -->
+  <div class="section">
+    <div class="section__label">02 — Colour System</div>
+
+    <div class="section__title">BRAND ACCENT — CYAN & BLUE</div>
+    <div class="swatch-grid" style="margin-bottom:24px">
+      <div class="swatch"><div class="swatch__color" style="background:#22d3ee"></div><div class="swatch__info"><div class="swatch__name">cyan-400</div><div class="swatch__hex">#22d3ee</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#06b6d4"></div><div class="swatch__info"><div class="swatch__name">cyan-500 ★ primary</div><div class="swatch__hex">#06b6d4</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#67e8f9"></div><div class="swatch__info"><div class="swatch__name">cyan-300 hover</div><div class="swatch__hex">#67e8f9</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#3b82f6"></div><div class="swatch__info"><div class="swatch__name">blue-500</div><div class="swatch__hex">#3b82f6</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#2563eb"></div><div class="swatch__info"><div class="swatch__name">blue-600</div><div class="swatch__hex">#2563eb</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(45,212,191,0.5)"></div><div class="swatch__info"><div class="swatch__name">canvas node</div><div class="swatch__hex">rgba(45,212,191,0.5)</div></div></div>
+    </div>
+
+    <div class="section__title">BACKGROUNDS</div>
+    <div class="swatch-grid" style="margin-bottom:24px">
+      <div class="swatch"><div class="swatch__color" style="background:#000000;border:1px solid rgba(255,255,255,0.1)"></div><div class="swatch__info"><div class="swatch__name">black — page base</div><div class="swatch__hex">#000000</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#0a0a0a"></div><div class="swatch__info"><div class="swatch__name">canvas base</div><div class="swatch__hex">#0a0a0a</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#111827"></div><div class="swatch__info"><div class="swatch__name">gray-900 via</div><div class="swatch__hex">#111827</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15)"></div><div class="swatch__info"><div class="swatch__name">white/5 card bg</div><div class="swatch__hex">rgba(255,255,255,0.05)</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(0,0,0,0.5)"></div><div class="swatch__info"><div class="swatch__name">black/50 input</div><div class="swatch__hex">rgba(0,0,0,0.5)</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(6,182,212,0.1)"></div><div class="swatch__info"><div class="swatch__name">cyan tint layer</div><div class="swatch__hex">rgba(6,182,212,0.1)</div></div></div>
+    </div>
+
+    <div class="section__title">TEXT RAMP</div>
+    <div class="swatch-grid" style="margin-bottom:24px">
+      <div class="swatch"><div class="swatch__color" style="background:#ffffff"></div><div class="swatch__info"><div class="swatch__name">white — primary</div><div class="swatch__hex">#ffffff</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#d1d5db"></div><div class="swatch__info"><div class="swatch__name">gray-300 secondary</div><div class="swatch__hex">#d1d5db</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#9ca3af"></div><div class="swatch__info"><div class="swatch__name">gray-400 body</div><div class="swatch__hex">#9ca3af</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#6b7280"></div><div class="swatch__info"><div class="swatch__name">gray-500 muted</div><div class="swatch__hex">#6b7280</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#f87171"></div><div class="swatch__info"><div class="swatch__name">red-400 error</div><div class="swatch__hex">#f87171</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#22d3ee"></div><div class="swatch__info"><div class="swatch__name">cyan-400 accent</div><div class="swatch__hex">#22d3ee</div></div></div>
+    </div>
+
+    <div class="section__title">KEY GRADIENTS</div>
+    <div class="swatch-grid swatch-grid--wide">
+      <div class="swatch swatch--grad"><div class="swatch__color" style="background:linear-gradient(to right,#06b6d4,#2563eb)"></div><div class="swatch__info"><div class="swatch__name">Primary CTA</div><div class="swatch__hex">cyan-500 → blue-600</div></div></div>
+      <div class="swatch swatch--grad"><div class="swatch__color" style="background:linear-gradient(to right,#22d3ee,#3b82f6)"></div><div class="swatch__info"><div class="swatch__name">Heading text</div><div class="swatch__hex">cyan-400 → blue-500</div></div></div>
+      <div class="swatch swatch--grad"><div class="swatch__color" style="background:linear-gradient(to bottom,#000000,#111827,#000000)"></div><div class="swatch__info"><div class="swatch__name">Page background</div><div class="swatch__hex">black → gray-900 → black</div></div></div>
+      <div class="swatch swatch--grad"><div class="swatch__color" style="background:linear-gradient(to bottom,rgba(255,255,255,0.05),transparent)"></div><div class="swatch__info"><div class="swatch__name">Card background</div><div class="swatch__hex">white/5 → transparent</div></div></div>
+      <div class="swatch swatch--grad"><div class="swatch__color" style="background:linear-gradient(to bottom,rgba(6,182,212,0.2),rgba(59,130,246,0.2),transparent)"></div><div class="swatch__info"><div class="swatch__name">Form glow backdrop</div><div class="swatch__hex">cyan/20 → blue/20 → 0</div></div></div>
+      <div class="swatch swatch--grad"><div class="swatch__color" style="background:linear-gradient(to bottom,rgba(239,68,68,0.05),transparent)"></div><div class="swatch__info"><div class="swatch__name">Problem card</div><div class="swatch__hex">red-500/5 → transparent</div></div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- COMPONENTS -->
+  <div class="section">
+    <div class="section__label">03 — Components</div>
+
+    <div class="section__title">BUTTONS</div>
+    <div class="components" style="margin-bottom:16px">
+      <button class="btn-primary">Book a Free Audit →</button>
+      <button class="btn-ghost">See What We Build</button>
+      <button class="btn-sm">Learn more</button>
+    </div>
+
+    <div class="section__title">BADGES & PILLS</div>
+    <div class="components" style="margin-bottom:16px">
+      <div class="badge">AI Automation Agency · South Africa</div>
+      <div class="badge--cyan badge" style="background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.3);color:#22d3ee">● Live system</div>
+      <div class="badge--step">Step 01</div>
+      <div class="tag-pill">Real Estate</div>
+      <div class="tag-pill">Legal</div>
+      <div class="tag-pill">Logistics</div>
+    </div>
+
+    <div class="section__title">CARDS</div>
+    <div class="card-grid" style="margin-bottom:16px">
+      <div class="card card--default">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="card__title">Business Process Automation</div>
+        <div class="card__body">Default card — white/5 gradient, white/10 border, cyan hover.</div>
+      </div>
+      <div class="card card--problem">
+        <div style="font-size:24px;margin-bottom:12px">⚠</div>
+        <div class="card__title">Problem Card</div>
+        <div class="card__body">Red tint bg, red/20 border. Used in before/after problem sections.</div>
+      </div>
+      <div class="card card--solution">
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+        </div>
+        <div class="card__title">Solution Card</div>
+        <div class="card__body">Cyan tint bg, cyan/20 border. Used in solution/outcome sections.</div>
+      </div>
+    </div>
+
+    <div class="section__title">FORM INPUT</div>
+    <div style="padding:28px;background:var(--card);border:1px solid var(--border);border-radius:16px">
+      <input class="input-demo" placeholder="jane@company.com — focus: cyan-500/50 border + cyan-500/20 ring"/>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SPACING -->
+  <div class="section">
+    <div class="section__label">04 — Spacing Tokens</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px">
+      <div class="spacing-row"><div class="spacing-label">py-32</div><div class="spacing-bar" style="width:128px"></div><div class="spacing-val">128px — main sections</div></div>
+      <div class="spacing-row"><div class="spacing-label">py-20</div><div class="spacing-bar" style="width:80px"></div><div class="spacing-val">80px — forms</div></div>
+      <div class="spacing-row"><div class="spacing-label">py-16</div><div class="spacing-bar" style="width:64px"></div><div class="spacing-val">64px — footer</div></div>
+      <div class="spacing-row"><div class="spacing-label">p-8</div><div class="spacing-bar" style="width:32px"></div><div class="spacing-val">32px — standard card</div></div>
+      <div class="spacing-row"><div class="spacing-label">p-6</div><div class="spacing-bar" style="width:24px"></div><div class="spacing-val">24px — small card</div></div>
+      <div class="spacing-row"><div class="spacing-label">px-8 py-4</div><div class="spacing-bar" style="width:32px;background:linear-gradient(to right,#22d3ee,#3b82f6)"></div><div class="spacing-val">32/16px — large CTA button</div></div>
+    </div>
+  </div>
+
+  <!-- BORDER RADIUS -->
+  <div class="section">
+    <div class="section__label">05 — Border Radius</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;padding:28px;background:var(--card);border:1px solid var(--border);border-radius:16px;align-items:flex-end">
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:linear-gradient(to br,#06b6d4,#2563eb);border-radius:8px;margin:0 auto 8px"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b7280">rounded-lg<br/>8px</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:linear-gradient(to br,#06b6d4,#2563eb);border-radius:12px;margin:0 auto 8px"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b7280">rounded-xl<br/>12px inputs</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:linear-gradient(to br,#06b6d4,#2563eb);border-radius:16px;margin:0 auto 8px"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b7280">rounded-2xl<br/>16px cards</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:linear-gradient(to br,#06b6d4,#2563eb);border-radius:24px;margin:0 auto 8px"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b7280">rounded-3xl<br/>24px large</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:80px;height:40px;background:linear-gradient(to r,#06b6d4,#2563eb);border-radius:9999px;margin:0 auto 8px"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6b7280">rounded-full<br/>pills / badges</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ANIMATION -->
+  <div class="section">
+    <div class="section__label">06 — Animation Tokens</div>
+    <div class="anim-grid">
+      <div class="anim-card">
+        <div class="anim-card__label">Entrance — hero text</div>
+        <div class="anim-card__val">opacity: 0→1, y: 30→0<br/>duration: 0.8s<br/>ease: easeOut</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">Viewport entrance</div>
+        <div class="anim-card__val">opacity: 0→1, x: -20→0<br/>duration: 0.8s<br/>cubic: [0.22, 1, 0.36, 1]</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">Stagger grid</div>
+        <div class="anim-card__val">staggerChildren: 0.1s<br/>child: opacity/y 20→0<br/>duration: 0.6s</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">Button / card hover</div>
+        <div class="anim-card__val">scale: 1.04–1.05<br/>y: -8px (cards)<br/>duration: 0.2–0.3s</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">Infinite pulse</div>
+        <div class="anim-card__val">scale: [1, 1.05, 1]<br/>duration: 3s<br/>repeat: Infinity</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">3D card tilt</div>
+        <div class="anim-card__val">perspective(1000px)<br/>rotateX/Y: ±10deg<br/>transition: 0.1s ease-out</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">Shimmer sweep</div>
+        <div class="anim-card__val">translateX -100%→100%<br/>rotate(45deg)<br/>duration: 3s infinite</div>
+      </div>
+      <div class="anim-card">
+        <div class="anim-card__label">Grid scroll</div>
+        <div class="anim-card__val">bg-position: 0 0 → 0 100px<br/>duration: 2s<br/>ease: linear infinite</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div><strong>Synex AI Labs</strong> — Brand System Reference</div>
+    <div>Extracted from production codebase · brand_assets/</div>
+  </div>
+
+</div>
+</body>
+</html>

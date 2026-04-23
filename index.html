@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Synex AI Labs — AI Automation Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;--bg2:#0a0a0a;--bg3:#111827;
+  --card:rgba(255,255,255,0.05);
+  --border:rgba(255,255,255,0.1);
+  --tx:#ffffff;--tx2:#d1d5db;--tx3:#9ca3af;--tx4:#6b7280;
+  --cyan4:#22d3ee;--cyan5:#06b6d4;--cyan3:#67e8f9;
+  --blue5:#3b82f6;--blue6:#2563eb;
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
+}
+html{background:#000;color:#fff;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{
+  background:linear-gradient(to bottom,#000 0%,#0a0a0a 25%,#111827 55%,#0a0a0a 80%,#000 100%);
+  min-height:100vh;overflow-x:hidden;
+}
+
+/* Grid texture */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(6,182,212,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(6,182,212,0.03) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+/* SVG noise grain */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:300px 300px;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:14px 0;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:38px;width:auto;border-radius:6px}
+.nav-logo-text{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.01em}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:#6b7280;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 22px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
+  border:none;border-radius:100px;cursor:pointer;text-decoration:none;
+  box-shadow:0 0 20px rgba(6,182,212,0.35);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.nav-cta:hover{transform:scale(1.04);box-shadow:0 0 32px rgba(6,182,212,0.55)}
+.nav-cta:active{transform:scale(0.98)}
+.nav-cta:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
+
+/* ── HERO ── */
+.hero-wrap{
+  min-height:100vh;display:flex;align-items:center;
+  max-width:1200px;margin:0 auto;padding:130px 40px 80px;
+  gap:72px;position:relative;z-index:1;
+}
+.hero-wrap::before{
+  content:'';position:absolute;top:10%;left:-10%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(6,182,212,0.07) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+.hero-content{flex:1;min-width:280px;max-width:600px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;
+  color:#6b7280;border:1px solid rgba(255,255,255,0.1);background:rgba(6,182,212,0.05);
+  padding:6px 14px;border-radius:100px;margin-bottom:28px;
+}
+.eyebrow .dot{width:6px;height:6px;background:#06b6d4;border-radius:50%;box-shadow:0 0 6px #06b6d4;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero-h1{font-family:'Syne',sans-serif;font-size:clamp(46px,5.5vw,78px);font-weight:800;line-height:1.0;letter-spacing:-0.03em;margin-bottom:24px;color:#fff}
+.hero-h1 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:18px;font-weight:300;color:#9ca3af;line-height:1.75;margin-bottom:40px;max-width:500px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 30px;
+  font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;
+  background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
+  border:none;border-radius:100px;cursor:pointer;text-decoration:none;
+  box-shadow:0 0 28px rgba(6,182,212,0.4),0 4px 20px rgba(6,182,212,0.15);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(6,182,212,0.6),0 6px 28px rgba(6,182,212,0.25)}
+.btn-primary:active{transform:scale(0.98)}
+.btn-primary:focus-visible{outline:2px solid #22d3ee;outline-offset:3px}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 28px;
+  font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;
+  background:rgba(255,255,255,0.05);color:#fff;
+  border:1px solid rgba(255,255,255,0.12);border-radius:100px;cursor:pointer;text-decoration:none;
+  transition:background 0.2s,border-color 0.2s,transform 0.2s;
+}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.22);transform:scale(1.04)}
+.btn-ghost:active{transform:scale(0.98)}
+.btn-ghost:focus-visible{outline:2px solid #22d3ee;outline-offset:3px}
+
+/* Hero visual card */
+.hero-visual{flex:1;min-width:280px;max-width:500px}
+.dashboard-card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(255,255,255,0.13);border-radius:24px;padding:28px;
+  box-shadow:0 0 80px rgba(6,182,212,0.07),0 40px 100px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.08);
+  position:relative;overflow:hidden;
+}
+.dashboard-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(6,182,212,0.55),transparent);
+}
+.card-header{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#06b6d4;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.live-dot{width:7px;height:7px;background:#22d3ee;border-radius:50%;box-shadow:0 0 8px #22d3ee;animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:0.6}}
+
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.metric{
+  background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;padding:16px;
+}
+.metric-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7280;margin-bottom:6px}
+.metric-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fff;line-height:1;letter-spacing:-0.02em}
+.metric-num .unit{font-size:14px;font-weight:600;color:#22d3ee;margin-left:2px}
+.metric-delta{font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80;margin-top:5px}
+
+.flow-section{background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px}
+.flow-header{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#6b7280;margin-bottom:14px}
+.flow-nodes{display:flex;align-items:center}
+.flow-node{display:flex;flex-direction:column;align-items:center;gap:7px;flex:0 0 auto}
+.flow-icon{
+  width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;
+  background:linear-gradient(135deg,#06b6d4,#2563eb);
+  box-shadow:0 0 14px rgba(6,182,212,0.45);
+  animation:glow 2.5s ease infinite;
+}
+.flow-icon:nth-child(1){animation-delay:0s}
+@keyframes glow{0%,100%{box-shadow:0 0 14px rgba(6,182,212,0.45)}50%{box-shadow:0 0 24px rgba(6,182,212,0.8)}}
+.flow-name{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;text-align:center}
+.flow-line{flex:1;height:2px;background:linear-gradient(to right,#06b6d4,#3b82f6);opacity:0.25;position:relative;margin-bottom:22px}
+.flow-dot{
+  position:absolute;top:50%;left:0;transform:translateY(-50%);
+  width:5px;height:5px;border-radius:50%;background:#22d3ee;box-shadow:0 0 5px #22d3ee;
+  animation:flow-travel 2.2s linear infinite;
+}
+.flow-line:nth-child(2) .flow-dot{animation-delay:0.55s}
+.flow-line:nth-child(4) .flow-dot{animation-delay:1.1s}
+@keyframes flow-travel{0%{left:0;opacity:1}100%{left:calc(100% - 5px);opacity:0.2}}
+
+/* ── TICKER ── */
+.ticker-outer{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:16px 0;overflow:hidden;
+}
+.ticker-outer::before,.ticker-outer::after{
+  content:'';position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none;
+}
+.ticker-outer::before{left:0;background:linear-gradient(to right,#000,transparent)}
+.ticker-outer::after{right:0;background:linear-gradient(to left,#000,transparent)}
+.ticker-track{display:flex;width:max-content;animation:ticker 35s linear infinite}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:10px;padding:0 32px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#4b5563;white-space:nowrap;
+}
+.ticker-item .spark{color:#06b6d4;font-size:10px}
+
+/* ── SECTION BASE ── */
+.section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:96px 40px}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;color:#06b6d4;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.sec-label::after{content:'';flex:0 0 36px;height:1px;background:linear-gradient(to right,rgba(6,182,212,0.4),transparent)}
+.sec-h2{font-family:'Syne',sans-serif;font-size:clamp(34px,4vw,52px);font-weight:800;letter-spacing:-0.025em;line-height:1.05;margin-bottom:18px;color:#fff}
+.sec-h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:17px;font-weight:300;color:#9ca3af;line-height:1.75;max-width:540px}
+
+/* ── PROBLEM ── */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
+.p-card{
+  background:linear-gradient(to bottom,rgba(239,68,68,0.07),rgba(239,68,68,0) 80%);
+  border:1px solid rgba(239,68,68,0.2);border-radius:20px;padding:28px;
+  position:relative;overflow:hidden;
+  transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),border-color 0.25s,box-shadow 0.25s;
+}
+.p-card:hover{transform:translateY(-7px);border-color:rgba(239,68,68,0.38);box-shadow:0 20px 50px rgba(239,68,68,0.05)}
+.p-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(239,68,68,0.3),transparent)}
+.p-icon{font-size:28px;margin-bottom:16px;line-height:1}
+.p-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;color:#e5e7eb}
+.p-body{font-size:14px;color:#6b7280;line-height:1.7}
+
+/* ── SERVICES ── */
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:52px}
+.s-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0) 100%);
+  border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px;
+  position:relative;overflow:hidden;
+  transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s,box-shadow 0.28s;
+}
+.s-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(6,182,212,0.28);
+  box-shadow:0 24px 60px rgba(6,182,212,0.06),0 0 0 1px rgba(6,182,212,0.08);
+}
+.s-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.14),transparent)}
+.s-icon{
+  width:46px;height:46px;border-radius:12px;margin-bottom:22px;
+  background:linear-gradient(135deg,#06b6d4,#2563eb);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 18px rgba(6,182,212,0.4),0 4px 14px rgba(6,182,212,0.18);
+}
+.s-icon svg{width:22px;height:22px;color:#000;stroke-width:2.2}
+.s-title{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;margin-bottom:10px;color:#fff}
+.s-body{font-size:14px;color:#9ca3af;line-height:1.72;margin-bottom:20px}
+.s-tags{display:flex;gap:8px;flex-wrap:wrap}
+.s-tag{padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#6b7280;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:100px}
+
+/* ── HOW IT WORKS ── */
+.steps-outer{margin-top:60px;position:relative}
+.steps-connector{
+  display:block;
+  position:absolute;top:88px;left:calc(12.5% + 28px);right:calc(12.5% + 28px);
+  height:1px;background:linear-gradient(to right,#06b6d4,#3b82f6);opacity:0.2;z-index:0;
+}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;z-index:1}
+.step{padding:0 28px}
+.step-badge{
+  display:inline-flex;padding:5px 14px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.05em;
+  background:linear-gradient(to right,#06b6d4,#3b82f6);color:#000;border-radius:100px;margin-bottom:20px;
+}
+.step-icon-wrap{
+  width:56px;height:56px;border-radius:16px;margin-bottom:20px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.28s,border-color 0.28s,box-shadow 0.28s,transform 0.28s;
+}
+.step:hover .step-icon-wrap{
+  background:linear-gradient(135deg,rgba(6,182,212,0.18),rgba(37,99,235,0.1));
+  border-color:rgba(6,182,212,0.35);
+  box-shadow:0 0 22px rgba(6,182,212,0.18);
+  transform:scale(1.06);
+}
+.step-icon-wrap svg{width:24px;height:24px;color:#22d3ee;stroke-width:1.8}
+.step-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;color:#fff}
+.step-body{font-size:13px;color:#6b7280;line-height:1.7}
+
+/* ── STATS ── */
+.stats-wrap{position:relative;z-index:1;padding:0 40px 80px;max-width:1200px;margin:0 auto}
+.stats-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(255,255,255,0.1);border-radius:28px;padding:64px 60px;
+  position:relative;overflow:hidden;
+}
+.stats-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.45),transparent)}
+.stats-glow{
+  position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(6,182,212,0.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:clamp(38px,4.5vw,58px);font-weight:800;
+  letter-spacing:-0.03em;line-height:1;margin-bottom:10px;
+  background:linear-gradient(to right,#22d3ee,#3b82f6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-lbl{font-size:13px;color:#6b7280;line-height:1.55}
+
+/* ── INDUSTRIES ── */
+.industries-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px}
+.pill{
+  padding:10px 20px;font-size:14px;color:#9ca3af;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
+  border-radius:100px;cursor:default;
+  transition:background 0.22s,border-color 0.22s,color 0.22s;
+}
+.pill:hover{background:rgba(6,182,212,0.09);border-color:rgba(6,182,212,0.28);color:#22d3ee}
+
+/* ── CTA / CONTACT ── */
+.cta-outer{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px 40px 120px}
+.cta-card{
+  background:linear-gradient(160deg,rgba(6,182,212,0.09) 0%,rgba(37,99,235,0.06) 50%,rgba(0,0,0,0) 100%);
+  border:1px solid rgba(6,182,212,0.22);border-radius:28px;
+  padding:72px 64px;position:relative;overflow:hidden;text-align:center;
+}
+.cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.55),transparent)}
+.cta-glow-l{position:absolute;top:-60px;left:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(6,182,212,0.1),transparent 65%);pointer-events:none}
+.cta-glow-r{position:absolute;bottom:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(37,99,235,0.08),transparent 65%);pointer-events:none}
+.cta-h2{font-family:'Syne',sans-serif;font-size:clamp(34px,4vw,54px);font-weight:800;letter-spacing:-0.025em;line-height:1.05;margin-bottom:18px;color:#fff}
+.cta-h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-size:17px;font-weight:300;color:#9ca3af;line-height:1.75;margin-bottom:44px;max-width:480px;margin-left:auto;margin-right:auto}
+
+.form{max-width:460px;margin:0 auto}
+.form-row{display:flex;gap:12px;margin-bottom:12px}
+.inp{
+  flex:1;width:100%;padding:13px 18px;
+  background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;
+  color:#fff;outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.inp::placeholder{color:#4b5563}
+.inp:focus{border-color:rgba(6,182,212,0.5);box-shadow:0 0 0 3px rgba(6,182,212,0.1)}
+.inp-full{width:100%;display:block;margin-bottom:12px}
+.form-btn{
+  width:100%;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;
+  background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
+  border:none;border-radius:12px;cursor:pointer;
+  box-shadow:0 0 22px rgba(6,182,212,0.3);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.form-btn:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(6,182,212,0.5)}
+.form-btn:active{transform:translateY(0)}
+.form-btn:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
+.form-note{font-family:'JetBrains Mono',monospace;font-size:10px;color:#4b5563;text-align:center;margin-top:12px;letter-spacing:0.06em}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);padding:44px 40px}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.f-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.f-logo img{height:30px;width:auto;border-radius:5px;opacity:0.85}
+.f-logo-text{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#9ca3af}
+.f-links{display:flex;gap:28px}
+.f-links a{font-size:13px;color:#4b5563;text-decoration:none;transition:color 0.2s}
+.f-links a:hover{color:#d1d5db}
+.f-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:#374151;letter-spacing:0.05em}
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1),transform 0.8s cubic-bezier(0.22,1,0.36,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .steps-grid{grid-template-columns:repeat(2,1fr);gap:32px}
+  .step{padding:0}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .hero-wrap{flex-direction:column;padding-top:100px;gap:40px}
+  .hero-visual{max-width:100%;width:100%}
+  .problem-grid,.services-grid,.stats-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .cta-card{padding:44px 28px}
+  .form-row{flex-direction:column}
+  .section{padding:72px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs logo"/>
+      <span class="nav-logo-text">Synex AI Labs</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book Free Audit →</a>
+  </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<div style="position:relative;z-index:1">
+<div class="hero-wrap">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="dot"></span>AI Automation Agency · South Africa</div>
+    <h1 class="hero-h1">
+      We Build AI That<br/>
+      <span class="grad">Works For You</span><br/>
+      24 / 7.
+    </h1>
+    <p class="hero-sub">
+      Synex AI Labs designs and deploys intelligent automation systems that eliminate repetitive work, accelerate decisions, and let your team focus on what actually matters.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Book a Free Audit →</a>
+      <a href="#services" class="btn-ghost">See What We Build</a>
+    </div>
+  </div>
+
+  <!-- Dashboard Visual -->
+  <div class="hero-visual">
+    <div class="dashboard-card">
+      <div class="card-header"><span class="live-dot"></span>Live Automation Dashboard</div>
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-lbl">Tasks Automated</div>
+          <div class="metric-num">847<span class="unit">k</span></div>
+          <div class="metric-delta">↑ 12.4% this week</div>
+        </div>
+        <div class="metric">
+          <div class="metric-lbl">Hours Saved</div>
+          <div class="metric-num">4.2<span class="unit">k</span></div>
+          <div class="metric-delta">↑ 8.1% this week</div>
+        </div>
+        <div class="metric">
+          <div class="metric-lbl">Accuracy Rate</div>
+          <div class="metric-num">99<span class="unit">.7%</span></div>
+          <div class="metric-delta">↑ 0.3% vs last month</div>
+        </div>
+        <div class="metric">
+          <div class="metric-lbl">Cost Reduction</div>
+          <div class="metric-num">67<span class="unit">%</span></div>
+          <div class="metric-delta">↑ avg across clients</div>
+        </div>
+      </div>
+      <div class="flow-section">
+        <div class="flow-header">Active Automation Flow</div>
+        <div class="flow-nodes">
+          <div class="flow-node">
+            <div class="flow-icon">📥</div>
+            <div class="flow-name">Intake</div>
+          </div>
+          <div class="flow-line"><div class="flow-dot"></div></div>
+          <div class="flow-node">
+            <div class="flow-icon" style="animation-delay:0.55s">⚙️</div>
+            <div class="flow-name">Process</div>
+          </div>
+          <div class="flow-line"><div class="flow-dot" style="animation-delay:0.7s"></div></div>
+          <div class="flow-node">
+            <div class="flow-icon" style="animation-delay:1.1s">🤖</div>
+            <div class="flow-name">AI Review</div>
+          </div>
+          <div class="flow-line"><div class="flow-dot" style="animation-delay:1.4s"></div></div>
+          <div class="flow-node">
+            <div class="flow-icon" style="animation-delay:1.65s">✅</div>
+            <div class="flow-name">Output</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-outer">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item">Business Process Automation <span class="spark">✦</span></span>
+    <span class="ticker-item">AI Chatbots & Assistants <span class="spark">✦</span></span>
+    <span class="ticker-item">Document Processing AI <span class="spark">✦</span></span>
+    <span class="ticker-item">CRM Automation <span class="spark">✦</span></span>
+    <span class="ticker-item">Lead Generation AI <span class="spark">✦</span></span>
+    <span class="ticker-item">Workflow Orchestration <span class="spark">✦</span></span>
+    <span class="ticker-item">Data Intelligence <span class="spark">✦</span></span>
+    <span class="ticker-item">Real Estate AI <span class="spark">✦</span></span>
+    <span class="ticker-item">Legal Document AI <span class="spark">✦</span></span>
+    <span class="ticker-item">Email Triage Systems <span class="spark">✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Business Process Automation <span class="spark">✦</span></span>
+    <span class="ticker-item">AI Chatbots & Assistants <span class="spark">✦</span></span>
+    <span class="ticker-item">Document Processing AI <span class="spark">✦</span></span>
+    <span class="ticker-item">CRM Automation <span class="spark">✦</span></span>
+    <span class="ticker-item">Lead Generation AI <span class="spark">✦</span></span>
+    <span class="ticker-item">Workflow Orchestration <span class="spark">✦</span></span>
+    <span class="ticker-item">Data Intelligence <span class="spark">✦</span></span>
+    <span class="ticker-item">Real Estate AI <span class="spark">✦</span></span>
+    <span class="ticker-item">Legal Document AI <span class="spark">✦</span></span>
+    <span class="ticker-item">Email Triage Systems <span class="spark">✦</span></span>
+  </div>
+</div>
+
+<!-- ════════════════════ PROBLEM ════════════════════ -->
+<div class="section" id="problem">
+  <div class="reveal">
+    <div class="sec-label">01 — The Problem</div>
+    <h2 class="sec-h2">Still Drowning in<br/><span class="grad">Manual Work?</span></h2>
+    <p class="sec-sub">Most businesses lose thousands of hours a year to repetitive tasks that AI can handle in seconds. Here's what that's costing you.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="p-card reveal d1">
+      <div class="p-icon">⏱</div>
+      <div class="p-title">Wasted Hours Every Day</div>
+      <div class="p-body">Your team spends 40–60% of their day on tasks that could be automated — data entry, follow-ups, report generation, document handling. That's hundreds of hours lost every month.</div>
+    </div>
+    <div class="p-card reveal d2">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Human Error is Expensive</div>
+      <div class="p-body">Manual processes introduce mistakes that ripple through your business — missed leads, incorrect invoices, compliance gaps, and frustrated clients. Every error has a cost.</div>
+    </div>
+    <div class="p-card reveal d3">
+      <div class="p-icon">📉</div>
+      <div class="p-title">You're Falling Behind</div>
+      <div class="p-body">While you manually handle repetitive tasks, your competitors are scaling with AI. The efficiency gap widens every week you wait. The best time to automate was yesterday.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ SERVICES ════════════════════ -->
+<div class="section" id="services">
+  <div class="reveal">
+    <div class="sec-label">02 — Services</div>
+    <h2 class="sec-h2">What We Build<br/><span class="grad">For You</span></h2>
+    <p class="sec-sub">End-to-end AI systems tailored to your business — from discovery and design through to deployment and ongoing optimisation.</p>
+  </div>
+  <div class="services-grid">
+    <div class="s-card reveal d1">
+      <div class="s-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="s-title">Business Process Automation</div>
+      <div class="s-body">We map your existing workflows and replace manual steps with intelligent automation — saving hours daily and eliminating human error at scale. From simple triggers to complex multi-step pipelines.</div>
+      <div class="s-tags">
+        <span class="s-tag">Workflow Design</span><span class="s-tag">Zapier / Make</span><span class="s-tag">n8n</span><span class="s-tag">API Integration</span>
+      </div>
+    </div>
+    <div class="s-card reveal d2">
+      <div class="s-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="s-title">AI Chatbots & Assistants</div>
+      <div class="s-body">Custom-trained AI assistants that handle customer enquiries, qualify leads, book appointments, and resolve support tickets — 24/7, with no wait time and zero staff overhead.</div>
+      <div class="s-tags">
+        <span class="s-tag">Claude / GPT-4</span><span class="s-tag">RAG Systems</span><span class="s-tag">WhatsApp</span><span class="s-tag">Web Widget</span>
+      </div>
+    </div>
+    <div class="s-card reveal d3">
+      <div class="s-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div class="s-title">Data Intelligence & Reporting</div>
+      <div class="s-body">Transform raw data into actionable insights with automated dashboards, anomaly detection, and AI-generated reports delivered on your schedule — no analyst required.</div>
+      <div class="s-tags">
+        <span class="s-tag">Auto Reports</span><span class="s-tag">Predictive AI</span><span class="s-tag">Dashboards</span><span class="s-tag">Alerts</span>
+      </div>
+    </div>
+    <div class="s-card reveal d4">
+      <div class="s-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="s-title">Document & Email AI</div>
+      <div class="s-body">Automated document extraction, classification, and processing pipelines. Smart email triage that routes, drafts replies, and escalates critical messages — all without manual intervention.</div>
+      <div class="s-tags">
+        <span class="s-tag">OCR + AI</span><span class="s-tag">Email Triage</span><span class="s-tag">Contracts</span><span class="s-tag">Invoices</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ HOW IT WORKS ════════════════════ -->
+<div class="section" id="process">
+  <div class="reveal">
+    <div class="sec-label">03 — The Process</div>
+    <h2 class="sec-h2">From Audit to<br/><span class="grad">Live System</span></h2>
+    <p class="sec-sub">A focused 4-stage process — no bloat, no long timelines. Most clients go live in under 6 weeks.</p>
+  </div>
+  <div class="steps-outer">
+    <div class="steps-connector"></div>
+    <div class="steps-grid">
+      <div class="step reveal d1">
+        <div class="step-badge">Step 01</div>
+        <div class="step-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="step-title">Discovery Audit</div>
+        <div class="step-body">We map your workflows, identify automation opportunities, and calculate the exact time and cost savings you can expect — before any commitment.</div>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-badge">Step 02</div>
+        <div class="step-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <div class="step-title">System Design</div>
+        <div class="step-body">We architect your custom AI solution — selecting the right tools, models, and integrations to match your exact business requirements.</div>
+      </div>
+      <div class="step reveal d3">
+        <div class="step-badge">Step 03</div>
+        <div class="step-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="step-title">Build & Deploy</div>
+        <div class="step-body">We build, test, and deploy your automation system — fully integrated with your existing tools. Zero disruption to your team during rollout.</div>
+      </div>
+      <div class="step reveal d4">
+        <div class="step-badge">Step 04</div>
+        <div class="step-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="step-title">Monitor & Optimise</div>
+        <div class="step-body">Ongoing monitoring, performance reporting, and continuous improvement — your system keeps delivering results as your business scales.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ STATS ════════════════════ -->
+<div class="stats-wrap" id="results">
+  <div class="stats-card reveal">
+    <div class="stats-glow"></div>
+    <div style="text-align:center;margin-bottom:52px">
+      <div class="sec-label" style="justify-content:center">04 — Results</div>
+      <h2 class="sec-h2" style="max-width:100%;text-align:center">Numbers That<br/><span class="grad">Speak for Themselves</span></h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">85%</div>
+        <div class="stat-lbl">Average reduction in<br/>manual task time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6 wks</div>
+        <div class="stat-lbl">Average time from<br/>audit to live system</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3×</div>
+        <div class="stat-lbl">Average increase in<br/>team throughput</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">99.7%</div>
+        <div class="stat-lbl">System uptime across<br/>all client deployments</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ INDUSTRIES ════════════════════ -->
+<div class="section">
+  <div class="reveal">
+    <div class="sec-label">05 — Industries</div>
+    <h2 class="sec-h2">We Work Across<br/><span class="grad">Every Sector</span></h2>
+    <p class="sec-sub">AI automation isn't industry-specific — it's universal. We've built systems for businesses across:</p>
+  </div>
+  <div class="industries-pills">
+    <div class="pill">🏡 Real Estate</div>
+    <div class="pill">⚖️ Legal</div>
+    <div class="pill">🚚 Logistics</div>
+    <div class="pill">🏥 Healthcare</div>
+    <div class="pill">💼 Finance</div>
+    <div class="pill">🛒 E-Commerce</div>
+    <div class="pill">🏗 Construction</div>
+    <div class="pill">📊 Consulting</div>
+    <div class="pill">🏨 Hospitality</div>
+    <div class="pill">📡 Telecoms</div>
+  </div>
+</div>
+
+<!-- ════════════════════ CTA / CONTACT ════════════════════ -->
+<div class="cta-outer" id="contact">
+  <div class="cta-card reveal">
+    <div class="cta-glow-l"></div>
+    <div class="cta-glow-r"></div>
+    <div class="sec-label" style="justify-content:center">Start Today</div>
+    <h2 class="cta-h2">Ready to Stop<br/><span class="grad">Doing It Manually?</span></h2>
+    <p class="cta-sub">Book a free 30-minute audit. We'll identify your top automation opportunities and show you exactly what's possible — no commitment required.</p>
+    <div class="form">
+      <div class="form-row">
+        <input class="inp" type="text" placeholder="Your name"/>
+        <input class="inp" type="email" placeholder="Work email"/>
+      </div>
+      <input class="inp inp-full" type="text" placeholder="Company name & industry"/>
+      <button class="form-btn">Book My Free Audit →</button>
+      <p class="form-note">Free · No commitment · Response within 24 hours</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="f-logo">
+      <img src="brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs"/>
+      <span class="f-logo-text">Synex AI Labs</span>
+    </a>
+    <div class="f-links">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#results">Results</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="f-copy">© 2026 Synex AI Labs · South Africa</div>
+  </div>
+</footer>
+
+<script>
+// Intersection observer for scroll reveals
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Tilt effect on service cards (mouse-only)
+if (window.matchMedia('(pointer:fine)').matches) {
+  document.querySelectorAll('.s-card,.p-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+</script>
+</body>
+</html>
