@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
   }
   body = body || {};
 
-  const { name, email, company, message } = body;
+  const { name, email, company, service, message } = body;
 
   console.log('[submit-lead] request received', {
     method: req.method,
@@ -56,6 +56,7 @@ module.exports = async function handler(req, res) {
       Name:    name,
       Email:   email,
       Company: company || '',
+      Service: service || '',
       Message: message || '',
       Date:    new Date().toISOString().split('T')[0],
       Status:  'New',
