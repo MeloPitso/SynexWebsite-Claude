@@ -673,15 +673,17 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     <div class="sec-label" style="justify-content:center">Start Today</div>
     <h2 class="cta-h2">Ready to Stop<br/><span class="grad">Doing It Manually?</span></h2>
     <p class="cta-sub">Book a free 30-minute audit. We'll identify your top automation opportunities and show you exactly what's possible — no commitment required.</p>
-    <div class="form">
+    <form class="form" id="contact-form" onsubmit="handleLeadSubmit(event)">
       <div class="form-row">
-        <input class="inp" type="text" placeholder="Your name"/>
-        <input class="inp" type="email" placeholder="Work email"/>
+        <input class="inp" type="text" id="lead-name" placeholder="Your name" required/>
+        <input class="inp" type="email" id="lead-email" placeholder="Work email" required/>
       </div>
-      <input class="inp inp-full" type="text" placeholder="Company name & industry"/>
-      <button class="form-btn">Book My Free Audit →</button>
+      <input class="inp inp-full" type="text" id="lead-company" placeholder="Company name & industry"/>
+      <textarea class="inp inp-full" id="lead-message" placeholder="What are you looking to automate?" rows="3" style="resize:none;font-family:inherit"></textarea>
+      <div id="form-feedback" style="display:none;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:'DM Sans',sans-serif"></div>
+      <button class="form-btn" type="submit" id="form-submit-btn">Book My Free Audit →</button>
       <p class="form-note">Free · No commitment · Response within 24 hours</p>
-    </div>
+    </form>
   </div>
 </div>
 
@@ -708,6 +710,43 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Contact form → Airtable via serverless function
+async function handleLeadSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('form-submit-btn');
+  const feedback = document.getElementById('form-feedback');
+  const name = document.getElementById('lead-name').value.trim();
+  const email = document.getElementById('lead-email').value.trim();
+  const company = document.getElementById('lead-company').value.trim();
+  const message = document.getElementById('lead-message').value.trim();
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  feedback.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/submit-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, company, message }),
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      feedback.style.cssText = 'display:block;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:"DM Sans",sans-serif;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.35);color:#22d3ee';
+      feedback.textContent = '✓ Thank you! We\'ll be in touch within 24 hours.';
+      document.getElementById('contact-form').reset();
+    } else {
+      throw new Error(data.error || 'Submission failed');
+    }
+  } catch {
+    feedback.style.cssText = 'display:block;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:"DM Sans",sans-serif;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171';
+    feedback.textContent = '✗ Something went wrong. Please try again or email us directly.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Book My Free Audit →';
+  }
+}
 
 // Tilt effect on service cards (mouse-only)
 if (window.matchMedia('(pointer:fine)').matches) {
