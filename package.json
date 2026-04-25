@@ -1,0 +1,7 @@
+{
+  "name": "synex-ai-labs",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  }
+}
