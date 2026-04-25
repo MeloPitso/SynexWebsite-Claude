@@ -57,7 +57,7 @@ module.exports = async function handler(req, res) {
       Email:   email,
       Company: company || '',
       Message: message || '',
-      Date:    new Date().toISOString(),
+      Date:    new Date().toISOString().split('T')[0],
       Status:  'New',
     },
   };
