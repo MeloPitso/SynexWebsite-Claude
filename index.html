@@ -96,7 +96,7 @@ nav{
 
 .hero-h1{font-family:'Syne',sans-serif;font-size:clamp(46px,5.5vw,78px);font-weight:800;line-height:1.0;letter-spacing:-0.03em;margin-bottom:24px;color:#fff}
 .hero-h1 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:18px;font-weight:300;color:#9ca3af;line-height:1.75;margin-bottom:40px;max-width:540px;text-align:center}
+.hero-sub{font-size:18px;font-weight:300;color:#9ca3af;line-height:1.75;margin-bottom:40px;max-width:560px;text-align:center}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 
 .btn-primary{
@@ -121,12 +121,6 @@ nav{
 .btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.22);transform:scale(1.04)}
 .btn-ghost:active{transform:scale(0.98)}
 .btn-ghost:focus-visible{outline:2px solid #22d3ee;outline-offset:3px}
-
-.hero-stats-bar{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:8px 32px;margin-top:40px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#4b5563;
-}
-.hero-stats-bar .stat-val{color:#22d3ee;font-weight:500;margin-right:4px}
 
 /* ── TICKER ── */
 .ticker-outer{
@@ -159,21 +153,7 @@ nav{
 .sec-h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sec-sub{font-size:17px;font-weight:300;color:#9ca3af;line-height:1.75;max-width:540px}
 
-/* ── PROBLEM ── */
-.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
-.p-card{
-  background:linear-gradient(to bottom,rgba(239,68,68,0.07),rgba(239,68,68,0) 80%);
-  border:1px solid rgba(239,68,68,0.2);border-radius:20px;padding:28px;
-  position:relative;overflow:hidden;
-  transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),border-color 0.25s,box-shadow 0.25s;
-}
-.p-card:hover{transform:translateY(-7px);border-color:rgba(239,68,68,0.38);box-shadow:0 20px 50px rgba(239,68,68,0.05)}
-.p-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(239,68,68,0.3),transparent)}
-.p-icon{font-size:28px;margin-bottom:16px;line-height:1}
-.p-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;color:#e5e7eb}
-.p-body{font-size:14px;color:#6b7280;line-height:1.7}
-
-/* ── SERVICES ── */
+/* ── WHO WE WORK WITH ── */
 .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:52px}
 .s-card{
   background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0) 100%);
@@ -187,34 +167,25 @@ nav{
   box-shadow:0 24px 60px rgba(6,182,212,0.06),0 0 0 1px rgba(6,182,212,0.08);
 }
 .s-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.14),transparent)}
-.s-icon{
-  width:46px;height:46px;border-radius:12px;margin-bottom:22px;
-  background:linear-gradient(135deg,#06b6d4,#2563eb);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 18px rgba(6,182,212,0.4),0 4px 14px rgba(6,182,212,0.18);
-}
-.s-icon svg{width:22px;height:22px;color:#000;stroke-width:2.2}
 .s-title{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;margin-bottom:10px;color:#fff}
-.s-body{font-size:14px;color:#9ca3af;line-height:1.72;margin-bottom:20px}
-.s-tags{display:flex;gap:8px;flex-wrap:wrap}
-.s-tag{padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#6b7280;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:100px}
-.s-more{
-  display:inline-flex;align-items:center;gap:6px;margin-top:20px;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
-  color:#22d3ee;text-decoration:none;letter-spacing:0.01em;
-  transition:gap 0.2s cubic-bezier(0.22,1,0.36,1),opacity 0.2s;
-}
-.s-more:hover{gap:11px;opacity:0.8}
-.s-more:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:3px}
 
-/* ── HOW IT WORKS ── */
+/* Dot bullet list (red) */
+.dot-list{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:11px}
+.dot-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#9ca3af;line-height:1.65}
+.dot-list li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(239,68,68,0.75);margin-top:7px}
+
+/* Centered CTA below who-grid */
+.who-cta{text-align:center;margin-top:52px}
+.who-cta p{font-size:15px;color:#6b7280;margin-bottom:22px;font-style:italic;letter-spacing:0.01em}
+
+/* ── HOW WE WORK (3 steps) ── */
 .steps-outer{margin-top:60px;position:relative}
 .steps-connector{
   display:block;
-  position:absolute;top:88px;left:calc(12.5% + 28px);right:calc(12.5% + 28px);
+  position:absolute;top:88px;left:calc(16.67% + 28px);right:calc(16.67% + 28px);
   height:1px;background:linear-gradient(to right,#06b6d4,#3b82f6);opacity:0.2;z-index:0;
 }
-.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;z-index:1}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;z-index:1}
 .step{padding:0 28px}
 .step-badge{
   display:inline-flex;padding:5px 14px;
@@ -236,40 +207,6 @@ nav{
 .step-icon-wrap svg{width:24px;height:24px;color:#22d3ee;stroke-width:1.8}
 .step-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;color:#fff}
 .step-body{font-size:13px;color:#6b7280;line-height:1.7}
-
-/* ── STATS ── */
-.stats-wrap{position:relative;z-index:1;padding:0 40px 80px;max-width:1200px;margin:0 auto}
-.stats-card{
-  background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 100%);
-  border:1px solid rgba(255,255,255,0.1);border-radius:28px;padding:64px 60px;
-  position:relative;overflow:hidden;
-}
-.stats-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.45),transparent)}
-.stats-glow{
-  position:absolute;top:-80px;left:50%;transform:translateX(-50%);
-  width:700px;height:400px;
-  background:radial-gradient(ellipse,rgba(6,182,212,0.07) 0%,transparent 65%);
-  pointer-events:none;
-}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.stat-item{text-align:center}
-.stat-num{
-  font-family:'Syne',sans-serif;font-size:clamp(38px,4.5vw,58px);font-weight:800;
-  letter-spacing:-0.03em;line-height:1;margin-bottom:10px;
-  background:linear-gradient(to right,#22d3ee,#3b82f6);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.stat-lbl{font-size:13px;color:#6b7280;line-height:1.55}
-
-/* ── INDUSTRIES ── */
-.industries-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px}
-.pill{
-  padding:10px 20px;font-size:14px;color:#9ca3af;
-  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
-  border-radius:100px;cursor:default;
-  transition:background 0.22s,border-color 0.22s,color 0.22s;
-}
-.pill:hover{background:rgba(6,182,212,0.09);border-color:rgba(6,182,212,0.28);color:#22d3ee}
 
 /* ── CTA / CONTACT ── */
 .cta-outer{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px 40px 120px}
@@ -335,15 +272,14 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
-  .steps-grid{grid-template-columns:repeat(2,1fr);gap:32px}
   .step{padding:0}
 }
 @media(max-width:768px){
   .nav-links,.nav-cta{display:none}
   .hero-center{padding:100px 24px 60px}
-  .problem-grid,.services-grid,.stats-grid{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr 1fr}
+  .services-grid{grid-template-columns:1fr}
   .steps-grid{grid-template-columns:1fr}
+  .steps-connector{display:none}
   .cta-card{padding:44px 28px}
   .form-row{flex-direction:column}
   .section{padding:72px 24px}
@@ -360,12 +296,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       <span class="nav-logo-text">Synex AI Labs</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#process">Process</a></li>
-      <li><a href="#results">Results</a></li>
+      <li><a href="/real-estate.html">Real Estate</a></li>
+      <li><a href="/engineering.html">Engineering</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Book Free Audit →</a>
+    <a href="#contact" class="nav-cta">Book an Audit →</a>
   </div>
 </nav>
 
@@ -381,17 +316,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       24 / 7.
     </h1>
     <p class="hero-sub">
-      Synex AI Labs designs and deploys intelligent automation systems that eliminate repetitive work, accelerate decisions, and let your team focus on what actually matters.
+      We work with real estate agencies and engineering firms in South Africa to eliminate the manual work slowing their operations down.
     </p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Book a Free Audit →</a>
-      <a href="#services" class="btn-ghost">See What We Build</a>
-    </div>
-    <div class="hero-stats-bar">
-      <span><span class="stat-val">847k</span> Tasks Automated</span>
-      <span><span class="stat-val">4.2k</span> Hours Saved</span>
-      <span><span class="stat-val">99.7%</span> Accuracy</span>
-      <span><span class="stat-val">67%</span> Cost Reduction</span>
+      <a href="#who" class="btn-ghost">See Who We Help</a>
     </div>
   </div>
 </section>
@@ -400,7 +329,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 <div class="ticker-outer">
   <div class="ticker-track" id="ticker">
     <span class="ticker-item">Business Process Automation <span class="spark">✦</span></span>
-    <span class="ticker-item">AI Chatbots & Assistants <span class="spark">✦</span></span>
+    <span class="ticker-item">AI Chatbots &amp; Assistants <span class="spark">✦</span></span>
     <span class="ticker-item">Document Processing AI <span class="spark">✦</span></span>
     <span class="ticker-item">CRM Automation <span class="spark">✦</span></span>
     <span class="ticker-item">Lead Generation AI <span class="spark">✦</span></span>
@@ -409,9 +338,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     <span class="ticker-item">Real Estate AI <span class="spark">✦</span></span>
     <span class="ticker-item">Legal Document AI <span class="spark">✦</span></span>
     <span class="ticker-item">Email Triage Systems <span class="spark">✦</span></span>
-    <!-- duplicate for seamless loop -->
     <span class="ticker-item">Business Process Automation <span class="spark">✦</span></span>
-    <span class="ticker-item">AI Chatbots & Assistants <span class="spark">✦</span></span>
+    <span class="ticker-item">AI Chatbots &amp; Assistants <span class="spark">✦</span></span>
     <span class="ticker-item">Document Processing AI <span class="spark">✦</span></span>
     <span class="ticker-item">CRM Automation <span class="spark">✦</span></span>
     <span class="ticker-item">Lead Generation AI <span class="spark">✦</span></span>
@@ -423,168 +351,83 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════════════════ PROBLEM ════════════════════ -->
-<div class="section" id="problem">
+<!-- ════════════════════ WHO WE WORK WITH ════════════════════ -->
+<div class="section" id="who">
   <div class="reveal">
-    <div class="sec-label">01 — The Problem</div>
-    <h2 class="sec-h2">Still Drowning in<br/><span class="grad">Manual Work?</span></h2>
-    <p class="sec-sub">Most businesses lose thousands of hours a year to repetitive tasks that AI can handle in seconds. Here's what that's costing you.</p>
-  </div>
-  <div class="problem-grid">
-    <div class="p-card reveal d1">
-      <div class="p-icon">⏱</div>
-      <div class="p-title">Wasted Hours Every Day</div>
-      <div class="p-body">Your team spends 40–60% of their day on tasks that could be automated — data entry, follow-ups, report generation, document handling. That's hundreds of hours lost every month.</div>
-    </div>
-    <div class="p-card reveal d2">
-      <div class="p-icon">❌</div>
-      <div class="p-title">Human Error is Expensive</div>
-      <div class="p-body">Manual processes introduce mistakes that ripple through your business — missed leads, incorrect invoices, compliance gaps, and frustrated clients. Every error has a cost.</div>
-    </div>
-    <div class="p-card reveal d3">
-      <div class="p-icon">📉</div>
-      <div class="p-title">You're Falling Behind</div>
-      <div class="p-body">While you manually handle repetitive tasks, your competitors are scaling with AI. The efficiency gap widens every week you wait. The best time to automate was yesterday.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════ SERVICES ════════════════════ -->
-<div class="section" id="services">
-  <div class="reveal">
-    <div class="sec-label">02 — Services</div>
-    <h2 class="sec-h2">What We Build<br/><span class="grad">For You</span></h2>
-    <p class="sec-sub">End-to-end AI systems tailored to your business — from discovery and design through to deployment and ongoing optimisation.</p>
+    <div class="sec-label">Who We Work With</div>
+    <h2 class="sec-h2">Sound <span class="grad">familiar?</span></h2>
   </div>
   <div class="services-grid">
+
+    <!-- Real Estate -->
     <div class="s-card reveal d1">
-      <div class="s-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      </div>
-      <div class="s-title">Business Process Automation</div>
-      <div class="s-body">Stop doing manually what a system can do in seconds.</div>
-      <a href="/services/automation.html" class="s-more">Learn More →</a>
+      <div class="s-title">Real Estate Agencies</div>
+      <ul class="dot-list">
+        <li>Leads come in and nobody follows up fast enough</li>
+        <li>Agents spend their mornings on admin instead of selling</li>
+        <li>Enquiries from Property24 never make it into the CRM</li>
+        <li>Viewings get booked through WhatsApp voice notes and missed calls</li>
+        <li>New leads sit uncontacted over weekends while competitors respond instantly</li>
+      </ul>
     </div>
+
+    <!-- Engineering -->
     <div class="s-card reveal d2">
-      <div class="s-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      </div>
-      <div class="s-title">AI Chatbots & Conversational Agents</div>
-      <div class="s-body">Your business, available 24/7 — even when your team isn't.</div>
-      <a href="/services/chatbots.html" class="s-more">Learn More →</a>
+      <div class="s-title">Engineering Firms</div>
+      <ul class="dot-list">
+        <li>Project updates get lost in email chains nobody reads</li>
+        <li>Client reports are assembled manually at the end of every month</li>
+        <li>Documents sit waiting for approvals that never come on time</li>
+        <li>Critical information buried in drawings takes hours to find and extract</li>
+        <li>Teams spend time on coordination instead of actual engineering work</li>
+      </ul>
     </div>
-    <div class="s-card reveal d3">
-      <div class="s-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-      </div>
-      <div class="s-title">API & Systems Integration</div>
-      <div class="s-body">Your tools should work together. We make sure they do.</div>
-      <a href="/services/integration.html" class="s-more">Learn More →</a>
-    </div>
-    <div class="s-card reveal d4">
-      <div class="s-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      </div>
-      <div class="s-title">Document Processing & Data Extraction</div>
-      <div class="s-body">Turn documents into data — automatically, accurately, instantly.</div>
-      <a href="/services/document-processing.html" class="s-more">Learn More →</a>
-    </div>
+
+  </div>
+  <div class="who-cta reveal">
+    <p>If any of this sounds like your business — we should talk.</p>
+    <a href="#contact" class="btn-primary">Book a Free Audit →</a>
   </div>
 </div>
 
-<!-- ════════════════════ HOW IT WORKS ════════════════════ -->
+<!-- ════════════════════ HOW WE WORK ════════════════════ -->
 <div class="section" id="process">
   <div class="reveal">
-    <div class="sec-label">03 — The Process</div>
-    <h2 class="sec-h2">From Audit to<br/><span class="grad">Live System</span></h2>
-    <p class="sec-sub">A focused 4-stage process — no bloat, no long timelines. Most clients go live in under 6 weeks.</p>
+    <div class="sec-label">How We Work</div>
+    <h2 class="sec-h2">Simple. Focused. <span class="grad">Effective.</span></h2>
   </div>
   <div class="steps-outer">
     <div class="steps-connector"></div>
     <div class="steps-grid">
+
       <div class="step reveal d1">
         <div class="step-badge">Step 01</div>
         <div class="step-icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
-        <div class="step-title">Discovery Audit</div>
-        <div class="step-body">We map your workflows, identify automation opportunities, and calculate the exact time and cost savings you can expect — before any commitment.</div>
+        <div class="step-title">Audit</div>
+        <div class="step-body">We sit down with your team, map your workflows, and identify exactly where time and money is being lost.</div>
       </div>
+
       <div class="step reveal d2">
         <div class="step-badge">Step 02</div>
         <div class="step-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         </div>
-        <div class="step-title">System Design</div>
-        <div class="step-body">We architect your custom AI solution — selecting the right tools, models, and integrations to match your exact business requirements.</div>
+        <div class="step-title">Build</div>
+        <div class="step-body">We design and build the automation system around your specific processes — nothing generic, nothing unnecessary.</div>
       </div>
+
       <div class="step reveal d3">
         <div class="step-badge">Step 03</div>
         <div class="step-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
-        <div class="step-title">Build & Deploy</div>
-        <div class="step-body">We build, test, and deploy your automation system — fully integrated with your existing tools. Zero disruption to your team during rollout.</div>
+        <div class="step-title">Run</div>
+        <div class="step-body">Your system goes live. We handle monitoring and improvements. Your team gets their time back.</div>
       </div>
-      <div class="step reveal d4">
-        <div class="step-badge">Step 04</div>
-        <div class="step-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <div class="step-title">Monitor & Optimise</div>
-        <div class="step-body">Ongoing monitoring, performance reporting, and continuous improvement — your system keeps delivering results as your business scales.</div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- ════════════════════ STATS ════════════════════ -->
-<div class="stats-wrap" id="results">
-  <div class="stats-card reveal">
-    <div class="stats-glow"></div>
-    <div style="text-align:center;margin-bottom:52px">
-      <div class="sec-label" style="justify-content:center">04 — Results</div>
-      <h2 class="sec-h2" style="max-width:100%;text-align:center">Numbers That<br/><span class="grad">Speak for Themselves</span></h2>
     </div>
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-num">85%</div>
-        <div class="stat-lbl">Average reduction in<br/>manual task time</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">6 wks</div>
-        <div class="stat-lbl">Average time from<br/>audit to live system</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">3×</div>
-        <div class="stat-lbl">Average increase in<br/>team throughput</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">99.7%</div>
-        <div class="stat-lbl">System uptime across<br/>all client deployments</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════ INDUSTRIES ════════════════════ -->
-<div class="section">
-  <div class="reveal">
-    <div class="sec-label">05 — Industries</div>
-    <h2 class="sec-h2">We Work Across<br/><span class="grad">Every Sector</span></h2>
-    <p class="sec-sub">AI automation isn't industry-specific — it's universal. We've built systems for businesses across:</p>
-  </div>
-  <div class="industries-pills">
-    <div class="pill">🏡 Real Estate</div>
-    <div class="pill">⚖️ Legal</div>
-    <div class="pill">🚚 Logistics</div>
-    <div class="pill">🏥 Healthcare</div>
-    <div class="pill">💼 Finance</div>
-    <div class="pill">🛒 E-Commerce</div>
-    <div class="pill">🏗 Construction</div>
-    <div class="pill">📊 Consulting</div>
-    <div class="pill">🏨 Hospitality</div>
-    <div class="pill">📡 Telecoms</div>
   </div>
 </div>
 
@@ -601,13 +444,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
         <input class="inp" type="text" id="lead-name" placeholder="Your name" required/>
         <input class="inp" type="email" id="lead-email" placeholder="Work email" required/>
       </div>
-      <input class="inp inp-full" type="text" id="lead-company" placeholder="Company name & industry"/>
+      <input class="inp inp-full" type="text" id="lead-company" placeholder="Company name &amp; industry"/>
       <select class="inp inp-full" id="lead-service" required>
         <option value="" disabled selected>What can we help you with?</option>
-        <option>Business Process Automation</option>
-        <option>AI Chatbots &amp; Conversational Agents</option>
-        <option>API &amp; Systems Integration</option>
-        <option>Document Processing &amp; Data Extraction</option>
+        <option>Real Estate Automation</option>
+        <option>Engineering Firm Automation</option>
         <option>Not sure / General Enquiry</option>
       </select>
       <textarea class="inp inp-full" id="lead-message" placeholder="What are you looking to automate?" rows="3" style="resize:none;font-family:inherit"></textarea>
@@ -626,9 +467,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       <span class="f-logo-text">Synex AI Labs</span>
     </a>
     <div class="f-links">
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#results">Results</a>
+      <a href="/real-estate.html">Real Estate</a>
+      <a href="/engineering.html">Engineering</a>
       <a href="#contact">Contact</a>
     </div>
     <div class="f-right">
@@ -668,7 +508,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     initParticles();
   }
 
-  // Layer 1 — Star field
   function initStars() {
     const count = isMobile ? 100 : 200;
     stars = Array.from({ length: count }, () => ({
@@ -691,7 +530,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     }
   }
 
-  // Layer 2 — Shooting stars
   function spawnShootingStar() {
     if (shootingStars.length >= 2) return;
     let x, y;
@@ -751,7 +589,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     );
   }
 
-  // Layer 3 — Constellation network
   function initParticles() {
     const count = isMobile ? 30 : 60;
     particles = Array.from({ length: count }, () => ({
@@ -808,7 +645,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       nextShootIn = 2000 + Math.random() * 2000;
       spawnShootingStar();
     }
-    // Subtle trail fade — lets stars persist
     ctx.fillStyle = 'rgba(0,0,0,0.05)';
     ctx.fillRect(0, 0, W, H);
     drawStars(time);
@@ -890,7 +726,7 @@ async function handleLeadSubmit(e) {
 
 // Tilt effect on service cards (mouse-only)
 if (window.matchMedia('(pointer:fine)').matches) {
-  document.querySelectorAll('.s-card,.p-card').forEach(card => {
+  document.querySelectorAll('.s-card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
