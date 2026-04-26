@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Document Processing & Data Extraction — Synex AI Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;--bg2:#0a0a0a;--bg3:#111827;
+  --card:rgba(255,255,255,0.05);
+  --border:rgba(255,255,255,0.1);
+  --tx:#ffffff;--tx2:#d1d5db;--tx3:#9ca3af;--tx4:#6b7280;
+  --cyan4:#22d3ee;--cyan5:#06b6d4;--cyan3:#67e8f9;
+  --blue5:#3b82f6;--blue6:#2563eb;
+}
+html{background:#000;color:#fff;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{
+  background:linear-gradient(to bottom,#000 0%,#0a0a0a 25%,#111827 55%,#0a0a0a 80%,#000 100%);
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(6,182,212,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(6,182,212,0.03) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:300px 300px;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:14px 0;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{height:38px;width:auto;border-radius:6px}
+.nav-logo-text{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.01em}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:#6b7280;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 22px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
+  border:none;border-radius:100px;cursor:pointer;text-decoration:none;
+  box-shadow:0 0 20px rgba(6,182,212,0.35);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.nav-cta:hover{transform:scale(1.04);box-shadow:0 0 32px rgba(6,182,212,0.55)}
+.nav-cta:active{transform:scale(0.98)}
+.nav-cta:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
+.back-nav{position:relative;z-index:1;padding:88px 40px 0;max-width:1200px;margin:0 auto}
+.back-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:#4b5563;text-decoration:none;
+  transition:color 0.2s,gap 0.2s;
+}
+.back-link:hover{color:#22d3ee;gap:12px}
+.svc-hero{
+  position:relative;z-index:1;
+  padding:60px 40px 100px;
+  text-align:center;overflow:hidden;
+}
+.svc-hero::before{
+  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:800px;height:600px;
+  background:radial-gradient(ellipse,rgba(6,182,212,0.08) 0%,transparent 65%);
+  pointer-events:none;
+}
+.svc-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.svc-icon-lg{
+  width:64px;height:64px;border-radius:18px;margin:0 auto 28px;
+  background:linear-gradient(135deg,#06b6d4,#2563eb);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 30px rgba(6,182,212,0.45),0 8px 24px rgba(6,182,212,0.2);
+}
+.svc-icon-lg svg{width:30px;height:30px;color:#000;stroke-width:2}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  color:#6b7280;border:1px solid rgba(255,255,255,0.1);background:rgba(6,182,212,0.05);
+  padding:6px 14px;border-radius:100px;margin-bottom:24px;
+}
+.svc-h1{
+  font-family:'Syne',sans-serif;font-size:clamp(40px,5.5vw,70px);font-weight:800;
+  line-height:1.05;letter-spacing:-0.03em;margin-bottom:20px;color:#fff;
+}
+.svc-h1 .grad{
+  background:linear-gradient(to right,#22d3ee,#3b82f6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.svc-tagline{
+  font-size:clamp(17px,2vw,21px);font-weight:300;color:#9ca3af;
+  line-height:1.6;margin-bottom:40px;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 30px;
+  font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;
+  background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
+  border:none;border-radius:100px;cursor:pointer;text-decoration:none;
+  box-shadow:0 0 28px rgba(6,182,212,0.4),0 4px 20px rgba(6,182,212,0.15);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(6,182,212,0.6),0 6px 28px rgba(6,182,212,0.25)}
+.btn-primary:active{transform:scale(0.98)}
+.btn-primary:focus-visible{outline:2px solid #22d3ee;outline-offset:3px}
+.section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:80px 40px}
+.section-prose{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:80px 40px}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;color:#06b6d4;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.sec-label::after{content:'';flex:0 0 36px;height:1px;background:linear-gradient(to right,rgba(6,182,212,0.4),transparent)}
+.sec-h2{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,42px);font-weight:800;
+  letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px;color:#fff;
+}
+.sec-h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.prose p{
+  font-size:16px;font-weight:300;color:#d1d5db;line-height:1.85;margin-bottom:20px;
+}
+.prose p:last-child{margin-bottom:0}
+.pain-section{
+  background:linear-gradient(160deg,rgba(239,68,68,0.05) 0%,rgba(0,0,0,0) 60%);
+  border-top:1px solid rgba(239,68,68,0.12);border-bottom:1px solid rgba(239,68,68,0.12);
+}
+.pain-section .sec-label{color:#f87171}
+.pain-section .sec-label::after{background:linear-gradient(to right,rgba(248,113,113,0.4),transparent)}
+.use-case-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.01) 100%);
+  border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:48px;
+  position:relative;overflow:hidden;margin-top:32px;
+}
+.use-case-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(6,182,212,0.45),transparent);
+}
+.use-case-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  color:#06b6d4;margin-bottom:20px;display:flex;align-items:center;gap:8px;
+}
+.use-case-label::before{content:'';width:6px;height:6px;background:#06b6d4;border-radius:50%;box-shadow:0 0 6px #06b6d4}
+.use-case-biz{
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:16px;
+}
+.use-case-card .prose p{font-size:15px;color:#9ca3af}
+.industries-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
+.ind-pill{
+  padding:10px 22px;font-size:14px;color:#9ca3af;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
+  border-radius:100px;
+  transition:background 0.22s,border-color 0.22s,color 0.22s;
+}
+.ind-pill:hover{background:rgba(6,182,212,0.09);border-color:rgba(6,182,212,0.28);color:#22d3ee}
+.cta-outer{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px 40px 120px}
+.cta-card{
+  background:linear-gradient(160deg,rgba(6,182,212,0.09) 0%,rgba(37,99,235,0.06) 50%,rgba(0,0,0,0) 100%);
+  border:1px solid rgba(6,182,212,0.22);border-radius:28px;
+  padding:72px 64px;position:relative;overflow:hidden;text-align:center;
+}
+.cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.55),transparent)}
+.cta-glow-l{position:absolute;top:-60px;left:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(6,182,212,0.1),transparent 65%);pointer-events:none}
+.cta-glow-r{position:absolute;bottom:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(37,99,235,0.08),transparent 65%);pointer-events:none}
+.cta-h2{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:800;letter-spacing:-0.025em;line-height:1.05;margin-bottom:16px;color:#fff}
+.cta-h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-size:16px;font-weight:300;color:#9ca3af;line-height:1.75;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);padding:44px 40px}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.f-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.f-logo img{height:30px;width:auto;border-radius:5px;opacity:0.85}
+.f-logo-text{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#9ca3af}
+.f-links{display:flex;gap:28px}
+.f-links a{font-size:13px;color:#4b5563;text-decoration:none;transition:color 0.2s}
+.f-links a:hover{color:#d1d5db}
+.f-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:#374151;letter-spacing:0.05em}
+.f-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.f-policy{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.f-policy a{font-size:10px;color:#2d3748;text-decoration:none;transition:color 0.2s;font-family:'DM Sans',sans-serif}
+.f-policy a:hover{color:#6b7280}
+.f-policy .dot{font-size:10px;color:#2d3748}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1),transform 0.8s cubic-bezier(0.22,1,0.36,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.divider{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 40px}
+.divider-line{height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.07),transparent)}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .svc-hero{padding:48px 24px 72px}
+  .section,.section-prose{padding:60px 24px}
+  .cta-card{padding:44px 28px}
+  .back-nav{padding:88px 24px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="../brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs logo"/>
+      <span class="nav-logo-text">Synex AI Labs</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#process">Process</a></li>
+      <li><a href="/#results">Results</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <a href="/#contact" class="nav-cta">Book Free Audit →</a>
+  </div>
+</nav>
+
+<div class="back-nav">
+  <a href="/#services" class="back-link">← Back to Services</a>
+</div>
+
+<div class="svc-hero">
+  <div class="svc-hero-inner">
+    <div class="svc-icon-lg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    </div>
+    <div class="eyebrow">Service</div>
+    <h1 class="svc-h1">Document Processing<br/><span class="grad">& Data Extraction</span></h1>
+    <p class="svc-tagline">Turn documents into data — automatically, accurately, instantly.</p>
+    <a href="/#contact" class="btn-primary">Book a Free Audit →</a>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<div class="section-prose reveal">
+  <div class="sec-label">01 — What It Is</div>
+  <h2 class="sec-h2">Documents in,<br/><span class="grad">structured data out</span></h2>
+  <div class="prose">
+    <p>Every business handles documents. Contracts, invoices, application forms, compliance submissions, ID documents, financial statements, certificates. Most businesses handle them the same way: someone reads each one, finds the relevant information, and manually enters it somewhere else. It's slow, it's tedious, and it's error-prone in exactly the ways that matter most.</p>
+    <p>Document processing automation changes this entirely. We build pipelines that receive your documents — whether they arrive by email, upload, or shared drive — and automatically extract the key data: names, dates, amounts, clauses, signatures, references. That data is validated, structured, and sent directly where it needs to go. No manual reading. No manual entry. No delays.</p>
+    <p>The technology that makes this possible combines optical character recognition (OCR) with large language models — meaning it doesn't just read printed text, it understands context. It can identify that a number on page 3 is a contract value, not a reference number. It can flag clauses that don't match your standard template. It can extract data from scanned PDFs, handwritten forms, or complex multi-page documents that would take a human 20 minutes to process.</p>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<div class="section-prose pain-section reveal">
+  <div class="sec-label">02 — What You're Losing Without It</div>
+  <h2 class="sec-h2">Manual processing is where<br/><span style="color:#f87171">accuracy goes to die</span></h2>
+  <div class="prose">
+    <p>The true cost of manual document processing isn't just time — it's accuracy. When a person reads through a 40-page contract and manually captures key terms, they will miss something. That's not a criticism; it's biology. Humans are poor at sustained, repetitive extraction tasks. The system, however, doesn't get tired on page 30.</p>
+    <p>Think about what a single error in a contract review costs — a missed clause, an incorrect rate captured from an invoice, a compliance form submitted with the wrong date. These aren't hypothetical risks. They're the everyday reality of businesses that haven't automated this process yet.</p>
+    <p>And then there's the backlog. When documents pile up faster than your team can process them, decisions get delayed. A property transfer stalls because the FICA documents are sitting in an inbox unreviewed. A finance application sits incomplete because the supporting documents haven't been extracted and filed. The bottleneck isn't the work itself — it's the pace at which humans can manually handle it.</p>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<div class="section-prose reveal">
+  <div class="sec-label">03 — Use Case</div>
+  <h2 class="sec-h2">A real story worth<br/><span class="grad">telling</span></h2>
+  <div class="use-case-card">
+    <div class="use-case-label">Case Study</div>
+    <div class="use-case-biz">Pretoria Legal Firm — Conveyancing Practice</div>
+    <div class="prose">
+      <p>A mid-size legal firm in Pretoria was receiving 60–80 client documents a week across their conveyancing practice — FICA packs, title deeds, transfer documents, and bond applications. Each pack required an admin to open every document, extract key information, and manually populate the client record in their case management system.</p>
+      <p>An experienced admin could process about 15 packs a day. The rest piled up. On busy weeks, clients were waiting two to three days just for their documents to be captured — before any legal work had even started.</p>
+      <p>We built a document processing pipeline that monitors their intake inbox, extracts key fields from each document type automatically, validates the data against their compliance checklist, and populates the case management system directly. Average processing time per pack dropped from 25 minutes to under 90 seconds. The team now focuses entirely on the legal work — the documents just happen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<div class="section reveal">
+  <div style="max-width:760px;margin:0 auto">
+    <div class="sec-label">04 — Industries</div>
+    <h2 class="sec-h2">Who this is<br/><span class="grad">built for</span></h2>
+    <div class="industries-grid">
+      <div class="ind-pill">🏡 Real Estate</div>
+      <div class="ind-pill">⚖️ Legal</div>
+      <div class="ind-pill">🔧 Engineering</div>
+      <div class="ind-pill">🏥 Healthcare Admin</div>
+      <div class="ind-pill">💼 Finance</div>
+      <div class="ind-pill">🏗 Construction</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<div class="cta-outer">
+  <div class="cta-card reveal">
+    <div class="cta-glow-l"></div>
+    <div class="cta-glow-r"></div>
+    <h2 class="cta-h2">Ready to see what this looks like<br/><span class="grad">for your business?</span></h2>
+    <p class="cta-sub">Book a free 30-minute audit. We'll review your document intake process and show you exactly how automation can eliminate the backlog — no commitment required.</p>
+    <a href="/#contact" class="btn-primary">Book a Free Audit →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="f-logo">
+      <img src="../brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs"/>
+      <span class="f-logo-text">Synex AI Labs</span>
+    </a>
+    <div class="f-links">
+      <a href="/#services">Services</a>
+      <a href="/#process">Process</a>
+      <a href="/#results">Results</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <div class="f-right">
+      <div class="f-copy">© 2026 Synex AI Labs · South Africa</div>
+      <div class="f-policy">
+        <a href="../privacy-policy.html">Privacy Policy</a>
+        <span class="dot">·</span>
+        <a href="../terms.html">Terms &amp; Conditions</a>
+        <span class="dot">·</span>
+        <a href="../data-policy.html">Data Collection Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

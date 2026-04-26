@@ -235,6 +235,14 @@ nav{
 .s-body{font-size:14px;color:#9ca3af;line-height:1.72;margin-bottom:20px}
 .s-tags{display:flex;gap:8px;flex-wrap:wrap}
 .s-tag{padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#6b7280;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:100px}
+.s-more{
+  display:inline-flex;align-items:center;gap:6px;margin-top:20px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  color:#22d3ee;text-decoration:none;letter-spacing:0.01em;
+  transition:gap 0.2s cubic-bezier(0.22,1,0.36,1),opacity 0.2s;
+}
+.s-more:hover{gap:11px;opacity:0.8}
+.s-more:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:3px}
 
 /* ── HOW IT WORKS ── */
 .steps-outer{margin-top:60px;position:relative}
@@ -539,40 +547,32 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       </div>
       <div class="s-title">Business Process Automation</div>
-      <div class="s-body">We map your existing workflows and replace manual steps with intelligent automation — saving hours daily and eliminating human error at scale. From simple triggers to complex multi-step pipelines.</div>
-      <div class="s-tags">
-        <span class="s-tag">Workflow Design</span><span class="s-tag">Zapier / Make</span><span class="s-tag">n8n</span><span class="s-tag">API Integration</span>
-      </div>
+      <div class="s-body">Stop doing manually what a system can do in seconds.</div>
+      <a href="/services/automation.html" class="s-more">Learn More →</a>
     </div>
     <div class="s-card reveal d2">
       <div class="s-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       </div>
-      <div class="s-title">AI Chatbots & Assistants</div>
-      <div class="s-body">Custom-trained AI assistants that handle customer enquiries, qualify leads, book appointments, and resolve support tickets — 24/7, with no wait time and zero staff overhead.</div>
-      <div class="s-tags">
-        <span class="s-tag">Claude / GPT-4</span><span class="s-tag">RAG Systems</span><span class="s-tag">WhatsApp</span><span class="s-tag">Web Widget</span>
-      </div>
+      <div class="s-title">AI Chatbots & Conversational Agents</div>
+      <div class="s-body">Your business, available 24/7 — even when your team isn't.</div>
+      <a href="/services/chatbots.html" class="s-more">Learn More →</a>
     </div>
     <div class="s-card reveal d3">
       <div class="s-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
       </div>
-      <div class="s-title">Data Intelligence & Reporting</div>
-      <div class="s-body">Transform raw data into actionable insights with automated dashboards, anomaly detection, and AI-generated reports delivered on your schedule — no analyst required.</div>
-      <div class="s-tags">
-        <span class="s-tag">Auto Reports</span><span class="s-tag">Predictive AI</span><span class="s-tag">Dashboards</span><span class="s-tag">Alerts</span>
-      </div>
+      <div class="s-title">API & Systems Integration</div>
+      <div class="s-body">Your tools should work together. We make sure they do.</div>
+      <a href="/services/integration.html" class="s-more">Learn More →</a>
     </div>
     <div class="s-card reveal d4">
       <div class="s-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
-      <div class="s-title">Document & Email AI</div>
-      <div class="s-body">Automated document extraction, classification, and processing pipelines. Smart email triage that routes, drafts replies, and escalates critical messages — all without manual intervention.</div>
-      <div class="s-tags">
-        <span class="s-tag">OCR + AI</span><span class="s-tag">Email Triage</span><span class="s-tag">Contracts</span><span class="s-tag">Invoices</span>
-      </div>
+      <div class="s-title">Document Processing & Data Extraction</div>
+      <div class="s-body">Turn documents into data — automatically, accurately, instantly.</div>
+      <a href="/services/document-processing.html" class="s-more">Learn More →</a>
     </div>
   </div>
 </div>
