@@ -273,6 +273,14 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 .reveal.in{opacity:1;transform:translateY(0)}
 .d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
 
+/* ── WHAT WE DO CARD ── */
+.what-card-wrap{margin-top:52px;max-width:620px}
+.what-card{display:flex;flex-direction:column}
+.what-card-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#06b6d4;margin-bottom:20px}
+.what-list{list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:11px}
+.what-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#9ca3af;line-height:1.65}
+.what-list li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(6,182,212,0.85);margin-top:7px}
+
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
   .step{padding:0}
@@ -299,8 +307,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       <span class="nav-logo-text">Synex AI Labs</span>
     </a>
     <ul class="nav-links">
-      <li><a href="/real-estate.html">Real Estate</a></li>
-      <li><a href="/engineering.html">Engineering</a></li>
+      <li><a href="/real-estate.html">Real Estate Agencies</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Book an Audit →</a>
@@ -319,11 +326,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       24 / 7.
     </h1>
     <p class="hero-sub">
-      We work with real estate agencies and engineering firms in South Africa to eliminate the manual work slowing their operations down.
+      We build systems that eliminate the manual work slowing your business down — so your team can focus on what actually moves the needle.
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Book a Free Audit →</a>
-      <a href="#who" class="btn-ghost">See Who We Help</a>
+      <a href="/real-estate.html" class="btn-primary">We Work With Real Estate Agencies →</a>
+      <a href="/#contact" class="btn-ghost">Book a Free Audit →</a>
     </div>
   </div>
 </section>
@@ -354,43 +361,27 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════════════════ WHO WE WORK WITH ════════════════════ -->
+<!-- ════════════════════ WHAT WE DO ════════════════════ -->
 <div class="section" id="who">
   <div class="reveal">
-    <div class="sec-label">Who We Work With</div>
-    <h2 class="sec-h2">Sound <span class="grad">familiar?</span></h2>
+    <div class="sec-label">What We Do</div>
+    <h2 class="sec-h2">Every automation we build is tailored to your business. Nothing off the shelf.</h2>
   </div>
-  <div class="services-grid">
-
-    <!-- Real Estate -->
-    <div class="s-card reveal d1">
-      <div class="s-title">Real Estate Agencies</div>
-      <p class="card-intro">Most agencies don't lose leads because of bad marketing. They lose them because demand moves faster than people can respond. We fix that.</p>
-      <ul class="dot-list">
-        <li>Leads come in and nobody follows up fast enough</li>
-        <li>Agents spend their mornings on admin instead of selling</li>
-        <li>Enquiries from Property24 never make it into the CRM</li>
-        <li>Viewings get booked through WhatsApp voice notes and missed calls</li>
-        <li>New leads sit uncontacted over weekends while competitors respond instantly</li>
-      </ul>
-    </div>
-
-    <!-- Engineering -->
-    <div class="s-card reveal d2">
-      <div class="s-title">Engineering Firms</div>
-      <ul class="dot-list">
-        <li>Project updates get lost in email chains nobody reads</li>
-        <li>Client reports are assembled manually at the end of every month</li>
-        <li>Documents sit waiting for approvals that never come on time</li>
-        <li>Critical information buried in drawings takes hours to find and extract</li>
-        <li>Teams spend time on coordination instead of actual engineering work</li>
-      </ul>
-    </div>
-
+  <div class="reveal d1" style="margin-top:20px">
+    <p class="sec-sub" style="max-width:640px">We don't sell software packages or generic tools. We sit down with your team, understand exactly where time and money is being lost, and build a system around that — specific to how your business actually operates.</p>
   </div>
-  <div class="who-cta reveal">
-    <p>If any of this sounds like your business — we should talk.</p>
-    <a href="#contact" class="btn-primary">Book a Free Audit →</a>
+  <div class="what-card-wrap reveal d2">
+    <div class="s-card what-card">
+      <div class="what-card-label">Real Estate Agencies</div>
+      <ul class="what-list">
+        <li>No lead goes uncontacted</li>
+        <li>Enquiries followed up automatically</li>
+        <li>Property24 leads flow directly into your CRM</li>
+        <li>Viewings booked without the back-and-forth</li>
+        <li>Your agency responds 24/7 — even when the office is closed</li>
+      </ul>
+      <a href="/real-estate.html" class="btn-primary" style="align-self:flex-start">Learn More →</a>
+    </div>
   </div>
 </div>
 

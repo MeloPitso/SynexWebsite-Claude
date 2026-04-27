@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Real Estate Automation — Synex AI Labs</title>
+<title>Real Estate Agencies — Synex AI Labs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -11,7 +11,13 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cyan4:#22d3ee;--cyan5:#06b6d4;--blue5:#3b82f6;--blue6:#2563eb;
+  --bg:#000000;--bg2:#0a0a0a;--bg3:#111827;
+  --card:rgba(255,255,255,0.05);
+  --border:rgba(255,255,255,0.1);
+  --tx:#ffffff;--tx2:#d1d5db;--tx3:#9ca3af;--tx4:#6b7280;
+  --cyan4:#22d3ee;--cyan5:#06b6d4;--cyan3:#67e8f9;
+  --blue5:#3b82f6;--blue6:#2563eb;
+  --red5:#ef4444;--red4:rgba(239,68,68,0.75);
 }
 html{background:#000;color:#fff;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
 body{
@@ -86,45 +92,6 @@ nav{
 .back-link:hover{color:#fff}
 .back-link:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:3px}
 
-/* ── INDUSTRY HERO ── */
-.industry-hero{
-  position:relative;
-  min-height:68vh;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-}
-.industry-hero::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(6,182,212,0.09) 0%,transparent 65%),
-    radial-gradient(ellipse 40% 35% at 80% 100%,rgba(37,99,235,0.05) 0%,transparent 60%);
-}
-.industry-hero-inner{
-  position:relative;z-index:1;
-  text-align:center;
-  max-width:720px;
-  padding:40px 40px 80px;
-}
-.industry-hero h1{
-  font-family:'Syne',sans-serif;
-  font-size:clamp(40px,5vw,68px);
-  font-weight:800;
-  letter-spacing:-0.03em;
-  line-height:1.05;
-  color:#fff;
-  margin-bottom:20px;
-}
-.industry-hero p{
-  font-size:18px;
-  font-weight:300;
-  color:#9ca3af;
-  line-height:1.75;
-  margin-bottom:36px;
-  max-width:540px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
 /* ── SECTION BASE ── */
 .section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:96px 40px}
 .sec-label{
@@ -137,56 +104,129 @@ nav{
 .sec-h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sec-sub{font-size:17px;font-weight:300;color:#9ca3af;line-height:1.75;max-width:540px}
 
-/* ── PROBLEM CARDS ── */
-.prob-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
-.s-card{
+/* ── HERO ── */
+.re-hero{
+  position:relative;
+  min-height:68vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;z-index:1;
+}
+.re-hero::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(6,182,212,0.09) 0%,transparent 65%),
+    radial-gradient(ellipse 40% 35% at 80% 100%,rgba(37,99,235,0.05) 0%,transparent 60%);
+}
+.re-hero-inner{
+  position:relative;z-index:1;
+  text-align:center;max-width:720px;
+  padding:40px 40px 80px;
+}
+.re-hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(40px,5vw,68px);
+  font-weight:800;letter-spacing:-0.03em;line-height:1.05;
+  color:#fff;margin-bottom:20px;
+}
+.re-hero p{
+  font-size:18px;font-weight:300;color:#9ca3af;line-height:1.75;
+  margin-bottom:36px;max-width:540px;margin-left:auto;margin-right:auto;
+}
+
+/* ── THE REAL PROBLEM ── */
+.prob-body-text{
+  max-width:680px;margin-top:36px;
+  display:flex;flex-direction:column;gap:22px;
+}
+.prob-body-text p{font-size:16px;color:#9ca3af;line-height:1.8}
+
+/* ── COST COMPARISON ── */
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.cost-col{border-radius:20px;padding:36px;position:relative;overflow:hidden}
+.cost-col.bad{
+  background:rgba(239,68,68,0.04);
+  border:1px solid rgba(239,68,68,0.2);
+}
+.cost-col.bad::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(239,68,68,0.25),transparent)}
+.cost-col.good{
+  background:rgba(6,182,212,0.04);
+  border:1px solid rgba(6,182,212,0.2);
+}
+.cost-col.good::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.3),transparent)}
+.cost-col-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;margin-bottom:24px;display:block;
+}
+.cost-col.bad .cost-col-label{color:rgba(239,68,68,0.85)}
+.cost-col.good .cost-col-label{color:rgba(6,182,212,0.9)}
+.cost-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:13px}
+.cost-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#9ca3af;line-height:1.65}
+.cost-list.red li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(239,68,68,0.75);margin-top:7px}
+.cost-list.cyan li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(6,182,212,0.85);margin-top:7px}
+
+/* ── HOW IT WORKS (FLOW DIAGRAM) ── */
+.flow-container{
+  position:relative;max-width:680px;
+  margin:52px auto 0;
+}
+.flow-step{
+  display:flex;align-items:center;gap:24px;
+  position:relative;margin-bottom:12px;
+}
+.flow-step:not(:last-child)::after{
+  content:'';position:absolute;
+  left:19px;top:40px;
+  width:2px;height:calc(100% + 12px);
+  background:linear-gradient(to bottom,rgba(6,182,212,0.4),rgba(6,182,212,0.15));
+}
+.flow-num{
+  flex-shrink:0;width:40px;height:40px;
+  border-radius:50%;
+  background:rgba(6,182,212,0.08);
+  border:1px solid rgba(6,182,212,0.35);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;
+  position:relative;z-index:1;
+}
+.flow-card{
+  flex:1;
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0) 100%);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:16px;padding:18px 24px;
+}
+.flow-card-title{
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;
+}
+
+/* ── SOLUTIONS GRID (2x2) ── */
+.sol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:52px}
+.sol-card{
   background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0) 100%);
   border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px;
   position:relative;overflow:hidden;
   transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s,box-shadow 0.28s;
 }
-.s-card:hover{
+.sol-card:hover{
   transform:translateY(-8px);
   border-color:rgba(6,182,212,0.28);
   box-shadow:0 24px 60px rgba(6,182,212,0.06),0 0 0 1px rgba(6,182,212,0.08);
 }
-.s-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.14),transparent)}
-.prob-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:12px;color:#fff}
-.prob-body{font-size:14px;color:#9ca3af;line-height:1.72}
-
-/* ── BEFORE / AFTER ── */
-.ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
-.ba-col{
-  background:linear-gradient(160deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0) 100%);
-  border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px;
-  position:relative;overflow:hidden;
-}
-.ba-col::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.1),transparent)}
-.ba-label{
-  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
-  letter-spacing:0.2em;text-transform:uppercase;
-  margin-bottom:20px;display:block;
-}
-.ba-label.before{color:rgba(239,68,68,0.8)}
-.ba-label.after{color:rgba(6,182,212,0.9)}
-.ba-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:12px}
-.ba-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#9ca3af;line-height:1.65}
-.ba-list.red-dots li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(239,68,68,0.75);margin-top:7px}
-.ba-list.cyan-dots li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(6,182,212,0.85);margin-top:7px}
+.sol-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.14),transparent)}
+.sol-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:12px;color:#fff}
+.sol-body{font-size:14px;color:#9ca3af;line-height:1.75}
 
 /* ── BOTTOM CTA ── */
-.industry-cta{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 40px 120px}
-.industry-cta-card{
+.re-cta{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 40px 120px}
+.re-cta-card{
   background:linear-gradient(160deg,rgba(6,182,212,0.08) 0%,rgba(37,99,235,0.05) 50%,rgba(0,0,0,0) 100%);
   border:1px solid rgba(6,182,212,0.18);border-radius:28px;
   padding:72px 64px;position:relative;overflow:hidden;text-align:center;
 }
-.industry-cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.45),transparent)}
-.icta-glow-l{position:absolute;top:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(6,182,212,0.09),transparent 65%);pointer-events:none}
-.icta-glow-r{position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(37,99,235,0.07),transparent 65%);pointer-events:none}
-.industry-cta h2{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-0.025em;color:#fff;margin-bottom:14px;line-height:1.1}
-.industry-cta h2 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.industry-cta p{font-size:16px;color:#9ca3af;line-height:1.75;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
+.re-cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.45),transparent)}
+.re-cta-glow-l{position:absolute;top:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(6,182,212,0.09),transparent 65%);pointer-events:none}
+.re-cta-glow-r{position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(37,99,235,0.07),transparent 65%);pointer-events:none}
+.re-cta h2{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-0.025em;color:#fff;margin-bottom:14px;line-height:1.1}
+.re-cta p{font-size:16px;color:#9ca3af;line-height:1.75;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
 
 /* ── FOOTER ── */
 footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);padding:44px 40px}
@@ -204,20 +244,23 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 .f-policy a:hover{color:#6b7280}
 .f-policy .dot{font-size:10px;color:#2d3748}
 
-/* ── REVEAL ── */
+/* ── REVEAL ANIMATIONS ── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1),transform 0.8s cubic-bezier(0.22,1,0.36,1)}
 .reveal.in{opacity:1;transform:translateY(0)}
 .d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
+.d5{transition-delay:0.5s}.d6{transition-delay:0.6s}.d7{transition-delay:0.7s}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   .nav-links,.nav-cta{display:none}
   .back-wrap{padding:88px 24px 0}
-  .industry-hero-inner{padding:32px 24px 60px}
-  .prob-grid,.ba-grid{grid-template-columns:1fr}
+  .re-hero-inner{padding:32px 24px 60px}
   .section{padding:72px 24px}
-  .industry-cta{padding:0 24px 80px}
-  .industry-cta-card{padding:44px 28px}
+  .cost-grid{grid-template-columns:1fr}
+  .sol-grid{grid-template-columns:1fr}
+  .re-cta{padding:0 24px 80px}
+  .re-cta-card{padding:44px 28px}
+  .flow-container{padding:0 8px}
 }
 </style>
 </head>
@@ -231,8 +274,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       <span class="nav-logo-text">Synex AI Labs</span>
     </a>
     <ul class="nav-links">
-      <li><a href="/real-estate.html" class="active">Real Estate</a></li>
-      <li><a href="/engineering.html">Engineering</a></li>
+      <li><a href="/real-estate.html" class="active">Real Estate Agencies</a></li>
       <li><a href="/#contact">Contact</a></li>
     </ul>
     <a href="/#contact" class="nav-cta">Book an Audit →</a>
@@ -244,121 +286,164 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   <a href="/" class="back-link">← Back</a>
 </div>
 
-<!-- HERO -->
-<section class="industry-hero">
-  <div class="industry-hero-inner">
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="re-hero">
+  <div class="re-hero-inner">
     <h1>Built for Real Estate Agencies</h1>
     <p>We eliminate the admin that keeps your agents away from what they do best — selling.</p>
     <a href="/#contact" class="btn-primary">Book a Free Audit →</a>
   </div>
 </section>
 
-<!-- THE REAL PROBLEM -->
+<!-- ════════════════════ THE REAL PROBLEM ════════════════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">The Real Problem</div>
     <h2 class="sec-h2">It's not your marketing. <span class="grad">It's what happens after.</span></h2>
   </div>
-  <div class="reveal d1" style="max-width:680px;margin-top:32px">
-    <p style="font-size:16px;color:#9ca3af;line-height:1.8;margin-bottom:22px">When the market is active, enquiries come in faster than any team can handle them manually. A lead submits on a Friday evening. Nobody sees it until Monday. By then they've already viewed a property with someone else.</p>
-    <p style="font-size:16px;color:#9ca3af;line-height:1.8;margin-bottom:22px">It's not a people problem. It's a systems problem. High demand exposes the gap between when a lead arrives and when someone actually responds — and in real estate, that gap is where deals are lost.</p>
-    <p style="font-size:16px;color:#9ca3af;line-height:1.8">We've seen it across agencies of every size. The ones winning aren't necessarily the best marketers. They're the ones who respond first, follow up consistently, and never let a lead go cold by accident. That's what we build.</p>
+  <div class="prob-body-text reveal d1">
+    <p>When the market is active, enquiries come in faster than any team can handle manually. A lead submits on a Friday evening. Nobody sees it until Monday. By then they've already viewed a property with someone else.</p>
+    <p>It's not a people problem. It's a systems problem. High demand exposes the gap between when a lead arrives and when someone actually responds — and in real estate, that gap is where deals are lost.</p>
+    <p>We've seen it across agencies of every size. The ones winning aren't necessarily the best marketers. They're the ones who respond first, follow up consistently, and never let a lead go cold by accident. That's what we build.</p>
   </div>
 </div>
 
-<!-- THE PROBLEMS WE SOLVE -->
+<!-- ════════════════════ COST OF DOING NOTHING ════════════════════ -->
 <div class="section">
   <div class="reveal">
-    <div class="sec-label">The Problems We Solve</div>
-    <h2 class="sec-h2">We've seen this <span class="grad">before.</span></h2>
-    <p class="sec-sub">These are the exact problems we solve for real estate agencies.</p>
+    <div class="sec-label">The Cost of Doing Nothing</div>
+    <h2 class="sec-h2">What this gap is <span class="grad">actually costing you.</span></h2>
   </div>
-  <div class="prob-grid">
+  <div class="cost-grid">
 
-    <div class="s-card reveal d1">
-      <div class="prob-title">Leads Falling Through the Cracks</div>
-      <div class="prob-body">A new enquiry comes in on a Friday afternoon. By Monday, the lead has already signed with someone else. Speed of response is everything in real estate — and manual processes can't keep up.</div>
+    <div class="cost-col bad reveal d1">
+      <span class="cost-col-label">Without a system</span>
+      <ul class="cost-list red">
+        <li>Leads lost every weekend to faster competitors</li>
+        <li>Agents spending mornings on follow-up admin</li>
+        <li>No visibility on which leads are worth pursuing</li>
+        <li>Revenue walking out the door unnoticed</li>
+        <li>Team morale taking strain from avoidable missed deals</li>
+      </ul>
     </div>
 
-    <div class="s-card reveal d2">
-      <div class="prob-title">Property24 to CRM: The Manual Gap</div>
-      <div class="prob-body">Every lead that comes through Property24 gets manually copied into your CRM — if someone remembers to do it. That gap is where deals get lost and follow-ups never happen.</div>
-    </div>
-
-    <div class="s-card reveal d3">
-      <div class="prob-title">Viewings Booked on WhatsApp Voice Notes</div>
-      <div class="prob-body">Agents coordinate viewings through WhatsApp messages, voice notes, and missed calls. There's no system, no record, and no way to track what was agreed. Things get missed.</div>
-    </div>
-
-    <div class="s-card reveal d4">
-      <div class="prob-title">Weekends and After-Hours Silence</div>
-      <div class="prob-body">Enquiries don't stop when your office closes. But your responses do. Every unanswered message over a weekend is a lead that's already looking at your competitor's listing.</div>
+    <div class="cost-col good reveal d2">
+      <span class="cost-col-label">With our system</span>
+      <ul class="cost-list cyan">
+        <li>Every lead contacted within minutes — day or night</li>
+        <li>Agents spending their time selling, not following up</li>
+        <li>Every lead scored and prioritised automatically</li>
+        <li>No deal lost to slow response again</li>
+        <li>Team focused on closing, not chasing</li>
+      </ul>
     </div>
 
   </div>
 </div>
 
-<!-- WHAT WE BUILD -->
+<!-- ════════════════════ HOW IT WORKS ════════════════════ -->
+<div class="section">
+  <div class="reveal">
+    <div class="sec-label">How It Works</div>
+    <h2 class="sec-h2">What happens from the moment <span class="grad">a lead arrives.</span></h2>
+  </div>
+  <div class="flow-container">
+
+    <div class="flow-step reveal d1">
+      <div class="flow-num">01</div>
+      <div class="flow-card">
+        <div class="flow-card-title">Lead submits an enquiry</div>
+      </div>
+    </div>
+
+    <div class="flow-step reveal d2">
+      <div class="flow-num">02</div>
+      <div class="flow-card">
+        <div class="flow-card-title">System scores and prioritises the lead</div>
+      </div>
+    </div>
+
+    <div class="flow-step reveal d3">
+      <div class="flow-num">03</div>
+      <div class="flow-card">
+        <div class="flow-card-title">Instant personalised response sent to the lead</div>
+      </div>
+    </div>
+
+    <div class="flow-step reveal d4">
+      <div class="flow-num">04</div>
+      <div class="flow-card">
+        <div class="flow-card-title">Agent notified immediately with lead priority</div>
+      </div>
+    </div>
+
+    <div class="flow-step reveal d5">
+      <div class="flow-num">05</div>
+      <div class="flow-card">
+        <div class="flow-card-title">Automated follow-up sequence begins</div>
+      </div>
+    </div>
+
+    <div class="flow-step reveal d6">
+      <div class="flow-num">06</div>
+      <div class="flow-card">
+        <div class="flow-card-title">Agent makes contact with the lead</div>
+      </div>
+    </div>
+
+    <div class="flow-step reveal d7">
+      <div class="flow-num">07</div>
+      <div class="flow-card">
+        <div class="flow-card-title">Sequence stops. Lead is yours to close.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════ WHAT WE BUILD ════════════════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">What We Build</div>
-    <h2 class="sec-h2">The systems that <span class="grad">close the gap.</span></h2>
+    <h2 class="sec-h2">The specific systems we deploy <span class="grad">for your agency.</span></h2>
   </div>
-  <div class="prob-grid" style="margin-top:48px">
+  <div class="sol-grid">
 
-    <div class="s-card reveal d1" style="grid-column:1/-1">
-      <div class="prob-title">No Lead Left Behind — Ever</div>
-      <div class="prob-body">Every enquiry that reaches your agency gets captured, scored, and followed up automatically — within minutes of submission. Hot leads get flagged for immediate attention. Warm and cold leads stay in an automated sequence until your agent makes contact. When your office closes on Friday, the system doesn't. The moment an agent marks a lead as contacted — the sequence stops. No spam, no over-communication. Just the right message at the right time, every time.</div>
+    <div class="sol-card reveal d1">
+      <div class="sol-title">No Lead Left Behind — Ever</div>
+      <div class="sol-body">Every enquiry that reaches your agency gets captured, scored, and followed up automatically — within minutes of submission. When your office closes on Friday, the system doesn't. The moment an agent marks a lead as contacted — the sequence stops. Just the right message at the right time, every time.</div>
+    </div>
+
+    <div class="sol-card reveal d2">
+      <div class="sol-title">Your CRM Updates Itself</div>
+      <div class="sol-body">The moment a lead comes in from any source, it's in your CRM — scored, tagged, and ready for your agent to act on. No manual entry, no missed records, no deals lost to admin.</div>
+    </div>
+
+    <div class="sol-card reveal d3">
+      <div class="sol-title">Viewings. Without the Chaos.</div>
+      <div class="sol-body">Clients book, confirm, and receive reminders through a structured system. No WhatsApp voice notes, no missed calls, no confusion about what was agreed. Everything tracked, everything confirmed.</div>
+    </div>
+
+    <div class="sol-card reveal d4">
+      <div class="sol-title">Always On. Even When You're Not.</div>
+      <div class="sol-body">An intelligent agent handles after-hours enquiries, qualifies leads, and captures details while your team is offline. Monday starts with warm leads already in your pipeline.</div>
     </div>
 
   </div>
 </div>
 
-<!-- WHAT CHANGES -->
-<div class="section">
-  <div class="reveal">
-    <div class="sec-label">What Changes</div>
-    <h2 class="sec-h2">What your agency looks like <span class="grad">after working with us.</span></h2>
-  </div>
-  <div class="ba-grid reveal">
-
-    <div class="ba-col">
-      <span class="ba-label before">Before</span>
-      <ul class="ba-list red-dots">
-        <li>Leads manually captured and sometimes lost</li>
-        <li>Agents doing admin instead of selling</li>
-        <li>No visibility on follow-up status</li>
-        <li>After-hours enquiries go cold</li>
-        <li>Property24 leads copied manually into CRM</li>
-      </ul>
-    </div>
-
-    <div class="ba-col">
-      <span class="ba-label after">After</span>
-      <ul class="ba-list cyan-dots">
-        <li>Every lead captured and followed up automatically</li>
-        <li>Agents focused entirely on client relationships</li>
-        <li>Full visibility on every lead and interaction</li>
-        <li>Instant responses 24/7 — even when the office is closed</li>
-        <li>Property24 leads flow directly into your CRM automatically</li>
-      </ul>
-    </div>
-
-  </div>
-</div>
-
-<!-- BOTTOM CTA -->
-<div class="industry-cta">
-  <div class="industry-cta-card reveal">
-    <div class="icta-glow-l"></div>
-    <div class="icta-glow-r"></div>
-    <h2>Let's talk about <span class="grad">your agency.</span></h2>
+<!-- ════════════════════ BOTTOM CTA ════════════════════ -->
+<div class="re-cta">
+  <div class="re-cta-card reveal">
+    <div class="re-cta-glow-l"></div>
+    <div class="re-cta-glow-r"></div>
+    <h2>Let's talk about your agency.</h2>
     <p>Book a free 30-minute audit. No pitch, no pressure — just a straight conversation about what's slowing your team down.</p>
     <a href="/#contact" class="btn-primary">Book My Free Audit →</a>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ════════════════════ FOOTER ════════════════════ -->
 <footer>
   <div class="footer-inner">
     <a href="/" class="f-logo">
@@ -390,7 +475,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 if (window.matchMedia('(pointer:fine)').matches) {
-  document.querySelectorAll('.s-card').forEach(card => {
+  document.querySelectorAll('.sol-card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
