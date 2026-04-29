@@ -82,7 +82,7 @@ nav{
 }
 .hero-center{
   position:relative;z-index:2;text-align:center;
-  max-width:800px;padding:130px 40px 80px;
+  width:100%;max-width:900px;padding:130px 40px 80px;
   display:flex;flex-direction:column;align-items:center;
 }
 .eyebrow{
@@ -94,7 +94,7 @@ nav{
 .eyebrow .dot{width:6px;height:6px;background:#06b6d4;border-radius:50%;box-shadow:0 0 6px #06b6d4;animation:blink 2s ease infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-.hero-h1{font-family:'Syne',sans-serif;font-size:clamp(46px,5.5vw,78px);font-weight:800;line-height:1.0;letter-spacing:-0.03em;margin-bottom:24px;color:#fff}
+.hero-h1{font-family:'Syne',sans-serif;font-size:clamp(48px,6vw,92px);font-weight:800;line-height:1.0;letter-spacing:-0.03em;margin-bottom:24px;color:#fff}
 .hero-h1 .grad{background:linear-gradient(to right,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:18px;font-weight:300;color:#9ca3af;line-height:1.75;margin-bottom:40px;max-width:560px;text-align:center}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
@@ -125,21 +125,22 @@ nav{
 /* ── TICKER ── */
 .ticker-outer{
   position:relative;z-index:1;
-  border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);
+  background:#06b6d4;
+  border-top:1px solid rgba(0,0,0,0.12);border-bottom:1px solid rgba(0,0,0,0.12);
   padding:16px 0;overflow:hidden;
 }
 .ticker-outer::before,.ticker-outer::after{
   content:'';position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none;
 }
-.ticker-outer::before{left:0;background:linear-gradient(to right,#000,transparent)}
-.ticker-outer::after{right:0;background:linear-gradient(to left,#000,transparent)}
+.ticker-outer::before{left:0;background:linear-gradient(to right,#06b6d4,transparent)}
+.ticker-outer::after{right:0;background:linear-gradient(to left,#06b6d4,transparent)}
 .ticker-track{display:flex;width:max-content;animation:ticker 35s linear infinite}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .ticker-item{
   display:inline-flex;align-items:center;gap:10px;padding:0 32px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#4b5563;white-space:nowrap;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#000000;white-space:nowrap;
 }
-.ticker-item .spark{color:#06b6d4;font-size:10px}
+.ticker-item .spark{color:#000000;font-size:10px}
 
 /* ── SECTION BASE ── */
 .section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:96px 40px}
@@ -320,15 +321,15 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   <div class="hero-overlay"></div>
   <div class="hero-center">
     <h1 class="hero-h1">
-      We Build AI That<br/>
-      <span class="grad">Works For You</span><br/>
-      24 / 7.
+      Your Business.<br/>
+      <span class="grad">Running.</span><br/>
+      Without You.
     </h1>
     <p class="hero-sub">
-      We build systems that eliminate the manual work slowing your business down — so your team can focus on what actually moves the needle.
+      We build systems that capture leads, follow up automatically, and keep your operations moving — so you can focus on growing, not managing.
     </p>
     <div class="hero-actions">
-      <a href="/real-estate.html" class="btn-primary">We Work With Real Estate Agencies →</a>
+      <a href="/real-estate.html" class="btn-primary">See How It Works →</a>
       <a href="/#contact" class="btn-ghost">Book a Free Audit →</a>
     </div>
   </div>
