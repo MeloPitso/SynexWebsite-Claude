@@ -282,6 +282,60 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 .what-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#9ca3af;line-height:1.65}
 .what-list li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(6,182,212,0.85);margin-top:7px}
 
+/* ── FLOW DIAGRAM (The System) ── */
+.flow-container{
+  position:relative;max-width:680px;
+  margin:52px auto 0;
+}
+.flow-step{
+  display:flex;align-items:center;gap:24px;
+  position:relative;margin-bottom:12px;
+}
+.flow-step:not(:last-child)::after{
+  content:'';position:absolute;
+  left:19px;top:40px;
+  width:2px;height:calc(100% + 12px);
+  background:linear-gradient(to bottom,rgba(6,182,212,0.4),rgba(6,182,212,0.15));
+}
+.flow-num{
+  flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.35);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;
+  position:relative;z-index:1;
+}
+.flow-card{
+  flex:1;
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0) 100%);
+  border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:18px 24px;
+}
+.flow-card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff}
+
+/* ── THE SYSTEM SECTION ── */
+.system-body{
+  margin-top:32px;max-width:680px;
+  display:flex;flex-direction:column;gap:20px;
+}
+.system-body p{font-size:16px;color:#9ca3af;line-height:1.8}
+.system-who{margin-top:64px;max-width:680px;margin-left:auto;margin-right:auto}
+.system-who-h{
+  font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#fff;
+  margin-bottom:20px;letter-spacing:-0.02em;
+}
+.system-who p{font-size:15px;color:#9ca3af;line-height:1.8;margin-bottom:16px}
+.system-who p:last-child{margin-bottom:0}
+.system-bottom{
+  margin-top:52px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:24px;
+}
+.system-bottom-line{
+  font-size:16px;font-weight:300;color:#6b7280;
+  font-family:'DM Sans',sans-serif;letter-spacing:0.01em;
+}
+
+/* Extended reveal delays */
+.d5{transition-delay:0.5s}.d6{transition-delay:0.6s}.d7{transition-delay:0.7s}
+
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
   .step{padding:0}
@@ -295,6 +349,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .cta-card{padding:44px 28px}
   .form-row{flex-direction:column}
   .section{padding:72px 24px}
+  .flow-container{padding:0 8px}
 }
 </style>
 </head>
@@ -374,6 +429,57 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       </ul>
       <a href="/real-estate.html" class="btn-primary" style="align-self:flex-start">Learn More →</a>
     </div>
+  </div>
+</div>
+
+<!-- ════════════════════ THE SYSTEM ════════════════════ -->
+<div class="section" id="the-system">
+  <div class="reveal">
+    <div class="sec-label">The System</div>
+    <h2 class="sec-h2">One problem. One system. <span class="grad">Built around your business.</span></h2>
+  </div>
+  <div class="system-body reveal d1">
+    <p>Most service businesses don't lose clients because of bad marketing or poor service. They lose them because enquiries come in faster than people can respond — and without a system in place, leads go cold, follow-ups get forgotten, and revenue walks out the door quietly.</p>
+    <p>We built a system that closes that gap. Every enquiry that reaches your business gets captured instantly, scored by priority, and followed up automatically — until someone on your team makes contact. The moment they do, the sequence stops. No spam. No over-communication. Just the right message at the right time.</p>
+  </div>
+  <div class="flow-container">
+    <div class="flow-step reveal d1">
+      <div class="flow-num">01</div>
+      <div class="flow-card"><div class="flow-card-title">Enquiry comes in</div></div>
+    </div>
+    <div class="flow-step reveal d2">
+      <div class="flow-num">02</div>
+      <div class="flow-card"><div class="flow-card-title">System captures and scores it instantly</div></div>
+    </div>
+    <div class="flow-step reveal d3">
+      <div class="flow-num">03</div>
+      <div class="flow-card"><div class="flow-card-title">Personalised response sent to the lead</div></div>
+    </div>
+    <div class="flow-step reveal d4">
+      <div class="flow-num">04</div>
+      <div class="flow-card"><div class="flow-card-title">Your team notified with lead priority</div></div>
+    </div>
+    <div class="flow-step reveal d5">
+      <div class="flow-num">05</div>
+      <div class="flow-card"><div class="flow-card-title">Automated follow-up sequence begins</div></div>
+    </div>
+    <div class="flow-step reveal d6">
+      <div class="flow-num">06</div>
+      <div class="flow-card"><div class="flow-card-title">Your team makes contact</div></div>
+    </div>
+    <div class="flow-step reveal d7">
+      <div class="flow-num">07</div>
+      <div class="flow-card"><div class="flow-card-title">Sequence stops</div></div>
+    </div>
+  </div>
+  <div class="system-who reveal">
+    <h3 class="system-who-h">Who this is built for</h3>
+    <p>Any business where speed of response determines whether you win or lose the client. We have configured this system for real estate agencies, law firms, medical practices, trade businesses, and consulting firms — but if your business gets enquiries and struggles to follow up consistently, this was built for you.</p>
+    <p>Upon enquiry, we assess your specific workflow, your team's process, and your industry's expectations — then configure the system around that. Nothing generic. Nothing off the shelf.</p>
+  </div>
+  <div class="system-bottom reveal">
+    <p class="system-bottom-line">If your business gets leads — this system was built for you.</p>
+    <a href="/#contact" class="btn-primary">Book a Free Audit →</a>
   </div>
 </div>
 
