@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -161,6 +160,7 @@ nav{
   border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px;
   position:relative;overflow:hidden;
   transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s,box-shadow 0.28s;
+  will-change:transform;
 }
 .s-card:hover{
   transform:translateY(-8px);
@@ -583,8 +583,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   let W, H, stars = [], particles = [], shootingStars = [];
   let animId = null, time = 0, shootTimer = 0;
   let nextShootIn = 2000 + Math.random() * 2000;
-  let lastTimestamp = 0;
+  let lastTimestamp = 0, frameAccum = 0;
   let isMobile = window.innerWidth < 768;
+  const FRAME_INTERVAL = 1000 / 30; // cap background canvas at 30fps
+  const SB = 8, PB = 6; // star/particle opacity bucket counts
+  const _sb = Array.from({length: SB}, () => []); // pre-allocated star buckets
+  const _pb = Array.from({length: PB}, () => []); // pre-allocated particle connection buckets
 
   function rand(a, b) { return a + Math.random() * (b - a); }
 
@@ -611,11 +615,21 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   }
 
   function drawStars(t) {
+    for (let b = 0; b < SB; b++) _sb[b].length = 0;
     for (const s of stars) {
       const op = s.baseOpacity * (0.6 + 0.4 * Math.sin(t * s.speed + s.phase));
+      const b = Math.min(SB - 1, (op * SB) | 0);
+      _sb[b].push(s.x, s.y, s.r);
+    }
+    for (let b = 0; b < SB; b++) {
+      const seg = _sb[b];
+      if (!seg.length) continue;
+      ctx.fillStyle = `rgba(255,248,220,${((b + 0.5) / SB).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,248,220,${op.toFixed(3)})`;
+      for (let k = 0; k < seg.length; k += 3) {
+        ctx.moveTo(seg[k] + seg[k + 2], seg[k + 1]);
+        ctx.arc(seg[k], seg[k + 1], seg[k + 2], 0, Math.PI * 2);
+      }
       ctx.fill();
     }
   }
@@ -701,35 +715,51 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 
   function drawParticles() {
     const maxDist = 140;
+    const maxDistSq = maxDist * maxDist;
     ctx.lineWidth = 0.8;
+    for (let b = 0; b < PB; b++) _pb[b].length = 0;
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < maxDist) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(45,212,191,${((1 - dist / maxDist) * 0.15).toFixed(3)})`;
-          ctx.stroke();
+        const dSq = dx * dx + dy * dy;
+        if (dSq < maxDistSq) {
+          const t = 1 - Math.sqrt(dSq) / maxDist;
+          const b = Math.min(PB - 1, (t * PB) | 0);
+          _pb[b].push(i, j);
         }
       }
     }
-    ctx.fillStyle = 'rgba(45,212,191,0.5)';
-    for (const p of particles) {
+    for (let b = 0; b < PB; b++) {
+      const seg = _pb[b];
+      if (!seg.length) continue;
+      ctx.strokeStyle = `rgba(45,212,191,${((b + 0.5) / PB * 0.15).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-      ctx.fill();
+      for (let k = 0; k < seg.length; k += 2) {
+        ctx.moveTo(particles[seg[k]].x, particles[seg[k]].y);
+        ctx.lineTo(particles[seg[k + 1]].x, particles[seg[k + 1]].y);
+      }
+      ctx.stroke();
     }
+    ctx.fillStyle = 'rgba(45,212,191,0.5)';
+    ctx.beginPath();
+    for (const p of particles) {
+      ctx.moveTo(p.x + 1.5, p.y);
+      ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+    }
+    ctx.fill();
   }
 
   function loop(ts) {
     animId = requestAnimationFrame(loop);
     const dt = ts - lastTimestamp;
     lastTimestamp = ts;
-    time += 0.016;
-    shootTimer += dt;
+    frameAccum += dt;
+    if (frameAccum < FRAME_INTERVAL) return;
+    const elapsed = frameAccum;
+    frameAccum %= FRAME_INTERVAL;
+    time += elapsed / 1000;
+    shootTimer += elapsed;
     if (shootTimer >= nextShootIn) {
       shootTimer = 0;
       nextShootIn = 2000 + Math.random() * 2000;
@@ -772,7 +802,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 <script>
 // Intersection observer for scroll reveals
 const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
@@ -814,20 +844,29 @@ async function handleLeadSubmit(e) {
   }
 }
 
-// Tilt effect on service cards (mouse-only)
+// Tilt effect on service cards (mouse-only, rAF-throttled)
 if (window.matchMedia('(pointer:fine)').matches) {
   document.querySelectorAll('.s-card').forEach(card => {
+    let tiltRaf = null, pendingE = null;
     card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+      pendingE = e;
+      if (tiltRaf) return;
+      tiltRaf = requestAnimationFrame(() => {
+        const r = card.getBoundingClientRect();
+        const x = (pendingE.clientX - r.left) / r.width - 0.5;
+        const y = (pendingE.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+        tiltRaf = null;
+      });
     });
     card.addEventListener('mouseleave', () => {
+      if (tiltRaf) { cancelAnimationFrame(tiltRaf); tiltRaf = null; }
       card.style.transform = '';
     });
   });
 }
 </script>
+<link rel="stylesheet" href="/chat.css"/>
+<script src="/chat.js"></script>
 </body>
 </html>
