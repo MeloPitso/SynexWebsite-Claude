@@ -351,6 +351,15 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .section{padding:72px 24px}
   .flow-container{padding:0 8px}
 }
+
+/* ── BEYOND AUTOMATION ── */
+.beyond-section{position:relative;z-index:1;background:rgba(6,182,212,0.012)}
+.beyond-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.5),rgba(37,99,235,0.35),transparent)}
+.use-cases{display:flex;gap:40px;margin-top:48px;flex-wrap:wrap}
+.use-case-item{flex:1;min-width:200px}
+.use-case-label{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+.use-case-body{font-size:14px;color:#6b7280;line-height:1.7}
+.beyond-note{font-size:13px;color:#374151;font-family:'DM Sans',sans-serif;letter-spacing:0.01em;margin-top:28px}
 </style>
 </head>
 <body>
@@ -425,11 +434,47 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     <div class="sec-label">The System</div>
     <h2 class="sec-h2">One problem. One system. <span class="grad">Built around your business.</span></h2>
   </div>
-  <div class="reveal d1" style="margin-top:52px">
-    <div class="s-card what-card" style="max-width:680px">
+  <div style="margin-top:52px;max-width:680px;display:flex;flex-direction:column;gap:20px">
+    <div class="s-card what-card reveal d1">
       <div class="s-title">Speed to Lead System</div>
       <p style="font-size:15px;color:#9ca3af;line-height:1.75;margin-bottom:24px">Every enquiry your business receives gets captured, scored, and followed up automatically — before your competitor even sees the message. You focus on closing. We handle everything before that.</p>
       <a href="/system.html" class="btn-primary" style="align-self:flex-start">Learn More →</a>
+    </div>
+    <div class="s-card what-card reveal d2">
+      <div class="s-title">Agentic Workflows</div>
+      <p style="font-size:15px;color:#9ca3af;line-height:1.75;margin-bottom:24px">For businesses with complex, high-stakes operations that demand more than automation. We design and build custom AI systems that think, decide, and act — handling multi-step processes end to end without manual intervention.</p>
+      <a href="/agentic-workflows.html" class="btn-primary" style="align-self:flex-start">Learn More →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ BEYOND AUTOMATION ════════════════════ -->
+<div class="beyond-section">
+  <div class="section">
+    <div class="reveal">
+      <div class="sec-label">Beyond Automation</div>
+      <h2 class="sec-h2">Got a complex process that needs more than automation?</h2>
+    </div>
+    <div class="reveal d1" style="margin-top:28px;max-width:680px">
+      <p style="font-size:16px;color:#9ca3af;line-height:1.8">Some operations are too nuanced, too variable, or too high-stakes for standard automation. Agentic workflows sit at a different level entirely — AI systems that receive a goal, determine the steps required, execute across multiple tools, and deliver an outcome. Built for businesses where the process changes depending on the situation.</p>
+    </div>
+    <div class="use-cases reveal d2">
+      <div class="use-case-item">
+        <div class="use-case-label">Law Firms</div>
+        <p class="use-case-body">From intake to drafted engagement letter — the system reads, reasons, and produces without waiting for instruction.</p>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-label">Engineering &amp; Construction</div>
+        <p class="use-case-body">Tender documents processed, scoped, and summarised before your team has had their morning coffee.</p>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-label">Any Complex Operation</div>
+        <p class="use-case-body">If your process involves multiple steps, changing inputs, and real decisions — we can build a system that handles it.</p>
+      </div>
+    </div>
+    <p class="beyond-note reveal d3">This is a custom service. Every build starts with a conversation.</p>
+    <div class="reveal d4" style="margin-top:28px">
+      <a href="#contact" class="btn-primary">Book a Discovery Call →</a>
     </div>
   </div>
 </div>
@@ -493,6 +538,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
         <option value="" disabled selected>What can we help you with?</option>
         <option>Real Estate Automation</option>
         <option>Engineering Firm Automation</option>
+        <option>Agentic Workflows</option>
         <option>Not sure / General Enquiry</option>
       </select>
       <textarea class="inp inp-full" id="lead-message" placeholder="What are you looking to automate?" rows="3" style="resize:none;font-family:inherit"></textarea>
