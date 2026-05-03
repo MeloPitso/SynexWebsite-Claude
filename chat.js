@@ -137,7 +137,14 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: conversationHistory }),
     })
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if (!res.ok) {
+          return res.text().then(function (t) {
+            throw new Error('API ' + res.status + ': ' + t.slice(0, 200));
+          });
+        }
+        return res.json();
+      })
       .then(function (data) {
         if (typingEl) typingEl.remove();
 
@@ -154,8 +161,9 @@
           }).catch(function () {});
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         if (typingEl) typingEl.remove();
+        console.error('[chat]', err);
         addMessage('bot', 'Something went wrong. Please try again in a moment.');
       })
       .finally(function () {
