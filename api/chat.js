@@ -61,7 +61,7 @@ module.exports = async function handler(req, res) {
   const apiKey = (process.env.ANTHROPIC_API_KEY || '').trim();
   if (!apiKey) {
     console.error('[chat] ANTHROPIC_API_KEY is not set');
-    return res.status(500).json({ error: 'AI service not configured' });
+    return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not set in environment variables' });
   }
 
   /* Sanitise messages: keep only user/assistant turns with string content.
