@@ -164,7 +164,7 @@
       .catch(function (err) {
         if (typingEl) typingEl.remove();
         console.error('[chat]', err);
-        addMessage('bot', 'Error: ' + (err && err.message ? err.message : 'unknown'));
+        addMessage('bot', 'Something went wrong. Please try again in a moment.');
       })
       .finally(function () {
         isLoading = false;
