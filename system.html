@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Speed to Lead System — Synex AI Labs</title>
+<meta name="description" content="The Speed to Lead System by Synex AI Labs captures every enquiry, responds instantly, and follows up automatically — closing the gap between a lead arriving and your team responding."/>
+<link rel="icon" type="image/jpeg" href="/brand_assets/SynexAILAbsLogo.jpeg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -224,9 +226,30 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 .d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
 .d5{transition-delay:0.5s}.d6{transition-delay:0.6s}.d7{transition-delay:0.7s}
 
+/* ── HAMBURGER / MOBILE NAV ── */
+.nav-hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  background:none;border:none;cursor:pointer;padding:6px;
+}
+.nav-hamburger:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:4px}
+.h-line{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),opacity 0.2s}
+.nav-hamburger.open .h-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open .h-line:nth-child(2){opacity:0}
+.nav-hamburger.open .h-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-nav{
+  display:none;position:fixed;inset:0;z-index:99;
+  flex-direction:column;align-items:center;justify-content:center;gap:32px;
+  background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.mob-nav.open{display:flex}
+.mob-nav a{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#9ca3af;text-decoration:none;letter-spacing:-0.02em;transition:color 0.2s}
+.mob-nav a:hover,.mob-nav a.active{color:#fff}
+.mob-nav .mob-cta-btn{padding:13px 32px;background:linear-gradient(to right,#06b6d4,#2563eb);color:#000 !important;border-radius:100px;font-size:16px;box-shadow:0 0 20px rgba(6,182,212,0.35)}
+
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   .nav-links,.nav-cta{display:none}
+  .nav-hamburger{display:flex}
   .back-wrap{padding:88px 24px 0}
   .sys-hero-inner{padding:32px 24px 60px}
   .section{padding:72px 24px}
@@ -242,15 +265,30 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs logo"/>
+      <img src="brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs logo" height="38" width="38"/>
       <span class="nav-logo-text">Synex AI Labs</span>
     </a>
     <ul class="nav-links">
       <li><a href="/#contact">Contact</a></li>
     </ul>
     <a href="/#contact" class="nav-cta">Book an Audit →</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="h-line"></span>
+      <span class="h-line"></span>
+      <span class="h-line"></span>
+    </button>
   </div>
 </nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="mob-nav" id="mob-nav" aria-hidden="true">
+  <a href="/">Home</a>
+  <a href="/real-estate.html">Real Estate</a>
+  <a href="/engineering.html">Engineering</a>
+  <a href="/system.html" class="active">Speed to Lead</a>
+  <a href="/agentic-workflows.html">Agentic Workflows</a>
+  <a href="/#contact" class="mob-cta-btn">Book a Free Audit →</a>
+</div>
 
 <!-- BACK LINK -->
 <div class="back-wrap">
@@ -373,7 +411,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 <footer>
   <div class="footer-inner">
     <a href="/" class="f-logo">
-      <img src="brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs"/>
+      <img src="brand_assets/SynexAILAbsLogo.jpeg" alt="Synex AI Labs" height="30" width="30" loading="lazy"/>
       <span class="f-logo-text">Synex AI Labs</span>
     </a>
     <div class="f-links">
@@ -399,6 +437,21 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+(function(){
+  const hbg = document.getElementById('nav-hamburger');
+  const mob = document.getElementById('mob-nav');
+  if (!hbg || !mob) return;
+  const toggle = (open) => {
+    hbg.classList.toggle('open', open);
+    mob.classList.toggle('open', open);
+    hbg.setAttribute('aria-expanded', open);
+    mob.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  hbg.addEventListener('click', () => toggle(!hbg.classList.contains('open')));
+  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+})();
 </script>
 </body>
 </html>
