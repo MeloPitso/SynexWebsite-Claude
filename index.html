@@ -220,11 +220,34 @@ nav{
 .practice-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#22d3ee;flex-shrink:0;line-height:1.2;min-width:28px}
 .practice-text{font-size:16px;color:#9ca3af;line-height:1.82}
 
-/* ── WHAT WE BUILD LIST ── */
-.build-intro{font-size:16px;color:#9ca3af;line-height:1.8;max-width:640px;margin-top:24px}
-.build-list{list-style:none;padding:0;margin:36px 0 0;display:flex;flex-direction:column;gap:13px;max-width:560px}
-.build-list li{display:flex;align-items:flex-start;gap:14px;font-size:15px;color:#9ca3af;line-height:1.65}
-.build-list li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;background:rgba(6,182,212,0.85);margin-top:7px}
+/* ── SERVICE CARDS ── */
+.service-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
+.service-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.01) 100%);
+  border:1px solid rgba(255,255,255,0.09);border-radius:24px;
+  padding:44px 40px;position:relative;overflow:hidden;
+  transition:border-color 0.28s,background 0.28s;
+}
+.service-card:hover{
+  border-color:rgba(6,182,212,0.22);
+  background:linear-gradient(160deg,rgba(6,182,212,0.06) 0%,rgba(37,99,235,0.03) 100%);
+}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.3),transparent)}
+.service-card-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#06b6d4;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.service-card-label::after{content:'';flex:0 0 28px;height:1px;background:linear-gradient(to right,rgba(6,182,212,0.4),transparent)}
+.service-card h3{font-family:'Syne',sans-serif;font-size:clamp(20px,2.2vw,27px);font-weight:800;letter-spacing:-0.025em;line-height:1.18;color:#fff;margin-bottom:16px}
+.service-card p{font-size:15px;color:#9ca3af;line-height:1.82;margin-bottom:28px}
+.btn-learn{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 24px;
+  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;
+  background:transparent;color:#22d3ee;
+  border:1px solid rgba(6,182,212,0.35);border-radius:100px;
+  text-decoration:none;
+  transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.2s;
+}
+.btn-learn:hover{background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.6);transform:translateX(3px)}
+.btn-learn:active{transform:translateX(1px)}
+.btn-learn:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:100px}
 
 /* ── FINAL CTA BAND ── */
 .final-cta{position:relative;z-index:1;background:rgba(6,182,212,0.012)}
@@ -303,6 +326,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .practice-num{font-size:18px}
   .final-cta-inner{padding:72px 24px}
   footer{padding:44px 24px}
+  .service-cards{grid-template-columns:1fr}
+  .service-card{padding:36px 28px}
 }
 
 /* ══════════════════ ANIMATIONS ══════════════════ */
@@ -392,6 +417,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   <a href="/">Home</a>
   <a href="/real-estate.html">Real Estate</a>
   <a href="/system.html">Speed to Lead</a>
+  <a href="/database-reactivation.html">Database Reactivation</a>
   <a href="/agentic-workflows.html">Agentic Workflows</a>
   <a href="#contact" class="mob-cta-btn">Book a Free Audit →</a>
 </div>
@@ -541,21 +567,26 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════ SECTION 6: WHAT WE BUILD ════════ -->
+<!-- ════════ SECTION 6: SERVICES ════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">Our Systems</div>
     <h2 class="sec-h2">What we build <span class="grad">for your business.</span></h2>
   </div>
-  <p class="build-intro reveal d1">Every system is built specifically for your business. We assess your operations, identify the highest-value automation opportunities, and build around that — nothing generic, nothing off the shelf.</p>
-  <ul class="build-list">
-    <li class="reveal d1">Lead capture and intelligent follow-up systems</li>
-    <li class="reveal d2">Database reactivation pipelines</li>
-    <li class="reveal d3">Automated client communication workflows</li>
-    <li class="reveal d4">Internal reporting and performance monitoring</li>
-    <li class="reveal d5">Document processing and data extraction pipelines</li>
-    <li class="reveal d6">API and systems integration</li>
-  </ul>
+  <div class="service-cards">
+    <div class="service-card reveal d1">
+      <div class="service-card-label">Speed to Lead</div>
+      <h3>You're losing leads you don't even know about.</h3>
+      <p>Most enquiries come in outside business hours. By the time your team follows up, the prospect is gone — and so is the money you spent to get them there. We fix the intake, not the ads.</p>
+      <a href="/system.html" class="btn-learn">Learn More →</a>
+    </div>
+    <div class="service-card reveal d2">
+      <div class="service-card-label">Database Reactivation</div>
+      <h3>Your old contacts are worth more than you think.</h3>
+      <p>Every business has contacts that went cold. Most write them off. But most of them didn't say no — the timing was off, or nobody followed up. We bring them back.</p>
+      <a href="/database-reactivation.html" class="btn-learn">Learn More →</a>
+    </div>
+  </div>
 </div>
 
 <!-- ════════ SECTION 7: FINAL CTA ════════ -->
