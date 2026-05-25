@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -10,9 +10,6 @@
 <meta property="og:url" content="https://synexailabs.com"/>
 <meta name="robots" content="index, follow"/>
 <link rel="icon" type="image/jpeg" href="/brand_assets/SynexAILAbsLogo.jpeg"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -22,9 +19,9 @@
   --tx:#ffffff;--tx2:#d1d5db;--tx3:#9ca3af;--tx4:#6b7280;
   --cyan4:#22d3ee;--cyan5:#06b6d4;--cyan3:#67e8f9;
   --blue5:#3b82f6;--blue6:#2563eb;
-  --fd:'Syne',sans-serif;--fb:'Space Grotesk',sans-serif;--fm:'JetBrains Mono',monospace;
+  --fd:'Syne',sans-serif;--fb:Arial,sans-serif;--fm:'JetBrains Mono',monospace;
 }
-html{background:#000;color:#fff;font-family:'Space Grotesk',sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
 body{
   background:linear-gradient(to bottom,#000 0%,#0a0a0a 25%,#111827 55%,#0a0a0a 80%,#000 100%);
   min-height:100vh;overflow-x:hidden;
@@ -58,7 +55,7 @@ nav{
 .nav-links a:hover{color:#fff}
 .nav-cta{
   display:inline-flex;align-items:center;gap:8px;padding:10px 22px;
-  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;
+  font-family:Arial,sans-serif;font-size:14px;font-weight:600;
   background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
   border:none;border-radius:100px;cursor:pointer;text-decoration:none;
   box-shadow:0 0 20px rgba(6,182,212,0.35);
@@ -118,7 +115,7 @@ nav{
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 .btn-primary{
   display:inline-flex;align-items:center;gap:8px;padding:14px 30px;
-  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;
+  font-family:Arial,sans-serif;font-size:15px;font-weight:600;
   background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
   border:none;border-radius:100px;cursor:pointer;text-decoration:none;
   box-shadow:0 0 28px rgba(6,182,212,0.4),0 4px 20px rgba(6,182,212,0.15);
@@ -129,7 +126,7 @@ nav{
 .btn-primary:focus-visible{outline:2px solid #22d3ee;outline-offset:3px}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:8px;padding:14px 28px;
-  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;
+  font-family:Arial,sans-serif;font-size:15px;font-weight:600;
   background:rgba(255,255,255,0.05);color:#fff;
   border:1px solid rgba(255,255,255,0.12);border-radius:100px;cursor:pointer;text-decoration:none;
   transition:background 0.2s,border-color 0.2s,transform 0.2s;
@@ -239,7 +236,7 @@ nav{
 .service-card p{font-size:15px;color:#9ca3af;line-height:1.82;margin-bottom:28px}
 .btn-learn{
   display:inline-flex;align-items:center;gap:8px;padding:11px 24px;
-  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;
+  font-family:Arial,sans-serif;font-size:14px;font-weight:600;
   background:transparent;color:#22d3ee;
   border:1px solid rgba(6,182,212,0.35);border-radius:100px;
   text-decoration:none;
@@ -274,7 +271,7 @@ nav{
 .inp{
   flex:1;width:100%;padding:13px 18px;
   background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;font-family:'Space Grotesk',sans-serif;font-size:14px;
+  border-radius:12px;font-family:Arial,sans-serif;font-size:14px;
   color:#fff;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
 }
 .inp::placeholder{color:#4b5563}
@@ -284,7 +281,7 @@ select.inp option{background:#0d0f14;color:#fff}
 select.inp:invalid{color:#4b5563}
 .inp-full{width:100%;display:block;margin-bottom:12px}
 .form-btn{
-  width:100%;padding:14px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;
+  width:100%;padding:14px;font-family:Arial,sans-serif;font-size:15px;font-weight:600;
   background:linear-gradient(to right,#06b6d4,#2563eb);color:#000;
   border:none;border-radius:12px;cursor:pointer;
   box-shadow:0 0 22px rgba(6,182,212,0.3);transition:transform 0.2s,box-shadow 0.2s;
@@ -306,7 +303,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 .f-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:#374151;letter-spacing:0.05em}
 .f-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
 .f-policy{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.f-policy a{font-size:10px;color:#2d3748;text-decoration:none;transition:color 0.2s;font-family:'Space Grotesk',sans-serif}
+.f-policy a{font-size:10px;color:#2d3748;text-decoration:none;transition:color 0.2s;font-family:Arial,sans-serif}
 .f-policy a:hover{color:#6b7280}
 .f-policy .dot{font-size:10px;color:#2d3748}
 
@@ -469,6 +466,28 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
+<!-- ════════ SECTION 6: SERVICES ════════ -->
+<div class="section">
+  <div class="reveal">
+    <div class="sec-label">Our Systems</div>
+    <h2 class="sec-h2">What we build <span class="grad">for your business.</span></h2>
+  </div>
+  <div class="service-cards">
+    <div class="service-card reveal d1">
+      <div class="service-card-label">Speed to Lead</div>
+      <h3>You're losing leads you don't even know about.</h3>
+      <p>Most enquiries come in outside business hours. By the time your team follows up, the prospect is gone — and so is the money you spent to get them there. We fix the intake, not the ads.</p>
+      <a href="/system.html" class="btn-learn">Learn More →</a>
+    </div>
+    <div class="service-card reveal d2">
+      <div class="service-card-label">Database Reactivation</div>
+      <h3>Your old contacts are worth more than you think.</h3>
+      <p>Every business has contacts that went cold. Most write them off. But most of them didn't say no — the timing was off, or nobody followed up. We bring them back.</p>
+      <a href="/database-reactivation.html" class="btn-learn">Learn More →</a>
+    </div>
+  </div>
+</div>
+
 <!-- ════════ SECTION 3: AGENTIC VS TRADITIONAL ════════ -->
 <div class="beyond-section">
   <div class="section">
@@ -567,28 +586,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════ SECTION 6: SERVICES ════════ -->
-<div class="section">
-  <div class="reveal">
-    <div class="sec-label">Our Systems</div>
-    <h2 class="sec-h2">What we build <span class="grad">for your business.</span></h2>
-  </div>
-  <div class="service-cards">
-    <div class="service-card reveal d1">
-      <div class="service-card-label">Speed to Lead</div>
-      <h3>You're losing leads you don't even know about.</h3>
-      <p>Most enquiries come in outside business hours. By the time your team follows up, the prospect is gone — and so is the money you spent to get them there. We fix the intake, not the ads.</p>
-      <a href="/system.html" class="btn-learn">Learn More →</a>
-    </div>
-    <div class="service-card reveal d2">
-      <div class="service-card-label">Database Reactivation</div>
-      <h3>Your old contacts are worth more than you think.</h3>
-      <p>Every business has contacts that went cold. Most write them off. But most of them didn't say no — the timing was off, or nobody followed up. We bring them back.</p>
-      <a href="/database-reactivation.html" class="btn-learn">Learn More →</a>
-    </div>
-  </div>
-</div>
-
 <!-- ════════ SECTION 7: FINAL CTA ════════ -->
 <div class="final-cta">
   <div class="final-cta-inner">
@@ -622,7 +619,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
         <option>Not sure / General Enquiry</option>
       </select>
       <textarea class="inp inp-full" id="lead-message" placeholder="What are you looking to automate?" rows="3" style="resize:none;font-family:inherit"></textarea>
-      <div id="form-feedback" style="display:none;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:'Space Grotesk',sans-serif"></div>
+      <div id="form-feedback" style="display:none;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:Arial,sans-serif"></div>
       <button class="form-btn" type="submit" id="form-submit-btn">Book My Free Audit →</button>
       <p class="form-note">Free · No commitment · Response within 24 hours</p>
     </form>
@@ -850,12 +847,12 @@ async function handleLeadSubmit(e) {
     });
     const data = await res.json();
     if (res.ok && data.success) {
-      feedback.style.cssText = 'display:block;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:"DM Sans",sans-serif;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.35);color:#22d3ee';
+      feedback.style.cssText = 'display:block;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:Arial,sans-serif;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.35);color:#22d3ee';
       feedback.textContent = '✓ Thank you! We\'ll be in touch within 24 hours.';
       document.getElementById('contact-form').reset();
     } else { throw new Error(data.error || 'Submission failed'); }
   } catch {
-    feedback.style.cssText = 'display:block;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:"DM Sans",sans-serif;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171';
+    feedback.style.cssText = 'display:block;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:12px;text-align:center;font-family:Arial,sans-serif;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171';
     feedback.textContent = '✗ Something went wrong. Please try again or email us directly.';
   } finally {
     btn.disabled = false; btn.textContent = 'Book My Free Audit →';
