@@ -93,7 +93,6 @@ nav{
   display:flex;align-items:center;justify-content:center;
   background:#000;overflow:hidden;z-index:1;
 }
-#hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;transform:translateZ(0)}
 .hero-overlay{
   position:absolute;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,0,0,0.4) 0%,transparent 100%);
@@ -428,8 +427,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 
 <!-- ════════ HERO ════════ -->
 <section class="hero-section" id="hero">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div class="hero-overlay"></div>
+<div class="hero-overlay"></div>
   <div class="hero-center">
     <div class="eyebrow">
       <span class="dot"></span>
@@ -675,185 +673,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 </footer>
 
 <script>
-(function () {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, stars = [], particles = [], shootingStars = [];
-  let animId = null, time = 0, shootTimer = 0;
-  let nextShootIn = 2000 + Math.random() * 2000;
-  let lastTimestamp = 0, frameAccum = 0;
-  let isMobile = window.innerWidth < 768;
-  const FRAME_INTERVAL = 1000 / 30;
-  const SB = 8, PB = 6;
-  const _sb = Array.from({length: SB}, () => []);
-  const _pb = Array.from({length: PB}, () => []);
-
-  function rand(a, b) { return a + Math.random() * (b - a); }
-
-  function resizeCanvas() {
-    const hero = canvas.parentElement;
-    W = canvas.width = hero.offsetWidth;
-    H = canvas.height = hero.offsetHeight;
-    const mobile = window.innerWidth < 768;
-    if (mobile !== isMobile) { isMobile = mobile; }
-    initStars();
-    initParticles();
-  }
-
-  function initStars() {
-    const count = isMobile ? 100 : 200;
-    stars = Array.from({ length: count }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      r: rand(0.3, 1.5), baseOpacity: rand(0.2, 0.9),
-      speed: rand(0.4, 1.8), phase: Math.random() * Math.PI * 2,
-    }));
-  }
-
-  function drawStars(t) {
-    for (let b = 0; b < SB; b++) _sb[b].length = 0;
-    for (const s of stars) {
-      const op = s.baseOpacity * (0.6 + 0.4 * Math.sin(t * s.speed + s.phase));
-      const b = Math.min(SB - 1, (op * SB) | 0);
-      _sb[b].push(s.x, s.y, s.r);
-    }
-    for (let b = 0; b < SB; b++) {
-      const seg = _sb[b];
-      if (!seg.length) continue;
-      ctx.fillStyle = `rgba(255,248,220,${((b + 0.5) / SB).toFixed(3)})`;
-      ctx.beginPath();
-      for (let k = 0; k < seg.length; k += 3) {
-        ctx.moveTo(seg[k] + seg[k + 2], seg[k + 1]);
-        ctx.arc(seg[k], seg[k + 1], seg[k + 2], 0, Math.PI * 2);
-      }
-      ctx.fill();
-    }
-  }
-
-  function spawnShootingStar() {
-    if (shootingStars.length >= 2) return;
-    let x, y;
-    if (Math.random() < 0.7) { x = rand(W * 0.1, W * 0.9); y = 0; }
-    else { x = 0; y = rand(0, H * 0.4); }
-    const angle = rand(30, 55) * Math.PI / 180;
-    const speed = rand(6, 10);
-    const length = rand(80, 150);
-    const dist = Math.hypot(W, H);
-    shootingStars.push({
-      x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
-      length, speed, opacity: 1, life: 0, maxLife: (length + dist) / speed,
-    });
-  }
-
-  function drawShootingStars() {
-    for (const s of shootingStars) {
-      const nx = s.vx / s.speed, ny = s.vy / s.speed;
-      const tx = s.x - nx * s.length, ty = s.y - ny * s.length;
-      const g = ctx.createLinearGradient(s.x, s.y, tx, ty);
-      g.addColorStop(0, `rgba(220,255,255,${s.opacity})`);
-      g.addColorStop(0.25, `rgba(180,240,255,${(s.opacity * 0.6).toFixed(3)})`);
-      g.addColorStop(1, 'rgba(150,220,255,0)');
-      ctx.save();
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = `rgba(150,255,255,${(s.opacity * 0.8).toFixed(3)})`;
-      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(tx, ty);
-      ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.lineCap = 'round'; ctx.stroke();
-      ctx.restore();
-      ctx.beginPath(); ctx.arc(s.x, s.y, 1.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.opacity})`; ctx.fill();
-    }
-  }
-
-  function updateShootingStars() {
-    for (const s of shootingStars) {
-      s.x += s.vx; s.y += s.vy; s.life++;
-      const fadeStart = s.maxLife * 0.7;
-      if (s.life > fadeStart) s.opacity = 1 - (s.life - fadeStart) / (s.maxLife * 0.3);
-    }
-    shootingStars = shootingStars.filter(s =>
-      s.x < W + s.length && s.y < H + s.length && s.life < s.maxLife && s.opacity > 0
-    );
-  }
-
-  function initParticles() {
-    const count = isMobile ? 30 : 60;
-    particles = Array.from({ length: count }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      vx: rand(-0.3, 0.3), vy: rand(-0.3, 0.3),
-    }));
-  }
-
-  function updateParticles() {
-    for (const p of particles) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) { p.x = 0; p.vx = Math.abs(p.vx); }
-      else if (p.x > W) { p.x = W; p.vx = -Math.abs(p.vx); }
-      if (p.y < 0) { p.y = 0; p.vy = Math.abs(p.vy); }
-      else if (p.y > H) { p.y = H; p.vy = -Math.abs(p.vy); }
-    }
-  }
-
-  function drawParticles() {
-    const maxDist = 140, maxDistSq = maxDist * maxDist;
-    ctx.lineWidth = 0.8;
-    for (let b = 0; b < PB; b++) _pb[b].length = 0;
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-        const dSq = dx * dx + dy * dy;
-        if (dSq < maxDistSq) {
-          const t = 1 - Math.sqrt(dSq) / maxDist;
-          const b = Math.min(PB - 1, (t * PB) | 0);
-          _pb[b].push(i, j);
-        }
-      }
-    }
-    for (let b = 0; b < PB; b++) {
-      const seg = _pb[b];
-      if (!seg.length) continue;
-      ctx.strokeStyle = `rgba(45,212,191,${((b + 0.5) / PB * 0.15).toFixed(3)})`;
-      ctx.beginPath();
-      for (let k = 0; k < seg.length; k += 2) {
-        ctx.moveTo(particles[seg[k]].x, particles[seg[k]].y);
-        ctx.lineTo(particles[seg[k + 1]].x, particles[seg[k + 1]].y);
-      }
-      ctx.stroke();
-    }
-    ctx.fillStyle = 'rgba(45,212,191,0.5)';
-    ctx.beginPath();
-    for (const p of particles) { ctx.moveTo(p.x + 1.5, p.y); ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2); }
-    ctx.fill();
-  }
-
-  function loop(ts) {
-    animId = requestAnimationFrame(loop);
-    const dt = ts - lastTimestamp; lastTimestamp = ts; frameAccum += dt;
-    if (frameAccum < FRAME_INTERVAL) return;
-    const elapsed = frameAccum; frameAccum %= FRAME_INTERVAL;
-    time += elapsed / 1000; shootTimer += elapsed;
-    if (shootTimer >= nextShootIn) {
-      shootTimer = 0; nextShootIn = 2000 + Math.random() * 2000; spawnShootingStar();
-    }
-    ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0, 0, W, H);
-    drawStars(time); updateShootingStars(); drawShootingStars(); updateParticles(); drawParticles();
-  }
-
-  function start() { if (animId) return; lastTimestamp = performance.now(); animId = requestAnimationFrame(loop); }
-  function stop() { if (animId) { cancelAnimationFrame(animId); animId = null; } }
-
-  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
-  // Stop the RAF loop when hero scrolls off-screen — frees main thread for smooth scrolling
-  const heroObs = new IntersectionObserver(entries => {
-    entries[0].isIntersecting ? start() : stop();
-  }, { rootMargin: '100px 0px' });
-  heroObs.observe(canvas.parentElement);
-  let resizeRaf;
-  window.addEventListener('resize', () => { cancelAnimationFrame(resizeRaf); resizeRaf = requestAnimationFrame(resizeCanvas); });
-  resizeCanvas(); start();
-})();
-</script>
-
-<script>
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
@@ -899,25 +718,6 @@ async function handleLeadSubmit(e) {
   };
   hbg.addEventListener('click', () => toggle(!hbg.classList.contains('open')));
   mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
-})();
-
-// Hero parallax — desktop only
-(function(){
-  const heroCenter = document.querySelector('.hero-center');
-  const heroSection = document.querySelector('.hero-section');
-  if (!heroCenter || !heroSection || !window.matchMedia('(pointer:fine)').matches) return;
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const scrolled = window.scrollY;
-      if (scrolled < heroSection.offsetHeight) {
-        heroCenter.style.transform = `translateY(${scrolled * 0.18}px)`;
-      }
-      ticking = false;
-    });
-  }, { passive: true });
 })();
 
 // Comparison list stagger — items slide in from opposing sides
