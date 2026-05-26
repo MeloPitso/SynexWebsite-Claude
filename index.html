@@ -12,6 +12,7 @@
 <link rel="icon" type="image/jpeg" href="/brand_assets/SynexAILAbsLogo.jpeg"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img{display:block;width:100%;height:auto}
 :root{
   --bg:#000000;--bg2:#0a0a0a;--bg3:#111827;
   --card:rgba(255,255,255,0.05);
@@ -673,6 +674,25 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 </footer>
 
 <script>
+/*
+ * SCROLL PERFORMANCE RULES — DO NOT VIOLATE
+ *
+ * Root cause of mobile scroll jolt (fixed 2026-05-26, all pages):
+ *   1. body::before and body::after are position:fixed with expensive backgrounds
+ *      (CSS grid + SVG noise). Without GPU promotion they trigger a full repaint
+ *      on every scroll frame. Fix: transform:translateZ(0);will-change:transform
+ *      on desktop; display:none on mobile (<768px) to eliminate them entirely.
+ *   2. nav backdrop-filter:blur(24px) caused GPU compositing overhead on mobile.
+ *      Fix: reduced to blur(10px) on mobile via @media(max-width:768px).
+ *
+ * Future JS rules for this project:
+ *   - Never attach scroll/touch/wheel listeners without { passive: true }
+ *   - Never read layout properties (offsetHeight, getBoundingClientRect,
+ *     scrollTop, clientWidth) inside a scroll handler — causes forced reflow
+ *   - Always use transform/opacity for animations, never layout properties
+ *     (top, left, width, height, margin, padding trigger layout recalc)
+ *   - Always test on mobile viewport (375px wide) before committing
+ */
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });

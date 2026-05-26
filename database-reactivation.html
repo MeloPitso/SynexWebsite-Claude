@@ -8,6 +8,7 @@
 <link rel="icon" type="image/jpeg" href="/brand_assets/SynexAILAbsLogo.jpeg"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img{display:block;width:100%;height:auto}
 :root{
   --bg:#000000;--bg2:#0a0a0a;--bg3:#111827;
   --card:rgba(255,255,255,0.05);
@@ -16,7 +17,7 @@
   --cyan4:#22d3ee;--cyan5:#06b6d4;--cyan3:#67e8f9;
   --blue5:#3b82f6;--blue6:#2563eb;
 }
-html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
 body{
   background:linear-gradient(to bottom,#000 0%,#0a0a0a 25%,#111827 55%,#0a0a0a 80%,#000 100%);
   min-height:100vh;overflow-x:hidden;
@@ -27,11 +28,13 @@ body::before{
     linear-gradient(rgba(6,182,212,0.03) 1px,transparent 1px),
     linear-gradient(90deg,rgba(6,182,212,0.03) 1px,transparent 1px);
   background-size:50px 50px;
+  transform:translateZ(0);will-change:transform;
 }
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:300px 300px;
+  transform:translateZ(0);will-change:transform;
 }
 
 /* ── NAV ── */
@@ -253,6 +256,10 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .sys-cta{padding:0 24px 80px}
   .sys-cta-card{padding:44px 28px}
   .flow-container{padding:0 8px}
+  /* Remove fixed bg overlays on mobile — position:fixed repaints cause scroll jank */
+  body::before,body::after{display:none}
+  /* Reduce backdrop-filter blur cost on mobile */
+  nav{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 }
 </style>
 </head>
@@ -431,6 +438,25 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 </footer>
 
 <script>
+/*
+ * SCROLL PERFORMANCE RULES — DO NOT VIOLATE
+ *
+ * Root cause of mobile scroll jolt (fixed 2026-05-26, all pages):
+ *   1. body::before and body::after are position:fixed with expensive backgrounds
+ *      (CSS grid + SVG noise). Without GPU promotion they trigger a full repaint
+ *      on every scroll frame. Fix: transform:translateZ(0);will-change:transform
+ *      on desktop; display:none on mobile (<768px) to eliminate them entirely.
+ *   2. nav backdrop-filter:blur(24px) caused GPU compositing overhead on mobile.
+ *      Fix: reduced to blur(10px) on mobile via @media(max-width:768px).
+ *
+ * Future JS rules for this project:
+ *   - Never attach scroll/touch/wheel listeners without { passive: true }
+ *   - Never read layout properties (offsetHeight, getBoundingClientRect,
+ *     scrollTop, clientWidth) inside a scroll handler — causes forced reflow
+ *   - Always use transform/opacity for animations, never layout properties
+ *     (top, left, width, height, margin, padding trigger layout recalc)
+ *   - Always test on mobile viewport (375px wide) before committing
+ */
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
