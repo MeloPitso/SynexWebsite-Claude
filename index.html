@@ -21,7 +21,7 @@
   --blue5:#3b82f6;--blue6:#2563eb;
   --fd:'Syne',sans-serif;--fb:Arial,sans-serif;--fm:'JetBrains Mono',monospace;
 }
-html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
 body{
   background:linear-gradient(to bottom,#000 0%,#0a0a0a 25%,#111827 55%,#0a0a0a 80%,#000 100%);
   min-height:100vh;overflow-x:hidden;
@@ -32,11 +32,13 @@ body::before{
     linear-gradient(rgba(6,182,212,0.03) 1px,transparent 1px),
     linear-gradient(90deg,rgba(6,182,212,0.03) 1px,transparent 1px);
   background-size:50px 50px;
+  transform:translateZ(0);will-change:transform;
 }
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:300px 300px;
+  transform:translateZ(0);will-change:transform;
 }
 
 /* ── NAV ── */
@@ -147,7 +149,7 @@ nav{
 }
 .ticker-outer::before{left:0;background:linear-gradient(to right,#06b6d4,transparent)}
 .ticker-outer::after{right:0;background:linear-gradient(to left,#06b6d4,transparent)}
-.ticker-track{display:flex;width:max-content;animation:ticker 35s linear infinite}
+.ticker-track{display:flex;width:max-content;animation:ticker 35s linear infinite;will-change:transform}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .ticker-item{
   display:inline-flex;align-items:center;gap:10px;padding:0 32px;
@@ -326,6 +328,10 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   footer{padding:44px 24px}
   .service-cards{grid-template-columns:1fr}
   .service-card{padding:36px 28px}
+  /* Remove fixed bg overlays on mobile — position:fixed repaints cause scroll jank */
+  body::before,body::after{display:none}
+  /* Reduce backdrop-filter blur cost on mobile */
+  nav{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 }
 
 /* ══════════════════ ANIMATIONS ══════════════════ */
@@ -836,6 +842,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   function stop() { if (animId) { cancelAnimationFrame(animId); animId = null; } }
 
   document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+  // Stop the RAF loop when hero scrolls off-screen — frees main thread for smooth scrolling
+  const heroObs = new IntersectionObserver(entries => {
+    entries[0].isIntersecting ? start() : stop();
+  }, { rootMargin: '100px 0px' });
+  heroObs.observe(canvas.parentElement);
   let resizeRaf;
   window.addEventListener('resize', () => { cancelAnimationFrame(resizeRaf); resizeRaf = requestAnimationFrame(resizeCanvas); });
   resizeCanvas(); start();
