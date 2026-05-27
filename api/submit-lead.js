@@ -111,8 +111,8 @@ module.exports = async function handler(req, res) {
     const isGeneral = service === 'Not sure / General Enquiry';
 
     const emailText = isGeneral
-      ? `Hey ${name}, great to hear from you.\n\nWe understand that finding the right solution isn't always straightforward — and that's completely okay.\n\nOne of our team members will reach out to you personally to understand your business, your goals, and the challenges you're facing. From there, we'll guide you towards the right solution tailored specifically to your needs.\n\nYou're in good hands.\n\nRegards,\nThe Synex AI Labs Team`
-      : `Hey ${name}, great to hear from you.\n\nWe've received your enquiry about ${service} and one of our team members will be in touch within 24 hours.\n\nWe look forward to showing you what's possible.\n\nRegards,\nThe Synex AI Labs Team`;
+      ? `Hey ${name}, great to hear from you.\n\nWe understand that finding the right solution isn't always straightforward — and that's completely okay.\n\nOne of our team members will reach out to you personally to understand your business, your goals, and the challenges you're facing. From there, we'll guide you towards the right solution tailored specifically to your needs.\n\nYou're in good hands.\n\nSynex AI Labs`
+      : `Hey ${name}, great to hear from you.\n\nWe've received your enquiry about ${service} and one of our team members will be in touch within 24 hours.\n\nWe look forward to showing you what's possible.\n\nSynex AI Labs`;
 
     try {
       const resend = new Resend(resendKey);
