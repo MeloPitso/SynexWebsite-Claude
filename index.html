@@ -330,8 +330,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .service-card{padding:36px 28px}
   /* Remove fixed bg overlays on mobile — position:fixed repaints cause scroll jank */
   body::before,body::after{display:none}
-  /* Reduce backdrop-filter blur cost on mobile */
-  nav{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  /* Remove backdrop-filter on mobile — GPU filter sampling on every scroll frame causes jank */
+  nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(0,0,0,0.92)}
+  /* Disable continuous repaint animations — background-position and box-shadow are not GPU-composited */
+  .hero-h1 .grad,.sec-h2 .grad,.cta-h2 .grad{animation:none}
+  .final-cta .btn-primary{animation:none}
 }
 
 /* ══════════════════ ANIMATIONS ══════════════════ */
