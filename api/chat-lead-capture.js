@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
   /* ── AIRTABLE ─────────────────────────────────────────────────── */
 
   const airtableKey  = (process.env.AIRTABLE_API_KEY || '').trim();
-  const airtableBase = 'appkekz8Njv0Z7YAM';
+  const airtableBase = (process.env.AIRTABLE_BASE_ID || '').trim();
   const airtableTable = 'Leads';
 
   if (airtableKey) {
