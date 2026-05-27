@@ -332,9 +332,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   body::before,body::after{display:none}
   /* Remove backdrop-filter on mobile — GPU filter sampling on every scroll frame causes jank */
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(0,0,0,0.92)}
-  /* Disable continuous repaint animations — background-position and box-shadow are not GPU-composited */
-  .hero-h1 .grad,.sec-h2 .grad,.cta-h2 .grad{animation:none}
-  .final-cta .btn-primary{animation:none}
 }
 
 /* ══════════════════ ANIMATIONS ══════════════════ */
@@ -396,6 +393,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 }
 .final-cta .btn-primary{animation:ctaPulse 3s ease-in-out infinite}
 .final-cta .btn-primary:hover,.final-cta .btn-primary:focus-visible{animation:none}
+
+/* Must come AFTER animation declarations to override them on mobile (cascade order) */
+@media(max-width:768px){
+  .hero-h1 .grad,.sec-h2 .grad,.cta-h2 .grad{animation:none}
+  .final-cta .btn-primary{animation:none}
+}
 </style>
 </head>
 <body>
