@@ -104,6 +104,31 @@ module.exports = async function handler(req, res) {
 
   console.log('[submit-lead] record saved successfully');
 
+  // ── ZOHO CRM ─────────────────────────────────────────────────────────────────
+
+  try {
+    const zohoParams = new URLSearchParams({
+      xnQsjsdp:   'cfd9e1c47072badededf1e6a524ce40b59f2c3b5f759fbb28ade92237a912a83',
+      xmIwtLD:    '83afd896d7dc3427e1912c20a6a4cdfb4a6f87934dc3f9578b1265b36664407a289683d886fb215fc80684b59d59183e',
+      actionType: 'TGVhZHM=',
+      returnURL:  'https://synexailabs.com',
+      'Last Name': name,
+      Email:       email,
+      Company:     company || '',
+      LEADCF2:     service || '',
+      LEADCF1:     message || '',
+    });
+
+    const zohoRes = await fetch('https://crm.zoho.com/crm/WebToLeadForm', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body:    zohoParams.toString(),
+    });
+    console.log('[submit-lead] Zoho CRM response status', zohoRes.status);
+  } catch (err) {
+    console.error('[submit-lead] Zoho CRM threw an exception', err.message);
+  }
+
   // ── RESEND EMAIL CONFIRMATION ────────────────────────────────────────────────
 
   const resendKey = (process.env.RESEND_API_KEY || '').trim();
