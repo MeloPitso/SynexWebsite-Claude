@@ -178,41 +178,43 @@ nav{
 .beyond-section{position:relative;z-index:1;background:rgba(6,182,212,0.012)}
 .beyond-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.5),rgba(37,99,235,0.35),transparent)}
 
-/* ── FLOW DIAGRAM ── */
-.flow-container{position:relative;max-width:680px;margin:52px auto 0}
-.flow-step{display:flex;align-items:center;gap:24px;position:relative;margin-bottom:12px}
-.flow-step:not(:last-child)::after{
-  content:'';position:absolute;left:19px;top:40px;
-  width:2px;height:calc(100% + 12px);
-  background:linear-gradient(to bottom,rgba(6,182,212,0.4),rgba(6,182,212,0.15));
-}
-.flow-num{
-  flex-shrink:0;width:40px;height:40px;border-radius:50%;
-  background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.35);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;
-  position:relative;z-index:1;
-}
-.flow-card{
-  flex:1;
-  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0) 100%);
-  border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:18px 24px;
+/* ── FLOW DIAGRAM (illustrated step cards) ── */
+.flow-grid{margin-top:52px;display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.flow-item{display:flex;flex-direction:column}
+.flow-step-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;color:#6b7280;
+  margin:18px 0 8px;
 }
 .flow-card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff}
 .flow-card-body{font-family:Arial,sans-serif;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.65;margin-top:6px}
 
-/* ── COMPARISON COLUMNS ── */
-.compare-wrap{display:flex;gap:0;margin-top:52px}
-.compare-col{flex:1;padding:0 40px 0 0}
-.compare-col:last-child{padding:0 0 0 40px}
-.compare-divider{width:1px;background:rgba(255,255,255,0.08);flex-shrink:0;align-self:stretch}
-.compare-col-head{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:24px;letter-spacing:-0.01em}
-.compare-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}
-.compare-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#9ca3af;line-height:1.65}
-.compare-list li::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;margin-top:7px}
-.compare-list.gray-dots li::before{background:rgba(107,114,128,0.6)}
-.compare-list.cyan-dots li::before{background:#06b6d4}
-.compare-closing{text-align:center;margin-top:52px;font-size:18px;font-weight:300;color:#d1d5db;line-height:1.6;max-width:640px;margin-left:auto;margin-right:auto}
+/* Illustration: window-chrome mockup card with a real Lucide icon + skeleton dashboard lines */
+.flow-illo{
+  position:relative;border-radius:16px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0) 100%);
+  border:1px solid rgba(255,255,255,0.09);
+  transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s,box-shadow 0.28s;
+}
+.flow-illo-chrome{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 14px;
+  background:rgba(0,0,0,0.22);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.flow-illo-dot{width:7px;height:7px;border-radius:50%;display:block}
+.flow-illo-dot--r{background:#ef4444;opacity:0.55}
+.flow-illo-dot--y{background:#f59e0b;opacity:0.55}
+.flow-illo-dot--g{background:#22c55e;opacity:0.55}
+.flow-illo-body{padding:24px 22px;display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.flow-illo-icon{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.28);
+  display:flex;align-items:center;justify-content:center;color:#22d3ee;
+}
+.flow-illo-icon svg{width:22px;height:22px}
+.flow-illo-lines{display:flex;flex-direction:column;gap:7px;width:100%}
+.flow-illo-line{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,0.08)}
 
 /* ── PRACTICE EXAMPLES ── */
 .practice-list{margin-top:52px;display:flex;flex-direction:column;gap:44px;max-width:720px}
@@ -448,10 +450,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .cta-card{padding:44px 28px}
   .form-row{flex-direction:column}
   .section{padding:72px 24px}
-  .flow-container{padding:0 8px}
-  .compare-wrap{flex-direction:column;gap:40px}
-  .compare-divider{display:none}
-  .compare-col,.compare-col:last-child{padding:0}
+  .flow-grid{grid-template-columns:1fr}
   .practice-item{gap:16px}
   .practice-num{font-size:18px}
   .final-cta-inner{padding:72px 24px}
@@ -491,25 +490,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 }
 .reveal.in .sec-label::after{transform:scaleX(1)}
 
-/* Flow connector lines draw downward on reveal */
-.flow-step:not(:last-child)::after{
-  transform:scaleY(0);transform-origin:top center;
-  transition:transform 0.75s cubic-bezier(0.22,1,0.36,1) 0.45s;
-}
-.flow-step.in:not(:last-child)::after{transform:scaleY(1)}
-
-/* Flow card + num hover lift */
-.flow-card{transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s,background 0.28s}
-.flow-num{transition:background 0.28s,border-color 0.28s,box-shadow 0.28s}
-.flow-step:hover .flow-card{
-  transform:translateX(8px);
-  border-color:rgba(6,182,212,0.28);
-  background:linear-gradient(160deg,rgba(6,182,212,0.07) 0%,rgba(255,255,255,0) 100%);
-}
-.flow-step:hover .flow-num{
-  background:rgba(6,182,212,0.18);
-  border-color:rgba(6,182,212,0.6);
-  box-shadow:0 0 18px rgba(6,182,212,0.3);
+/* Flow illustration hover lift */
+.flow-item:hover .flow-illo{
+  transform:translateY(-6px);
+  border-color:rgba(6,182,212,0.3);
+  box-shadow:0 20px 50px rgba(6,182,212,0.08);
 }
 
 /* Practice number spring-pop on reveal */
@@ -590,28 +575,96 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════ SECTION 2: WHAT IS AN AGENTIC AI SYSTEM ════════ -->
-<div class="section" id="what-is">
+<!-- ════════ SECTION 4: HOW IT WORKS ════════ -->
+<div class="section" id="how-it-works">
   <div class="reveal">
-    <div class="sec-label">What We Build</div>
-    <h2 class="sec-h2">What is an <span class="grad">Agentic AI System?</span></h2>
+    <div class="sec-label">How It Works</div>
+    <h2 class="sec-h2">What working with us <span class="grad">looks like.</span></h2>
   </div>
-  <div style="margin-top:36px;max-width:680px;display:flex;flex-direction:column;gap:20px">
-    <p class="reveal d1" style="font-size:16px;color:#9ca3af;line-height:1.8">Most people have heard of AI tools — the kind you open, type a question into, and get a response back. That's useful. But it still requires you to initiate every interaction.</p>
-    <p class="reveal d2" style="font-size:16px;color:#9ca3af;line-height:1.8">An agentic AI system works differently. You don't ask it anything. It monitors what's happening in your business, makes decisions based on the rules you've set, and takes action on its own — whether that's responding to a new lead, following up with a contact, or flagging something that needs your attention.</p>
-    <p class="reveal d3" style="font-size:16px;color:#9ca3af;line-height:1.8">Think of it as a member of staff who knows their role inside out, never needs to be reminded, and only comes to you when something genuinely requires a human decision.</p>
-    <p class="reveal d4" style="font-size:16px;color:#9ca3af;line-height:1.8">The rest of the time — it's just running.</p>
-  </div>
-
-  <div style="margin-top:80px;padding-top:80px;border-top:1px solid rgba(255,255,255,0.08)">
-    <div class="reveal">
-      <h2 class="sec-h2">Why your business <span class="grad">needs one.</span></h2>
+  <div class="flow-grid">
+    <div class="flow-item reveal d1">
+      <div class="flow-illo">
+        <div class="flow-illo-chrome">
+          <span class="flow-illo-dot flow-illo-dot--r"></span>
+          <span class="flow-illo-dot flow-illo-dot--y"></span>
+          <span class="flow-illo-dot flow-illo-dot--g"></span>
+        </div>
+        <div class="flow-illo-body">
+          <div class="flow-illo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <div class="flow-illo-lines">
+            <span class="flow-illo-line" style="width:78%"></span>
+            <span class="flow-illo-line" style="width:52%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step-num">Step 01</div>
+      <div class="flow-card-title">We audit your operations</div>
+      <div class="flow-card-body">We identify where your business is losing time, missing leads, or operating below its potential.</div>
     </div>
-    <div style="margin-top:36px;max-width:680px;display:flex;flex-direction:column;gap:20px">
-      <p class="reveal d1" style="font-size:16px;color:#9ca3af;line-height:1.8">Most business operations don't live in one place. A single task — following up with a client, processing a new enquiry, preparing a report — touches multiple systems, requires judgment at each step, and depends entirely on someone being available to run it.</p>
-      <p class="reveal d2" style="font-size:16px;color:#9ca3af;line-height:1.8">When that someone is busy, it waits. When they're having a bad day, mistakes happen. When something unexpected comes in, the process stalls.</p>
-      <p class="reveal d3" style="font-size:16px;color:#9ca3af;line-height:1.8">Agentic AI handles the entire task from a single input. It moves across your systems, makes the right call at each step, adapts when something unusual comes in, and delivers a result specific to that situation — not a generic output that needs to be cleaned up afterwards.</p>
-      <p class="reveal d4" style="font-size:16px;color:#9ca3af;line-height:1.8">Your team stops managing the process. They start acting on the outcome.</p>
+    <div class="flow-item reveal d2">
+      <div class="flow-illo">
+        <div class="flow-illo-chrome">
+          <span class="flow-illo-dot flow-illo-dot--r"></span>
+          <span class="flow-illo-dot flow-illo-dot--y"></span>
+          <span class="flow-illo-dot flow-illo-dot--g"></span>
+        </div>
+        <div class="flow-illo-body">
+          <div class="flow-illo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+          </div>
+          <div class="flow-illo-lines">
+            <span class="flow-illo-line" style="width:64%"></span>
+            <span class="flow-illo-line" style="width:40%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step-num">Step 02</div>
+      <div class="flow-card-title">We build the system</div>
+      <div class="flow-card-body">We design and build a system specifically to address that bottleneck — built around how your business actually operates, not a generic template.</div>
+    </div>
+    <div class="flow-item reveal d3">
+      <div class="flow-illo">
+        <div class="flow-illo-chrome">
+          <span class="flow-illo-dot flow-illo-dot--r"></span>
+          <span class="flow-illo-dot flow-illo-dot--y"></span>
+          <span class="flow-illo-dot flow-illo-dot--g"></span>
+        </div>
+        <div class="flow-illo-body">
+          <div class="flow-illo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+          <div class="flow-illo-lines">
+            <span class="flow-illo-line" style="width:70%"></span>
+            <span class="flow-illo-line" style="width:48%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step-num">Step 03</div>
+      <div class="flow-card-title">We review it together</div>
+      <div class="flow-card-body">Before anything goes live, we walk through the system in a dedicated session — analysing how it works, refining where necessary, and making sure it meets your expectations.</div>
+    </div>
+    <div class="flow-item reveal d4">
+      <div class="flow-illo">
+        <div class="flow-illo-chrome">
+          <span class="flow-illo-dot flow-illo-dot--r"></span>
+          <span class="flow-illo-dot flow-illo-dot--y"></span>
+          <span class="flow-illo-dot flow-illo-dot--g"></span>
+        </div>
+        <div class="flow-illo-body">
+          <div class="flow-illo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
+          </div>
+          <div class="flow-illo-lines">
+            <span class="flow-illo-line" style="width:60%"></span>
+            <span class="flow-illo-line" style="width:36%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step-num">Step 04</div>
+      <div class="flow-card-title">We deploy and stay with you</div>
+      <div class="flow-card-body">Once live, we handle ongoing maintenance and remain available for updates and improvements as your business evolves.</div>
     </div>
   </div>
 </div>
@@ -1053,84 +1106,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
   <div class="reveal d1" style="margin-top:28px">
     <a href="#contact" class="btn-ghost">Book Your Free Audit →</a>
-  </div>
-</div>
-
-<!-- ════════ SECTION 3: AGENTIC VS TRADITIONAL ════════ -->
-<div class="beyond-section">
-  <div class="section">
-    <div class="reveal">
-      <div class="sec-label">A Step Further</div>
-      <h2 class="sec-h2">A step further than automation.</h2>
-    </div>
-    <div style="margin-top:28px;max-width:680px;display:flex;flex-direction:column;gap:16px">
-      <p class="reveal d1" style="font-size:16px;color:#9ca3af;line-height:1.8">Traditional automation has transformed how businesses operate — and for good reason. Scheduled reports, auto-replies, and data transfers have saved countless hours and reduced human error across industries. We have a lot of respect for what automation has made possible.</p>
-      <p class="reveal d2" style="font-size:16px;color:#9ca3af;line-height:1.8">Agentic AI takes that foundation and goes further.</p>
-    </div>
-    <div class="compare-wrap reveal d3">
-      <div class="compare-col">
-        <div class="compare-col-head">Traditional Automation</div>
-        <ul class="compare-list gray-dots">
-          <li>Follows a fixed set of instructions</li>
-          <li>Executes one trigger, one action</li>
-          <li>Does exactly what it was programmed to do</li>
-          <li>Requires human intervention when something unexpected happens</li>
-          <li>Works within a single system or workflow</li>
-          <li>Consistent and reliable within its defined scope</li>
-        </ul>
-      </div>
-      <div class="compare-divider"></div>
-      <div class="compare-col">
-        <div class="compare-col-head">Agentic AI — A Step Further</div>
-        <ul class="compare-list cyan-dots">
-          <li>Understands context and makes decisions</li>
-          <li>Handles multi-step processes end to end</li>
-          <li>Adapts when conditions change or something unexpected happens</li>
-          <li>Monitors outcomes and adjusts behaviour accordingly</li>
-          <li>Works across multiple systems simultaneously</li>
-          <li>Evolves with your business without being reprogrammed</li>
-        </ul>
-      </div>
-    </div>
-    <p class="compare-closing reveal d4">Traditional automation does what you tell it. Agentic AI does what needs to be done.</p>
-  </div>
-</div>
-
-<!-- ════════ SECTION 4: HOW IT WORKS ════════ -->
-<div class="section" id="how-it-works">
-  <div class="reveal">
-    <div class="sec-label">How It Works</div>
-    <h2 class="sec-h2">What working with us <span class="grad">looks like.</span></h2>
-  </div>
-  <div class="flow-container">
-    <div class="flow-step reveal d1">
-      <div class="flow-num">01</div>
-      <div class="flow-card">
-        <div class="flow-card-title">We audit your operations</div>
-        <div class="flow-card-body">We identify where your business is losing time, missing leads, or operating below its potential.</div>
-      </div>
-    </div>
-    <div class="flow-step reveal d2">
-      <div class="flow-num">02</div>
-      <div class="flow-card">
-        <div class="flow-card-title">We build the system</div>
-        <div class="flow-card-body">We design and build a system specifically to address that bottleneck — built around how your business actually operates, not a generic template.</div>
-      </div>
-    </div>
-    <div class="flow-step reveal d3">
-      <div class="flow-num">03</div>
-      <div class="flow-card">
-        <div class="flow-card-title">We review it together</div>
-        <div class="flow-card-body">Before anything goes live, we walk through the system in a dedicated session — analysing how it works, refining where necessary, and making sure it meets your expectations.</div>
-      </div>
-    </div>
-    <div class="flow-step reveal d4">
-      <div class="flow-num">04</div>
-      <div class="flow-card">
-        <div class="flow-card-title">We deploy and stay with you</div>
-        <div class="flow-card-body">Once live, we handle ongoing maintenance and remain available for updates and improvements as your business evolves.</div>
-      </div>
-    </div>
   </div>
 </div>
 
