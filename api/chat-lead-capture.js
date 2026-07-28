@@ -1,12 +1,22 @@
 const { Resend } = require('resend');
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  /* ─────────────────────────────────────────────────────────────────
+   * ARCHIVED — ENDPOINT DISABLED
+   *
+   * The chat widget was archived on 2026-05-04 (commit c479bcd), which
+   * removed chat.js/chat.css from every page. The serverless functions
+   * were never disabled with it, so this endpoint stayed publicly
+   * reachable — an unauthenticated write path into Airtable, Telegram
+   * and Resend for a feature that is not on the site.
+   *
+   * Nothing calls this. It returns 410 Gone before reading the body or
+   * touching any credential. The implementation below is intact; delete
+   * this guard to re-enable, and re-add the vercel.json function entry.
+   * ───────────────────────────────────────────────────────────────── */
+  return res.status(410).json({ error: 'Gone — this endpoint has been retired.' });
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  /* eslint-disable no-unreachable */
 
   let body = req.body;
   if (typeof body === 'string') {

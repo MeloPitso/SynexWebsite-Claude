@@ -1,16 +1,91 @@
 const { Resend } = require('resend');
 
+/* ── CORS ────────────────────────────────────────────────────────────────────
+ * Only the real site may post here. The apex domain 301s to www, so both are
+ * listed; localhost is kept for local development against serve.mjs.
+ * Note this is enforced server-side (403), not merely advertised in headers —
+ * CORS headers alone are a browser-side convention and would not stop a script.
+ */
+const ALLOWED_ORIGINS = [
+  'https://synexailabs.com',
+  'https://www.synexailabs.com',
+  'http://localhost:3000',
+];
+
+/* ── RATE LIMIT ──────────────────────────────────────────────────────────────
+ * 5 submissions per IP per 10 minutes. A real enquirer submits once, twice if
+ * they typo — 5 leaves generous headroom while stopping scripted floods, and a
+ * 10-minute window means anyone who does trip it recovers quickly.
+ *
+ * This is in-memory and therefore PER WARM INSTANCE. Vercel runs several
+ * concurrent instances and recycles them, so a determined distributed attacker
+ * can still get through; this is a speed bump, not a guarantee. That trade is
+ * deliberate: this form takes a handful of submissions a week, so a durable
+ * store (Vercel KV / Upstash) would add a dependency and an external round-trip
+ * per request for little real gain. If volume or abuse grows, swap the Map for
+ * a KV-backed counter — the checkRateLimit() signature is designed for that.
+ */
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const rateLimitHits = new Map();
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const cutoff = now - RATE_LIMIT_WINDOW_MS;
+  const hits = (rateLimitHits.get(ip) || []).filter(t => t > cutoff);
+
+  // Opportunistic sweep so a long-lived warm instance can't grow unbounded.
+  if (rateLimitHits.size > 5000) {
+    for (const [key, times] of rateLimitHits) {
+      if (!times.some(t => t > cutoff)) rateLimitHits.delete(key);
+    }
+  }
+
+  if (hits.length >= RATE_LIMIT_MAX) {
+    return { allowed: false, retryAfter: Math.ceil((hits[0] + RATE_LIMIT_WINDOW_MS - now) / 1000) };
+  }
+
+  hits.push(now);
+  rateLimitHits.set(ip, hits);
+  return { allowed: true };
+}
+
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin;
+  const originAllowed = !!origin && ALLOWED_ORIGINS.includes(origin);
+
+  if (originAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Vary', 'Origin');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(originAllowed ? 200 : 403).end();
   }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Browsers always send Origin on a cross-site POST, and same-origin fetch()
+  // sends it too — so a missing Origin here means a non-browser client. This
+  // endpoint only ever serves the site's own contact form, so reject both.
+  if (!originAllowed) {
+    console.warn('[submit-lead] rejected disallowed origin', { origin: origin || '(none)' });
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim()
+    || req.socket?.remoteAddress
+    || 'unknown';
+
+  const limit = checkRateLimit(ip);
+  if (!limit.allowed) {
+    console.warn('[submit-lead] rate limit exceeded', { ip, retryAfter: limit.retryAfter });
+    res.setHeader('Retry-After', String(limit.retryAfter));
+    return res.status(429).json({ error: 'Too many submissions. Please try again shortly.' });
   }
 
   // Vercel auto-parses JSON bodies, but handle raw string as a safety net
@@ -106,27 +181,34 @@ module.exports = async function handler(req, res) {
 
   // ── ZOHO CRM ─────────────────────────────────────────────────────────────────
 
-  try {
-    const zohoParams = new URLSearchParams({
-      xnQsjsdp:   'cfd9e1c47072badededf1e6a524ce40b59f2c3b5f759fbb28ade92237a912a83',
-      xmIwtLD:    '83afd896d7dc3427e1912c20a6a4cdfb4a6f87934dc3f9578b1265b36664407a289683d886fb215fc80684b59d59183e',
-      actionType: 'TGVhZHM=',
-      returnURL:  'https://synexailabs.com',
-      'Last Name': name,
-      Email:       email,
-      Company:     company || '',
-      LEADCF2:     service || '',
-      LEADCF1:     message || '',
-    });
+  const zohoOwnerId = (process.env.ZOHO_WEBFORM_OWNER_ID || '').trim();
+  const zohoSecret  = (process.env.ZOHO_WEBFORM_SECRET   || '').trim();
 
-    const zohoRes = await fetch('https://crm.zoho.com/crm/WebToLeadForm', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body:    zohoParams.toString(),
-    });
-    console.log('[submit-lead] Zoho CRM response status', zohoRes.status);
-  } catch (err) {
-    console.error('[submit-lead] Zoho CRM threw an exception', err.message);
+  if (zohoOwnerId && zohoSecret) {
+    try {
+      const zohoParams = new URLSearchParams({
+        xnQsjsdp:   zohoOwnerId,
+        xmIwtLD:    zohoSecret,
+        actionType: 'TGVhZHM=',
+        returnURL:  'https://synexailabs.com',
+        'Last Name': name,
+        Email:       email,
+        Company:     company || '',
+        LEADCF2:     service || '',
+        LEADCF1:     message || '',
+      });
+
+      const zohoRes = await fetch('https://crm.zoho.com/crm/WebToLeadForm', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body:    zohoParams.toString(),
+      });
+      console.log('[submit-lead] Zoho CRM response status', zohoRes.status);
+    } catch (err) {
+      console.error('[submit-lead] Zoho CRM threw an exception', err.message);
+    }
+  } else {
+    console.warn('[submit-lead] ZOHO_WEBFORM_OWNER_ID or ZOHO_WEBFORM_SECRET not set — skipping Zoho');
   }
 
   // ── RESEND EMAIL CONFIRMATION ────────────────────────────────────────────────

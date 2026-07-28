@@ -2,5 +2,7 @@ node_modules/
 temporary screenshots/
 .env
 .env.*
+# ...but the placeholder template must be committed.
+!.env.example
 
 .vercel
