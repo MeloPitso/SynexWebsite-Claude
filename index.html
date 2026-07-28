@@ -412,6 +412,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 @media(prefers-reduced-motion:reduce){
   .pipeline-box::before,.arrow-flow{animation:none!important}
   .pipeline-box{transition:none}
+  .hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{animation:none!important}
 }
 
 /* Pipeline stacks vertically before the general 768px breakpoint — the 5-box
@@ -467,15 +468,33 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 .hero-sub{animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.8s}
 .hero-actions{animation:fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;animation-delay:1.05s}
 
-/* Gradient text shimmer */
-@keyframes shimmer{from{background-position:0% center}to{background-position:200% center}}
+/* Gradient text shine — static gradient fill, plus a periodic transform-only
+   sweep on ::after (same compositor-only technique as .pipeline-box::before).
+   Never animate background-position: it repaints text every frame. */
 .hero-h1 .grad,.sec-h2 .grad,.cta-h2 .grad{
+  position:relative;display:inline-block;overflow:hidden;
   background:linear-gradient(90deg,#22d3ee,#3b82f6,#22d3ee);
-  background-size:200% auto;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:shimmer 5s linear infinite;
+}
+.hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{
+  content:'';position:absolute;top:-30%;left:0;pointer-events:none;
+  width:75%;height:160%;
+  background:linear-gradient(115deg,
+    transparent 0%,
+    rgba(255,255,255,0.22) 38%,
+    rgba(255,255,255,0.8) 50%,
+    rgba(255,255,255,0.22) 62%,
+    transparent 100%);
+  transform:translateX(-260%) skewX(-18deg);
+  animation:text-shine 5s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes text-shine{
+  0%{transform:translateX(-260%) skewX(-18deg)}
+  30%{transform:translateX(260%) skewX(-18deg)}
+  100%{transform:translateX(260%) skewX(-18deg)}
 }
 
 /* Section label line draw on reveal */
@@ -506,7 +525,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 
 /* Must come AFTER animation declarations to override them on mobile (cascade order) */
 @media(max-width:768px){
-  .hero-h1 .grad,.sec-h2 .grad,.cta-h2 .grad{animation:none}
+  .hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{animation:none}
   .final-cta .btn-primary{animation:none}
 }
 </style>
