@@ -60,25 +60,14 @@ nav{
 .nav-cta:active{transform:scale(0.98)}
 .nav-cta:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
 
-/* ── HAMBURGER / MOBILE NAV ── */
-.nav-hamburger{
-  display:none;flex-direction:column;justify-content:center;gap:5px;
-  background:none;border:none;cursor:pointer;padding:6px;
+/* ── MOBILE NAV LINKS (shown ≤768px in place of the CTA; see nav-cta hide rule) ── */
+.nav-mobile-links{display:none;align-items:center;gap:10px}
+.nav-mobile-links a{
+  font-family:Arial,sans-serif;font-size:13px;font-weight:600;
+  color:#9ca3af;text-decoration:none;white-space:nowrap;transition:color 0.2s;
 }
-.nav-hamburger:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:4px}
-.h-line{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),opacity 0.2s}
-.nav-hamburger.open .h-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-hamburger.open .h-line:nth-child(2){opacity:0}
-.nav-hamburger.open .h-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mob-nav{
-  display:none;position:fixed;inset:0;z-index:99;
-  flex-direction:column;align-items:center;justify-content:center;gap:32px;
-  background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-}
-.mob-nav.open{display:flex}
-.mob-nav a{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#9ca3af;text-decoration:none;letter-spacing:-0.02em;transition:color 0.2s}
-.mob-nav a:hover{color:#fff}
-.mob-nav .mob-cta-btn{padding:13px 32px;background:linear-gradient(to right,#06b6d4,#2563eb);color:#000 !important;border-radius:100px;font-size:16px;box-shadow:0 0 20px rgba(6,182,212,0.35)}
+.nav-mobile-links a:hover{color:#fff}
+.nav-mobile-links a:focus-visible{outline:2px solid #22d3ee;outline-offset:3px;border-radius:3px}
 
 /* ── HERO ── */
 .hero-section{
@@ -440,8 +429,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
+  .nav-inner{padding:0 16px}
+  .nav-logo{gap:7px}
+  .nav-logo img{height:28px}
+  .nav-logo-text{font-size:13px;white-space:nowrap}
   .nav-links,.nav-cta{display:none}
-  .nav-hamburger{display:flex}
+  .nav-mobile-links{display:flex}
   .hero-center{padding:100px 24px 60px}
   .cta-card{padding:44px 28px}
   .form-row{flex-direction:column}
@@ -540,18 +533,13 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
       <span class="nav-logo-text">Synex AI Labs</span>
     </a>
     <a href="#contact" class="nav-cta">Book an Audit →</a>
+    <div class="nav-mobile-links">
+      <a href="#solutions">Services</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About Us</a>
+    </div>
   </div>
 </nav>
-
-<!-- MOBILE NAV OVERLAY -->
-<div class="mob-nav" id="mob-nav" aria-hidden="true">
-  <a href="/">Home</a>
-  <a href="/real-estate.html">Real Estate</a>
-  <a href="/system.html">Speed to Lead</a>
-  <a href="/database-reactivation.html">Database Reactivation</a>
-  <a href="/agentic-workflows.html">Agentic Workflows</a>
-  <a href="#contact" class="mob-cta-btn">Book a Free Audit →</a>
-</div>
 
 <!-- ════════ HERO ════════ -->
 <section class="hero-section" id="hero">
@@ -681,7 +669,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 </div>
 
 <!-- ════════ SECTION 6: SERVICES ════════ -->
-<div class="section">
+<div class="section" id="solutions">
   <div class="reveal">
     <div class="sec-label">Our Systems</div>
     <h2 class="sec-h2">The Solutions We Provide <span class="grad">For Your Business.</span></h2>
@@ -1279,19 +1267,6 @@ async function handleLeadSubmit(e) {
     btn.disabled = false; btn.textContent = 'Book My Free Audit →';
   }
 }
-
-(function(){
-  const hbg = document.getElementById('nav-hamburger');
-  const mob = document.getElementById('mob-nav');
-  if (!hbg || !mob) return;
-  const toggle = (open) => {
-    hbg.classList.toggle('open', open); mob.classList.toggle('open', open);
-    hbg.setAttribute('aria-expanded', open); mob.setAttribute('aria-hidden', !open);
-    document.body.style.overflow = open ? 'hidden' : '';
-  };
-  hbg.addEventListener('click', () => toggle(!hbg.classList.contains('open')));
-  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
-})();
 
 // Comparison list stagger — items slide in from opposing sides
 (function(){
