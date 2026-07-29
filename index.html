@@ -476,7 +476,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
    sweep on ::after (same compositor-only technique as .pipeline-box::before).
    Never animate background-position: it repaints text every frame. */
 .hero-h1 .grad,.sec-h2 .grad,.cta-h2 .grad{
-  position:relative;display:inline-block;overflow:hidden;
+  /* clip-path (not overflow:hidden) bounds the ::after sweep to the text box: an
+     inline-block with overflow != visible is defined to have no content baseline
+     (CSS2.1 10.8.1), which used its bottom margin edge as the baseline instead and
+     shifted the gradient word ~7.6px above its plain sibling. clip-path clips the
+     same region without affecting baseline computation. */
+  position:relative;display:inline-block;overflow:visible;clip-path:inset(0);
   background:linear-gradient(90deg,#22d3ee,#3b82f6,#22d3ee);
   -webkit-background-clip:text;
   background-clip:text;
