@@ -280,6 +280,53 @@ select.inp:invalid{color:#4b5563}
 .form-btn:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
 .form-note{font-family:'JetBrains Mono',monospace;font-size:10px;color:#4b5563;text-align:center;margin-top:12px;letter-spacing:0.06em}
 
+/* ── FAQ ── */
+.faq-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  letter-spacing:0.15em;text-transform:uppercase;color:#22d3ee;
+  border:1px solid rgba(6,182,212,0.25);background:rgba(6,182,212,0.06);
+  padding:6px 16px;border-radius:100px;margin-bottom:22px;
+}
+.faq-heading{font-style:italic}
+.faq-wrap{position:relative;margin-top:52px}
+.faq-glow{
+  position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:640px;max-width:90vw;height:420px;
+  background:radial-gradient(ellipse at center,rgba(6,182,212,0.12),rgba(37,99,235,0.05) 45%,transparent 72%);
+  pointer-events:none;z-index:0;
+}
+.faq-list{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px}
+.faq-item{
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.01) 100%);
+  border:1px solid rgba(255,255,255,0.09);border-radius:18px;
+  transition:border-color 0.28s,box-shadow 0.28s;
+}
+.faq-item.is-open{border-color:rgba(6,182,212,0.3);box-shadow:0 20px 50px rgba(6,182,212,0.08)}
+.faq-q{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:24px 28px;background:transparent;border:none;cursor:pointer;text-align:left;
+  font-family:'Syne',sans-serif;
+}
+.faq-q-text{font-size:16px;font-weight:700;color:#fff;line-height:1.4;transition:color 0.2s}
+.faq-item.is-open .faq-q-text,.faq-q:hover .faq-q-text{color:#22d3ee}
+.faq-chevron{
+  position:relative;flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:#22d3ee;
+  border:1px solid rgba(6,182,212,0.28);background:rgba(6,182,212,0.06);
+  transition:transform 0.32s cubic-bezier(0.22,1,0.36,1);
+}
+.faq-chevron svg{width:14px;height:14px}
+.faq-item.is-open .faq-chevron{transform:rotate(180deg)}
+.faq-q:focus-visible{outline:2px solid #22d3ee;outline-offset:-2px}
+/* Panel height is snapped instantly (not transitioned — see script) so the only
+   properties animated frame-to-frame are opacity/transform, staying compositor-only. */
+.faq-panel{height:0;overflow:hidden;opacity:0;transform:translateY(-6px);transition:opacity 0.28s ease,transform 0.28s ease}
+.faq-panel.is-open{opacity:1;transform:translateY(0)}
+.faq-panel-inner{padding:0 28px 26px}
+.faq-panel-inner p{font-size:14.5px;color:#9ca3af;line-height:1.75}
+
 /* ── FOOTER ── */
 footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);padding:44px 40px}
 .footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
@@ -413,6 +460,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .pipeline-box::before,.arrow-flow{animation:none!important}
   .pipeline-box{transition:none}
   .hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{animation:none!important}
+  .faq-panel,.faq-chevron,.faq-item{transition:none!important}
 }
 
 /* Pipeline stacks vertically before the general 768px breakpoint — the 5-box
@@ -457,6 +505,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   footer{padding:44px 24px}
   .service-cards{grid-template-columns:1fr}
   .service-card{padding:36px 28px}
+  .faq-q{padding:20px 22px}
+  .faq-panel-inner{padding:0 22px 22px}
   /* Remove fixed bg overlay on mobile — position:fixed repaints cause scroll jank */
   body::after{display:none}
   /* Remove backdrop-filter on mobile — GPU filter sampling on every scroll frame causes jank */
@@ -1168,6 +1218,92 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
+<!-- ════════ FAQ ════════ -->
+<div class="section" id="faq">
+  <div class="reveal">
+    <div class="faq-pill">FAQ</div>
+    <h2 class="sec-h2 faq-heading">Common <span class="grad">Questions.</span></h2>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-glow" aria-hidden="true"></div>
+    <div class="faq-list">
+
+      <div class="faq-item reveal d1">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
+          <span class="faq-q-text">What if the AI makes an error?</span>
+          <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-panel" id="faq-panel-1" role="region" aria-labelledby="faq-btn-1">
+          <div class="faq-panel-inner">
+            <p>It depends on the system — some include automated validation that flags anything uncertain, others route through human review before anything goes out. We build in the right safety net for what's actually at stake.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d2">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2">
+          <span class="faq-q-text">Do you only work with specific industries?</span>
+          <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-btn-2">
+          <div class="faq-panel-inner">
+            <p>No — repetitive, time-consuming tasks show up in every industry. We look at where your business is losing time specifically, then build for that.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d3">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
+          <span class="faq-q-text">Will this work with our existing systems?</span>
+          <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-btn-3">
+          <div class="faq-panel-inner">
+            <p>Yes — we build within your current setup, so there's no disruption to how your team already works. We make suggestions based on what's actually slowing you down, not a generic template.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d4">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-panel-4" id="faq-btn-4">
+          <span class="faq-q-text">Is this just a chatbot?</span>
+          <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-btn-4">
+          <div class="faq-panel-inner">
+            <p>No. We solve a problem that already exists in your business — we don't manufacture a use case to justify a chatbot. The system is built around the actual bottleneck.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d5">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-panel-5" id="faq-btn-5">
+          <span class="faq-q-text">How long does implementation take?</span>
+          <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-panel" id="faq-panel-5" role="region" aria-labelledby="faq-btn-5">
+          <div class="faq-panel-inner">
+            <p>It varies by project — we'll walk through realistic timelines together during your audit call, based on what's actually being built.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal d6">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-panel-6" id="faq-btn-6">
+          <span class="faq-q-text">What happens after it's built — do you disappear?</span>
+          <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </button>
+        <div class="faq-panel" id="faq-panel-6" role="region" aria-labelledby="faq-btn-6">
+          <div class="faq-panel-inner">
+            <p>No — once it's live, we stay on for maintenance if you want us to, making changes and updates as your business evolves.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- ════════ SECTION 7: FINAL CTA ════════ -->
 <div class="final-cta">
   <div class="final-cta-inner">
@@ -1329,6 +1465,54 @@ async function handleLeadSubmit(e) {
     if (entries[0].isIntersecting) { trigger(); obs.disconnect(); }
   }, { threshold: 0.25 });
   obs.observe(wrap);
+})();
+
+// FAQ accordion — single-open. Height is snapped instantly (never transitioned) at
+// the correct point in each direction so the only per-frame animated properties are
+// opacity/transform on .faq-panel and transform on .faq-chevron, keeping the whole
+// interaction on the compositor thread (see the "SCROLL PERFORMANCE RULES" note above).
+(function(){
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (!faqItems.length) return;
+
+  function openItem(item){
+    const btn = item.querySelector('.faq-q');
+    const panel = item.querySelector('.faq-panel');
+    item.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    panel.setAttribute('aria-hidden', 'false');
+    panel.style.height = panel.scrollHeight + 'px';
+    panel.classList.add('is-open');
+  }
+
+  function closeItem(item){
+    const btn = item.querySelector('.faq-q');
+    const panel = item.querySelector('.faq-panel');
+    panel.style.height = panel.scrollHeight + 'px';
+    item.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('aria-hidden', 'true');
+    panel.classList.remove('is-open');
+    const onEnd = (e) => {
+      if (e.target !== panel || e.propertyName !== 'opacity') return;
+      panel.style.height = '0px';
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    panel.addEventListener('transitionend', onEnd);
+  }
+
+  faqItems.forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    const panel = item.querySelector('.faq-panel');
+    panel.setAttribute('aria-hidden', 'true');
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+      faqItems.forEach(other => {
+        if (other !== item && other.classList.contains('is-open')) closeItem(other);
+      });
+      if (isOpen) closeItem(item); else openItem(item);
+    });
+  });
 })();
 </script>
 </body>
