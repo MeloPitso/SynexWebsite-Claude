@@ -337,6 +337,13 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   transform:translateX(-320%) skewX(-18deg);
   animation:box-shine 4s ease-in-out infinite;
   animation-delay:var(--shine-delay,0s);
+  animation-play-state:paused;
+}
+/* Viewport-gated: only the pipeline-wrap(s) actually near the viewport get
+   .anim-live (see IntersectionObserver in <script>). Keeps 45 shine/arrow-flow
+   animations compositor-idle everywhere except the section being scrolled through. */
+.pipeline-wrap.anim-live .pipeline-box::before{
+  animation-play-state:running;
   will-change:transform;
 }
 @keyframes box-shine{
@@ -386,6 +393,10 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
     transparent 12px 22px);
   background-size:22px 100%;
   animation:arrow-flow-x 1.1s linear infinite;
+  animation-play-state:paused;
+}
+.pipeline-wrap.anim-live .arrow-flow{
+  animation-play-state:running;
   will-change:transform;
 }
 @keyframes arrow-flow-x{
@@ -1234,6 +1245,20 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Viewport-gate the pipeline shine/arrow-flow animations (25 + 20 across the
+// solution sections) — they used to run animation:infinite unconditionally,
+// staying compositor-promoted for the entire page lifetime regardless of scroll
+// position, which caused site-wide scroll jank. Observing at the .pipeline-wrap
+// level (one per section) rather than per-element keeps this a single shared
+// mechanism that automatically covers any future solution section.
+const pipelineWraps = document.querySelectorAll('.pipeline-wrap');
+if (pipelineWraps.length) {
+  const pipelineIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => e.target.classList.toggle('anim-live', e.isIntersecting));
+  }, { rootMargin: '200px 0px 200px 0px', threshold: 0 });
+  pipelineWraps.forEach(el => pipelineIO.observe(el));
+}
 
 async function handleLeadSubmit(e) {
   e.preventDefault();
