@@ -155,10 +155,6 @@ nav{
 .d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
 .d5{transition-delay:0.5s}.d6{transition-delay:0.6s}.d7{transition-delay:0.7s}
 
-/* ── BEYOND BAND ── */
-.beyond-section{position:relative;z-index:1;background:rgba(6,182,212,0.012)}
-.beyond-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.5),rgba(37,99,235,0.35),transparent)}
-
 /* ── FLOW DIAGRAM (illustrated step cards) ── */
 .flow-grid{margin-top:52px;display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
 .flow-item{display:flex;flex-direction:column}
@@ -196,12 +192,6 @@ nav{
 .flow-illo-icon svg{width:22px;height:22px}
 .flow-illo-lines{display:flex;flex-direction:column;gap:7px;width:100%}
 .flow-illo-line{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,0.08)}
-
-/* ── PRACTICE EXAMPLES ── */
-.practice-list{margin-top:52px;display:flex;flex-direction:column;gap:44px;max-width:720px}
-.practice-item{display:flex;gap:24px;align-items:flex-start}
-.practice-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#22d3ee;flex-shrink:0;line-height:1.2;min-width:28px}
-.practice-text{font-size:16px;color:#9ca3af;line-height:1.82}
 
 /* ── SERVICE CARDS ── */
 .service-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
@@ -499,8 +489,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .form-row{flex-direction:column}
   .section{padding:72px 24px}
   .flow-grid{grid-template-columns:1fr}
-  .practice-item{gap:16px}
-  .practice-num{font-size:18px}
   .final-cta-inner{padding:72px 24px}
   footer{padding:44px 24px}
   .service-cards{grid-template-columns:1fr}
@@ -579,10 +567,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   border-color:rgba(6,182,212,0.3);
   box-shadow:0 20px 50px rgba(6,182,212,0.08);
 }
-
-/* Practice number spring-pop on reveal */
-.practice-num{transform:scale(0.5) translateY(10px);transition:transform 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.25s}
-.practice-item.in .practice-num{transform:scale(1) translateY(0)}
 
 /* Final CTA button rhythmic pulse */
 @keyframes ctaPulse{
@@ -1193,30 +1177,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
   <div class="reveal d1" style="margin-top:28px">
     <a href="#contact" class="btn-ghost">Book Your Free Audit →</a>
-  </div>
-</div>
-
-<!-- ════════ SECTION 5: IN PRACTICE ════════ -->
-<div class="beyond-section">
-  <div class="section">
-    <div class="reveal">
-      <div class="sec-label">In Practice</div>
-      <h2 class="sec-h2">What this looks like <span class="grad">in your business.</span></h2>
-    </div>
-    <div class="practice-list">
-      <div class="practice-item reveal d1">
-        <span class="practice-num">1</span>
-        <p class="practice-text">A potential client fills in your contact form at 9pm on a Sunday. By 9:01pm they have received a personalised response. By Monday morning your team has a scored, prioritised lead ready to call. Nobody touched it.</p>
-      </div>
-      <div class="practice-item reveal d2">
-        <span class="practice-num">2</span>
-        <p class="practice-text">A contact you spoke to 8 months ago goes cold. The system identifies them, crafts a personalised re-engagement message, sends it at the right time, and flags them the moment they respond. Your team picks up the conversation like it never stopped.</p>
-      </div>
-      <div class="practice-item reveal d3">
-        <span class="practice-num">3</span>
-        <p class="practice-text">Every Monday morning your leadership team receives a performance summary — leads received, responses sent, conversions tracked. It assembled itself overnight. Nobody spent Sunday pulling reports.</p>
-      </div>
-    </div>
   </div>
 </div>
 
