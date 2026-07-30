@@ -594,7 +594,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 
 /* Must come AFTER animation declarations to override them on mobile (cascade order) */
 @media(max-width:768px){
-  .hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{animation:none}
+  /* will-change:transform must be dropped alongside animation:none — the base rule
+     (line ~561) sets it unconditionally, and without this override the browser keeps
+     promoting all 11 .grad::after spans to their own compositing layer on mobile even
+     though nothing is animating. Dead GPU-memory cost with zero benefit on iOS. */
+  .hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{animation:none;will-change:auto}
   .final-cta .btn-primary{animation:none}
 }
 </style>
