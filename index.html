@@ -246,6 +246,83 @@ nav{
 .btn-learn:active{transform:translateX(1px)}
 .btn-learn:focus-visible{outline:2px solid #22d3ee;outline-offset:2px;border-radius:100px}
 
+/* ── CUSTOM AI CONSULTING ILLUSTRATION ──
+   Reuses the .flow-illo chrome-window language (dots + gradient panel) above,
+   scaled into a two-region video-call mockup: participant tiles + controls on
+   the left, a notes column on the right. Motion is transform/opacity-only and
+   viewport-gated via .anim-live, same mechanism as the pipeline shine/arrow-flow
+   animations (see IntersectionObserver in <script>). */
+.consult-illo{
+  position:relative;margin-top:40px;max-width:760px;
+  border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0) 100%);
+  border:1px solid rgba(255,255,255,0.09);
+}
+.consult-illo-chrome{
+  display:flex;align-items:center;gap:6px;padding:10px 14px;
+  background:rgba(0,0,0,0.22);border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.consult-illo-body{display:flex;gap:20px;padding:22px}
+.consult-call-area{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px}
+
+.consult-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.consult-tile{
+  position:relative;aspect-ratio:4/3;border-radius:10px;
+  background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.22);
+  display:flex;align-items:center;justify-content:center;color:#22d3ee;
+  overflow:hidden;
+}
+.consult-tile--active{border-color:rgba(34,211,238,0.5)}
+.consult-tile-icon{width:26px;height:26px;position:relative;z-index:1}
+.consult-tile-glow{
+  position:absolute;inset:-20%;border-radius:50%;
+  background:radial-gradient(circle,rgba(34,211,238,0.35) 0%,rgba(34,211,238,0) 70%);
+  opacity:0.2;
+}
+
+.consult-caption{
+  height:20px;border-radius:10px;padding:0 10px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;
+}
+.consult-caption-fill{
+  display:block;height:6px;width:100%;border-radius:3px;
+  background:rgba(255,255,255,0.18);
+  transform:scaleX(0.35);transform-origin:left;
+}
+
+.consult-controls{display:flex;align-items:center;gap:10px}
+.consult-control{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;color:#22d3ee;
+}
+.consult-control svg{width:16px;height:16px}
+.consult-control--cc{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;letter-spacing:0.02em}
+.consult-control--end{background:#ef4444;border-color:#ef4444}
+.consult-control--end svg{width:15px;height:15px;transform:rotate(135deg)}
+
+.consult-notes{
+  flex:0 0 168px;border-radius:12px;padding:16px 14px;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
+  display:flex;flex-direction:column;gap:10px;
+}
+.consult-notes-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;color:#6b7280;
+}
+.consult-notes-line{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,0.08)}
+.consult-notes-line--flag{background:rgba(6,182,212,0.45)}
+
+.consult-tile-glow{animation:consultGlow 2.6s ease-in-out infinite;animation-play-state:paused}
+.consult-caption-fill{animation:consultCaption 3.4s ease-in-out infinite;animation-play-state:paused}
+.consult-illo.anim-live .consult-tile-glow,
+.consult-illo.anim-live .consult-caption-fill{
+  animation-play-state:running;will-change:transform,opacity;
+}
+@keyframes consultGlow{0%,100%{opacity:0.2;transform:scale(0.92)}50%{opacity:0.5;transform:scale(1.05)}}
+@keyframes consultCaption{0%,100%{transform:scaleX(0.35)}50%{transform:scaleX(0.8)}}
+
 /* ── FINAL CTA BAND ── */
 .final-cta{position:relative;z-index:1;background:rgba(6,182,212,0.012)}
 .final-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.5),rgba(37,99,235,0.35),transparent)}
@@ -360,7 +437,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
 /* ═══════════════════════════════════════════════════
    PIPELINE DIAGRAM COMPONENT (reusable — solution sections)
    Markup: .pipeline-wrap > .pipeline-row > (.pipeline-box + .pipeline-arrow) x N
-   Reference pattern for the 5 remaining solution sections.
+   Reference pattern for the 3 remaining solution sections.
    ═══════════════════════════════════════════════════ */
 .sec-sub{font-size:16px;font-weight:300;color:#9ca3af;line-height:1.8;max-width:640px}
 .pipeline-wrap{margin-top:56px}
@@ -475,6 +552,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .pipeline-box{transition:none}
   .hero-h1 .grad::after,.sec-h2 .grad::after,.cta-h2 .grad::after{animation:none!important}
   .faq-panel,.faq-chevron,.faq-item{transition:none!important}
+  .consult-tile-glow,.consult-caption-fill{animation:none!important}
 }
 
 /* Pipeline stacks vertically before the general 768px breakpoint — the 5-box
@@ -519,6 +597,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .service-card{padding:36px 28px}
   .faq-q{padding:20px 22px}
   .faq-panel-inner{padding:0 22px 22px}
+  .consult-illo-body{flex-direction:column}
+  .consult-notes{flex:1 1 auto}
 }
 
 /* Tablet-width perf fix: real iPad widths (768–1024px, portrait & landscape —
@@ -823,12 +903,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════ SOLUTIONS: EMAIL CLASSIFICATION ENGINE (1 of 6) ════════ -->
+<!-- ════════ SOLUTIONS: EMAIL CLASSIFICATION ENGINE (1 of 3) ════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">Solution</div>
     <h2 class="sec-h2">Email Classification <span class="grad">Engine</span></h2>
-    <p class="sec-sub">Every incoming email gets read, sorted by type and urgency, and routed to the right person automatically. What used to take someone an hour each morning now happens before anyone opens their laptop.</p>
+    <p class="sec-sub">An urgent email comes in, and the right person on your team is notified immediately — no more discovering it three hours later. Everything else gets sorted, prioritized, and logged automatically, so mornings start with a clear inbox, not an hour of triage.</p>
   </div>
 
   <div class="pipeline-wrap reveal d1">
@@ -897,14 +977,14 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
         </div>
         <div class="pipeline-step-num">Step 05</div>
-        <div class="pipeline-title">Automatic Response Sent</div>
+        <div class="pipeline-title">Team Notified</div>
       </div>
 
     </div>
   </div>
 </div>
 
-<!-- ════════ SOLUTIONS: INVOICE AUTOMATION (2 of 6) ════════ -->
+<!-- ════════ SOLUTIONS: INVOICE AUTOMATION (2 of 3) ════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">Solution</div>
@@ -987,166 +1067,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════ SOLUTIONS: CASE FILE ORGANIZER (3 of 6) ════════ -->
-<div class="section">
-  <div class="reveal">
-    <div class="sec-label">Solution</div>
-    <h2 class="sec-h2">Case File <span class="grad">Organizer</span></h2>
-    <p class="sec-sub">Every document in a matter — emails, PDFs, Word files, attachments — gets scanned, sorted, and flagged for duplicates automatically. Your team opens a clean, organised file instead of hunting through folders. Nobody re-reads the same email twice.</p>
-  </div>
-
-  <div class="pipeline-wrap reveal d1">
-    <div class="pipeline-row">
-
-      <div class="pipeline-box" style="--shine-delay:0s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M2 12h20"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 01</div>
-        <div class="pipeline-title">Folder Scanned</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:0.8s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h7l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M15 3v4h4"/><path d="M4 7v13a1 1 0 0 0 1 1h1"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 02</div>
-        <div class="pipeline-title">Files Identified</div>
-        <div class="pipeline-detail">PDF, Word, Email, Excel</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:1.6s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 0 0 4 4l3-3a4 4 0 0 0-5.66-5.66"/><path d="M15 12a4 4 0 0 0-4-4l-3 3a4 4 0 0 0 5.66 5.66"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 03</div>
-        <div class="pipeline-title">Duplicates &amp; Attachments Linked</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:2.4s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.59 2.59 20 10v0a2 2 0 0 1 0 2.83l-7.17 7.17a2 2 0 0 1-2.83 0L3 13V5a2 2 0 0 1 2-2h8Z"/><circle cx="7.5" cy="7.5" r="1.15" fill="currentColor" stroke="none"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 04</div>
-        <div class="pipeline-title">Category Suggested</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:3.2s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 05</div>
-        <div class="pipeline-title">Exported to Review Workbook</div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ════════ SOLUTIONS: CASE INTAKE ASSISTANT (4 of 6) ════════ -->
-<div class="section">
-  <div class="reveal">
-    <div class="sec-label">Solution</div>
-    <h2 class="sec-h2">Case Intake <span class="grad">Assistant</span></h2>
-    <p class="sec-sub">New case documents arrive by email. The system reads them, pulls out the key facts — parties, dates, amounts — and files them against the right matter automatically. Anything it isn't sure about gets flagged for a human, never guessed.</p>
-  </div>
-
-  <div class="pipeline-wrap reveal d1">
-    <div class="pipeline-row">
-
-      <div class="pipeline-box" style="--shine-delay:0s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 01</div>
-        <div class="pipeline-title">Document Arrives by Email</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:0.8s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5a1 1 0 0 1 1-1h3M20 8V5a1 1 0 0 1-1-1h-3M4 16v3a1 1 0 0 0 1 1h3M20 16v3a1 1 0 0 1-1 1h-3"/><path d="M8 12h8M8 9h5M8 15h3"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 02</div>
-        <div class="pipeline-title">Content Extracted</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:1.6s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><circle cx="11" cy="13" r="2.6"/><path d="M13.5 15.5 16 18"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 03</div>
-        <div class="pipeline-title">Key Facts Identified (Parties, Dates, Amounts)</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:2.4s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M12 11v5m-2-2 2 2 2-2"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 04</div>
-        <div class="pipeline-title">Filed to the Right Matter</div>
-      </div>
-
-      <div class="pipeline-arrow">
-        <span class="arrow-line"></span>
-        <span class="arrow-flow"></span>
-        <span class="arrow-head"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      </div>
-
-      <div class="pipeline-box" style="--shine-delay:3.2s">
-        <div class="pipeline-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5"/></svg>
-        </div>
-        <div class="pipeline-step-num">Step 05</div>
-        <div class="pipeline-title">Uncertain Items Flagged for Review</div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ════════ SOLUTIONS: LISTING TO SIGNATURE PIPELINE (5 of 5) ════════ -->
+<!-- ════════ SOLUTIONS: LISTING TO SIGNATURE PIPELINE (3 of 3) ════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">Solution</div>
@@ -1225,7 +1146,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
 </div>
 
-<!-- ════════ SOLUTIONS: CUSTOM AI SOLUTIONS (6 of 6) ════════ -->
+<!-- ════════ SOLUTIONS: CLOSING CARDS (Custom AI Solutions / Custom AI Consulting) ════════ -->
 <div class="section">
   <div class="reveal">
     <div class="sec-label">Solution</div>
@@ -1234,6 +1155,65 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   </div>
   <div class="reveal d1" style="margin-top:28px">
     <a href="#contact" class="btn-ghost">Book Your Free Audit →</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <div class="sec-label">Solution</div>
+    <h2 class="sec-h2">Custom AI <span class="grad">Consulting</span></h2>
+    <p class="sec-sub">Not every problem needs new code. If you're weighing how AI fits into your operations, we'll walk through it with you — what's worth automating, what isn't, and how to prioritize it — before anything gets built.</p>
+  </div>
+
+  <div class="consult-illo reveal d1">
+    <div class="consult-illo-chrome">
+      <span class="flow-illo-dot flow-illo-dot--r"></span>
+      <span class="flow-illo-dot flow-illo-dot--y"></span>
+      <span class="flow-illo-dot flow-illo-dot--g"></span>
+    </div>
+    <div class="consult-illo-body">
+      <div class="consult-call-area">
+        <div class="consult-tiles">
+          <div class="consult-tile consult-tile--active">
+            <div class="consult-tile-glow"></div>
+            <svg class="consult-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          </div>
+          <div class="consult-tile">
+            <svg class="consult-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          </div>
+          <div class="consult-tile">
+            <svg class="consult-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          </div>
+          <div class="consult-tile">
+            <svg class="consult-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          </div>
+        </div>
+        <div class="consult-caption"><span class="consult-caption-fill"></span></div>
+        <div class="consult-controls">
+          <div class="consult-control">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+          </div>
+          <div class="consult-control">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+          </div>
+          <div class="consult-control consult-control--cc">CC</div>
+          <div class="consult-control consult-control--end">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="consult-notes">
+        <div class="consult-notes-label">Notes</div>
+        <span class="consult-notes-line" style="width:82%"></span>
+        <span class="consult-notes-line" style="width:64%"></span>
+        <span class="consult-notes-line" style="width:70%"></span>
+        <span class="consult-notes-line consult-notes-line--flag" style="width:56%"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal d2" style="margin-top:28px">
+    <a href="#contact" class="btn-ghost">Book Your Free Consultation →</a>
   </div>
 </div>
 
@@ -1425,13 +1405,14 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// Viewport-gate the pipeline shine/arrow-flow animations (25 + 20 across the
-// solution sections) — they used to run animation:infinite unconditionally,
-// staying compositor-promoted for the entire page lifetime regardless of scroll
-// position, which caused site-wide scroll jank. Observing at the .pipeline-wrap
+// Viewport-gate the pipeline shine/arrow-flow animations (15 + 12 across the
+// solution sections) plus the Custom AI Consulting mockup's tile-glow/caption
+// pulse — they used to run animation:infinite unconditionally, staying
+// compositor-promoted for the entire page lifetime regardless of scroll
+// position, which caused site-wide scroll jank. Observing at the wrapper
 // level (one per section) rather than per-element keeps this a single shared
 // mechanism that automatically covers any future solution section.
-const pipelineWraps = document.querySelectorAll('.pipeline-wrap');
+const pipelineWraps = document.querySelectorAll('.pipeline-wrap, .consult-illo');
 if (pipelineWraps.length) {
   const pipelineIO = new IntersectionObserver((entries) => {
     entries.forEach(e => e.target.classList.toggle('anim-live', e.isIntersecting));
