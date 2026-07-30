@@ -22,7 +22,7 @@ img{display:block;width:100%;height:auto}
   --blue5:#3b82f6;--blue6:#2563eb;
   --fd:'Syne',sans-serif;--fb:Arial,sans-serif;--fm:'JetBrains Mono',monospace;
 }
-html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+html{background:#000;color:#fff;font-family:Arial,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overflow-x:clip}
 body{
   background:linear-gradient(to bottom,#000 0%,#0a0a0a 25%,#111827 55%,#0a0a0a 80%,#000 100%);
   min-height:100vh;overflow-x:hidden;
@@ -120,7 +120,7 @@ nav{
 
 /* ── TICKER ── */
 .ticker-outer{
-  position:relative;z-index:1;
+  position:relative;z-index:1;isolation:isolate;
   background:#06b6d4;
   border-top:1px solid rgba(0,0,0,0.12);border-bottom:1px solid rgba(0,0,0,0.12);
   padding:16px 0;overflow:hidden;
@@ -507,9 +507,19 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
   .service-card{padding:36px 28px}
   .faq-q{padding:20px 22px}
   .faq-panel-inner{padding:0 22px 22px}
-  /* Remove fixed bg overlay on mobile — position:fixed repaints cause scroll jank */
+}
+
+/* Tablet-width perf fix: real iPad widths (768–1024px, portrait & landscape —
+   e.g. 810/820/834/1024) sit above the 768px breakpoint above but still have
+   mobile-class GPUs, so without this they got the full desktop cost: a fixed
+   noise layer plus nav blur recomputed every scroll frame, site-wide. Kept as
+   its own query rather than widening the 768px breakpoint above so small-laptop
+   widths in the 768–1024px range keep the desktop nav layout untouched — only
+   these two perf-only rules extend to them. */
+@media(max-width:1024px){
+  /* Remove fixed bg overlay — position:fixed repaints cause scroll jank */
   body::after{display:none}
-  /* Remove backdrop-filter on mobile — GPU filter sampling on every scroll frame causes jank */
+  /* Remove backdrop-filter — GPU filter sampling on every scroll frame causes jank */
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(0,0,0,0.92)}
 }
 
@@ -1375,9 +1385,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.07);p
  *   1. body::after is position:fixed with an expensive background (SVG noise).
  *      Without GPU promotion it triggers a full repaint on every scroll frame.
  *      Fix: transform:translateZ(0);will-change:transform on desktop;
- *      display:none on mobile (<768px) to eliminate it entirely.
- *   2. nav backdrop-filter:blur(24px) caused GPU compositing overhead on mobile.
- *      Fix: reduced to blur(10px) on mobile via @media(max-width:768px).
+ *      display:none up to 1024px (mobile + real iPad widths) to eliminate it entirely.
+ *   2. nav backdrop-filter:blur(24px) caused GPU compositing overhead on mobile
+ *      and tablet. Fix: backdrop-filter:none up to 1024px via @media(max-width:1024px)
+ *      (widened 2026-07-30 from 768px — iPad widths of 768–1024px were still getting
+ *      the full desktop-cost noise layer + blur, uncaught by the original fix).
  *
  * Future JS rules for this project:
  *   - Never attach scroll/touch/wheel listeners without { passive: true }
