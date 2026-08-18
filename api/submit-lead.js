@@ -179,38 +179,6 @@ module.exports = async function handler(req, res) {
 
   console.log('[submit-lead] record saved successfully');
 
-  // ── ZOHO CRM ─────────────────────────────────────────────────────────────────
-
-  const zohoOwnerId = (process.env.ZOHO_WEBFORM_OWNER_ID || '').trim();
-  const zohoSecret  = (process.env.ZOHO_WEBFORM_SECRET   || '').trim();
-
-  if (zohoOwnerId && zohoSecret) {
-    try {
-      const zohoParams = new URLSearchParams({
-        xnQsjsdp:   zohoOwnerId,
-        xmIwtLD:    zohoSecret,
-        actionType: 'TGVhZHM=',
-        returnURL:  'https://synexailabs.com',
-        'Last Name': name,
-        Email:       email,
-        Company:     company || '',
-        LEADCF2:     service || '',
-        LEADCF1:     message || '',
-      });
-
-      const zohoRes = await fetch('https://crm.zoho.com/crm/WebToLeadForm', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body:    zohoParams.toString(),
-      });
-      console.log('[submit-lead] Zoho CRM response status', zohoRes.status);
-    } catch (err) {
-      console.error('[submit-lead] Zoho CRM threw an exception', err.message);
-    }
-  } else {
-    console.warn('[submit-lead] ZOHO_WEBFORM_OWNER_ID or ZOHO_WEBFORM_SECRET not set — skipping Zoho');
-  }
-
   // ── RESEND EMAIL CONFIRMATION ────────────────────────────────────────────────
 
   const resendKey = (process.env.RESEND_API_KEY || '').trim();

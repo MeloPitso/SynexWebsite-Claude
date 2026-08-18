@@ -1437,8 +1437,8 @@ async function handleLeadSubmit(e) {
   const email = document.getElementById('lead-email').value.trim();
   const company = document.getElementById('lead-company').value.trim();
   // The "what can we help you with" dropdown was removed from the form (2026-07-28).
-  // The backend (Airtable Service column, Zoho LEADCF2, and the Resend confirmation-email
-  // branch) still expects a service value, so every submission is now treated as a
+  // The backend (Airtable Service column and the Resend confirmation-email branch)
+  // still expects a service value, so every submission is now treated as a
   // general enquiry rather than sending an empty/undefined value.
   const service = 'Not sure / General Enquiry';
   const message = document.getElementById('lead-message').value.trim();
